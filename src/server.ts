@@ -39,10 +39,10 @@ app.get("/spotify/:track", (req: Request, res: Response) => {
   console.log(`Playing song: ${dummySong.name} by ${dummySong.artist}`);
 
 });
-app.get('/callback', function(req, res) {
+app.get('/callback', async function(req, res) {
 
-  var code = req.query.code || null;
-  var state = req.query.state || null;
+  const code = req.query.code as string || null;
+  const state = req.query.state as string || null;
 
   if (state === null) {
     res.redirect('/#' +
@@ -50,19 +50,29 @@ app.get('/callback', function(req, res) {
         error: 'state_mismatch'
       }));
   } else {
-    var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      form: {
-        code: code,
-        redirect_uri,
-        grant_type: 'authorization_code'
-      },
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
-      },
-      json: true
-    };
+    const params = new URLSearchParams();
+    params.append('code', code!);
+    params.append('redirect_uri', redirect_uri);
+    params.append('grant_type', 'authorization_code');
+    try {
+      const response = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Basic ' + Buffer.from(client_id + ':' + client_secret).toString('base64')
+        },
+        body: params.toString()
+      });
+
+      const data = await response.json();
+      if (data.access_token && data.refresh_token) {
+        res.send(`Access token received: ${data.access_token}<br>Refresh token received: ${data.refresh_token}`);
+      } else {
+        res.send(`Error retrieving tokens: ${JSON.stringify(data)}`);
+      }
+        } catch (error) {
+      res.send(`Error: ${error}`);
+    }
   }
 });
 app.listen(port, () => {
