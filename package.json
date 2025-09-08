@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/jessevandevelde/BetterJamsServer#readme",
   "devDependencies": {
+    "@types/express": "^5.0.3",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2"
   },
