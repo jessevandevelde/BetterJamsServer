@@ -1,0 +1,11 @@
+<div class="queue-row">
+    <img class="album-cover" src="{{ dummyData.album.images[0].url }}" alt="albumcover" />
+    <div class="text-container">
+        <h2>{{ dummyData.name }}</h2>
+        <p>By {{ dummyData.artists[0].name }}</p>
+    </div>
+     <div class="upvote-container">
+        <ion-icon (click)="onUpvote()" class="icon" name="arrow-up-circle-outline"></ion-icon>
+        <p class="upvote-count">{{ upVoteCount }}</p>
+    </div>
+</div>
