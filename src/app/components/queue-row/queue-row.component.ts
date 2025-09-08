@@ -15,11 +15,14 @@ import dummyData from './dummy-data.json';
 export class QueueRowComponent {
   dummyData = dummyData;
   upVoteCount = 0;
+  upvoted = false;
+
   ngOnInit() {
     console.log(this.dummyData);
   }
   
   onUpvote() {
-    this.upVoteCount++;
+    this.upvoted = !this.upvoted;
+    this.upVoteCount += this.upvoted ? 1 : -1;
   }
 }
