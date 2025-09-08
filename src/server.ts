@@ -3,11 +3,13 @@ import 'dotenv/config';
 import { randomBytes } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 import querystring from 'node:querystring';
+import cookieParser from 'cookie-parser';
 
 const client_id: string = process.env.CLIENT_ID!;
 const client_secret: string = process.env.CLIENT_SECRET!;
 const redirect_uri = 'http://127.0.0.1:3000/callback';
 const app = express();
+app.use(cookieParser());
 const port = 3000;
 
 app.get("/", (req: Request, res: Response) => {
@@ -71,7 +73,9 @@ app.get('/callback', async (req: Request, res: Response) => {
       } = await response.json();
 
       if (data.access_token && data.refresh_token) {
-        res.send(`Access token received: ${data.access_token}<br>Refresh token received: ${data.refresh_token}`);
+        res.cookie('access_token', data.access_token, { httpOnly: false, secure: false, sameSite: 'lax' });
+        res.cookie('refresh_token', data.refresh_token , { httpOnly: false, secure: false, sameSite: 'lax' });
+        res.redirect('http://localhost:4200');
       } else {
         res.send(`Error retrieving tokens: ${JSON.stringify(data)}`);
       }
