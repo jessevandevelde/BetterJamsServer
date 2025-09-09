@@ -9,8 +9,6 @@ export class LoginPageService {
   constructor(private http: HttpClient) { }
 
   login(){
-    this.http.get('http://localhost:3000/login').subscribe(res => {
-      console.log(res);
-    });
+   window.location.href = 'http://localhost:3000/login'
   }
 }

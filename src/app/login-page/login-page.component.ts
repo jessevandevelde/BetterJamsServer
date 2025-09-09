@@ -20,8 +20,6 @@ export class LoginPageComponent {
   }
 
   protected login(){
-    // this.loginPageService.login()
-    window.location.href = 'http://localhost:3000/login'
+    this.loginPageService.login()
   }
-  
 }
