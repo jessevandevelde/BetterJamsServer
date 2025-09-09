@@ -4,6 +4,7 @@ import { randomBytes } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 import querystring from 'node:querystring';
 import cookieParser from 'cookie-parser';
+import cors from 'cors'
 
 const client_id: string = process.env.CLIENT_ID!;
 const client_secret: string = process.env.CLIENT_SECRET!;
@@ -11,6 +12,10 @@ const redirect_uri = 'http://127.0.0.1:3000/callback';
 const app = express();
 app.use(cookieParser());
 const port = 3000;
+app.use(cors ({
+  origin: 'http://127.0.0.1:4200',
+  credentials: true,
+}))
 
 app.get("/", (req: Request, res: Response) => {
   res.send("test");
@@ -30,14 +35,14 @@ app.get('/login', (req: Request, res: Response) => {
     }));
 });
 
-app.get("/spotify/:track", (req: Request, res: Response) => {
+app.get("/track", (req: Request, res: Response) => {
   const track = req.params.track;
   const dummySong = {
     name: track,
     artist: "playboi Dummy",
     url: `https://open.spotify.com/track/dummy-${track}`,
   };
-
+  console.log(req.cookies)
   console.log(`Playing song: ${dummySong.name} by ${dummySong.artist}`);
   res.json(dummySong);
 });
@@ -73,9 +78,9 @@ app.get('/callback', async (req: Request, res: Response) => {
       } = await response.json();
 
       if (data.access_token && data.refresh_token) {
-        res.cookie('access_token', data.access_token, { httpOnly: false, secure: false, sameSite: 'lax' });
-        res.cookie('refresh_token', data.refresh_token , { httpOnly: false, secure: false, sameSite: 'lax' });
-        res.redirect('http://localhost:4200');
+        res.cookie('access_token', data.access_token, { httpOnly: true, secure: false, sameSite: 'lax' });
+        res.cookie('refresh_token', data.refresh_token , { httpOnly: true, secure: false, sameSite: 'lax' });
+        res.redirect('http://127.0.0.1:4200');
       } else {
         res.send(`Error retrieving tokens: ${JSON.stringify(data)}`);
       }

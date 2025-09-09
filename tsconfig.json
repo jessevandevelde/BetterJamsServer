@@ -6,6 +6,6 @@
     "outDir": "dist",
     "esModuleInterop": true,
     "strict": true,
-    "types": ["cookie-parser"],
+    "types": ["cookie-parser", "cors"],
   }
 }
