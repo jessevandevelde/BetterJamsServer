@@ -21,9 +21,10 @@ p {
   display: flex;
   align-items: center;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #7F7F7F;
   border-radius: 8px;
   background-color: #181C22;
+  max-width: 50%;
 }
 
 .upvote-container {
