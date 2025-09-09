@@ -1,5 +1,5 @@
 {
-  "name": "betterjamserver",
+  "name": "betterjamsserver",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -26,7 +26,6 @@
   "dependencies": {
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
-    "axios": "^1.11.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
