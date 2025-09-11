@@ -1,3 +1,10 @@
+.login-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+}
+
 .auth-button {
   display: flex;
   background-color: #1ED760 ;
