@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import dummyData from './components/queue-row/dummy-data.json';
 import { QueueRowTrackData } from './components/queue-row/queue-row.interfaces';
 
 @Component({
-  standalone: true,
-  selector: 'app-root',
-  template: `<app-queue-row [track]="trackData"></app-queue-row>`,
-  styleUrls: ['./app.component.css'],
-  imports: [QueueRowComponent],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    imports: [RouterOutlet, QueueRowComponent],
 })
 export class AppComponent {
   title = 'SpotifyBetterJams';
