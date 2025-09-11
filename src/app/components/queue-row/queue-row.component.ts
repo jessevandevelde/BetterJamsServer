@@ -1,26 +1,21 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import dummyData from './dummy-data.json';
+import { QueueRowTrackData } from './queue-row.interfaces';
+
 
 @Component({
   selector: 'app-queue-row',
-  standalone: true,
   imports: [],
   templateUrl: './queue-row.component.html',
   styleUrls: ['./queue-row.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  inputs: ['dummyData'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class QueueRowComponent {
-  dummyData = dummyData;
+  track = input.required<QueueRowTrackData>()
   upVoteCount = 0;
   upvoted = false;
 
-  ngOnInit() {
-    console.log(this.dummyData);
-  }
-  
   onUpvote() {
     this.upvoted = !this.upvoted;
     this.upVoteCount += this.upvoted ? 1 : -1;

@@ -1,5 +1,12 @@
-/* Global styles */
+:root{
+  --dark-blue:#181C22;
+  --dark-gray:#35393f;
+  --mid-gray: #7f7f7f;
+  --light-gray: #d9d9d9;
+  --text-font: 'Arial, Helvetica, sans-serif', sans-serif;
+}
+
 
 body{
-    background-color: #181C22;
+    background-color: var(--dark-blue);
 }
