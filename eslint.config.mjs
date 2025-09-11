@@ -12,7 +12,9 @@ const eslintConfig = defineConfig(
       '@stylistic/comma-dangle': [
         'error',
         'always-multiline',
+
       ],
+      'no-console': 'error',
       '@stylistic/padding-line-between-statements': ['error',
         { blankLine: 'always', prev: '*', next: 'return' },
         { blankLine: 'always', prev: '*', next: ['const', 'let'] },
@@ -42,7 +44,7 @@ const eslintConfig = defineConfig(
 
 export default defineConfig(
   {
-    ignores: ['node_modules', 'dist'],
+    ignores: ['node_modules', 'dist', 'e2e'],
   },
   {
     files: ['**/*.mjs', '**/*.js'],
