@@ -12,6 +12,8 @@ const eslintConfig = defineConfig(
         'error',
         'always-multiline',
       ],
+      'no-console': 'error',
+      'no-restricted-syntax': 'error',
       '@stylistic/padding-line-between-statements': ['error',
         { blankLine: 'always', prev: '*', next: 'return' },
         { blankLine: 'always', prev: '*', next: ['const', 'let'] },

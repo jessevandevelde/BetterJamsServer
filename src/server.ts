@@ -18,9 +18,11 @@ app.get('/spotify/:track', (req: Request, _res: Response) => {
     url: `https://open.spotify.com/track/dummy-${track}`,
   };
 
+  // eslint-disable-next-line no-console
   console.log(`Playing song: ${dummySong.name} by ${dummySong.artist}`);
 });
 
 app.listen(port, () => {
+  // eslint-disable-next-line no-console
   console.log(`Server draait op http://localhost:${port}`);
 });
