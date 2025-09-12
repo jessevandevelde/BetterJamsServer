@@ -9,15 +9,15 @@
     <div class="text-container">
         <h2>{{ _track.songName }}</h2>
 
-        <p>By {{ _track.artistName }}</p>
+        <p>{{ _track.artistName }}</p>
     </div>
 
     <div class="upvote-container">
-        <ion-icon (click)="onUpvote()" 
-            class="icon" 
-            name="arrow-up-circle-outline"
-        ></ion-icon>
-
-        <p class="upvote-count">{{ upVoteCount }}</p>
+        <fa-icon 
+            class="upvote-button" 
+            [icon]="upvoted() ? fasThumbsUp : faThumbsUp" 
+            (click)="toggleVote()">
+        </fa-icon>
+        <p class="upvote-count">{{ upVoteCount() }}</p>
     </div>
 </div>

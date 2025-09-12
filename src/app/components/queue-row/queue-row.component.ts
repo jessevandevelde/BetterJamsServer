@@ -1,23 +1,30 @@
-import { CUSTOM_ELEMENTS_SCHEMA, input } from '@angular/core';
+import { input, output } from '@angular/core';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { QueueRowTrackData } from './queue-row.interfaces';
-
-
+import { faThumbsUp as fasThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @Component({
   selector: 'app-queue-row',
-  imports: [],
+  imports: [FontAwesomeModule],
   templateUrl: './queue-row.component.html',
   styleUrls: ['./queue-row.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class QueueRowComponent {
-  track = input.required<QueueRowTrackData>()
-  upVoteCount = 0;
-  upvoted = false;
+  protected fasThumbsUp = fasThumbsUp;
+  protected faThumbsUp = faThumbsUp;
 
-  onUpvote() {
-    this.upvoted = !this.upvoted;
-    this.upVoteCount += this.upvoted ? 1 : -1;
+  track = input.required<QueueRowTrackData>();
+  upVoteCount = input.required<number>();
+  upvoted = input.required<boolean>();
+
+  upvote = output<void>();
+  removeVote = output<void>();
+
+  toggleVote() {
+    this.upvoted() 
+      ? this.removeVote.emit() 
+      : this.upvote.emit();
   }
 }

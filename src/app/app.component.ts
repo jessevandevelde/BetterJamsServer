@@ -14,6 +14,8 @@ export class AppComponent {
   title = 'SpotifyBetterJams';
   dummyData = dummyData;
   trackData: QueueRowTrackData;
+  upvoteCount = 0;
+  upvoted = false;
 
   constructor() {
     this.trackData = this.createTrackData(dummyData);
@@ -25,5 +27,16 @@ export class AppComponent {
       songName: data.name,
       artistName: data.artists[0].name,
     }
+  }
+
+  protected vote() {
+    this.upvoted = true;
+    this.upvoteCount++;
+    console.log('upvoted')
+  }
+
+  protected removeVote() {
+    this.upvoted = false;
+    this.upvoteCount--;
   }
  }

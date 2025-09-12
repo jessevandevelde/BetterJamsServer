@@ -63,3 +63,8 @@ p {
 }
 
 
+.upvote-button{
+  color: var(--light-gray);
+  font-size: 24px;
+  cursor: pointer;
+}
