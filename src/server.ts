@@ -1,19 +1,29 @@
 import express, { Request, Response } from "express";
-import 'dotenv/config';
 import { randomBytes } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 import querystring from 'node:querystring';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+import dotenvExpand from "dotenv-expand";
+import dotenv from "dotenv";
+import { createCookie } from "./helpers/cookies.helpers";
+import { access } from "node:fs";
 
+
+const env = dotenv.config();
+dotenvExpand.expand(env)
+const serverPort = process.env.SERVER_PORT!;
+const serverUrl = process.env.SERVER_URL!;
+const clientUrl = process.env.CLIENT_URL!;
+const spotifyUrl = process.env.SPOTIFY_API_URL!;
 const client_id: string = process.env.CLIENT_ID!;
 const client_secret: string = process.env.CLIENT_SECRET!;
-const redirect_uri = 'http://127.0.0.1:3000/callback';
+const redirect_uri = `${serverUrl}/callback`;
 const app = express();
 app.use(cookieParser());
-const port = 3000;
+
 app.use(cors ({
-  origin: 'http://127.0.0.1:4200',
+  origin: clientUrl,
   credentials: true,
 }))
 
@@ -24,8 +34,11 @@ app.get("/", (req: Request, res: Response) => {
 app.get('/login', (req: Request, res: Response) => {
   const state = randomBytes(16).toString('hex');
   const scope = 'user-read-private user-read-email';
+  const maxAge = 60 * 1000;
 
-  res.redirect('https://accounts.spotify.com/authorize?' +
+  createCookie(res, 'state', state, maxAge)
+
+  res.redirect(`${spotifyUrl}/authorize?` +
     querystring.stringify({
       response_type: 'code',
       client_id,
@@ -48,21 +61,20 @@ app.get("/track", (req: Request, res: Response) => {
 });
 
 app.get('/callback', async (req: Request, res: Response) => {
-  const code = typeof req.query.code === 'string' ? req.query.code : null;
-  const state = typeof req.query.state === 'string' ? req.query.state : null;
+  const code = req.query.code as string || null;
+  const state = req.cookies.state;
 
-  if (state === null) {
-    res.redirect('/#' +
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
+  if (state === null || state !== req.query.state) {
+    res.redirect(`${clientUrl}/login?error=state_mismatch`);
   } else {
+
     const params = new URLSearchParams();
     params.append('code', code!);
     params.append('redirect_uri', redirect_uri);
     params.append('grant_type', 'authorization_code');
+
     try {
-      const response = await fetch('https://accounts.spotify.com/api/token', {
+      const response = await fetch(`${spotifyUrl}/api/token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -78,9 +90,12 @@ app.get('/callback', async (req: Request, res: Response) => {
       } = await response.json();
 
       if (data.access_token && data.refresh_token) {
-        res.cookie('access_token', data.access_token, { httpOnly: true, secure: false, sameSite: 'lax' });
-        res.cookie('refresh_token', data.refresh_token , { httpOnly: true, secure: false, sameSite: 'lax' });
-        res.redirect('http://127.0.0.1:4200');
+        const maxAge = 1000 * 60 * 60;
+
+        createCookie(res, 'access_token', data.access_token, maxAge)
+        createCookie(res, 'refresh_token', data.refresh_token )
+        
+        res.redirect(clientUrl);
       } else {
         res.send(`Error retrieving tokens: ${JSON.stringify(data)}`);
       }
@@ -90,6 +105,6 @@ app.get('/callback', async (req: Request, res: Response) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server draait op http://localhost:${port}`);
+app.listen(serverPort, () => {
+  console.log(`Server draait op ${serverUrl}`);
 });

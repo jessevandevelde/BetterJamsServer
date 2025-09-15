@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "dotenv -e .env -- nodemon src/server.ts",
+    "production": "dotenv -e .env.production -- nodemon src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/jessevandevelde/BetterJamsServer#readme",
   "devDependencies": {
     "@types/express": "^5.0.3",
+    "dotenv-cli": "^10.0.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2"
   },
@@ -29,6 +31,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
+    "dotenv-expand": "^12.0.3",
     "express": "^5.1.0"
   }
 }
