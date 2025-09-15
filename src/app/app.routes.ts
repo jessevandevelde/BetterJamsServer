@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { LoginPageComponent } from "./login-page/login-page.component";
+import { QueueRowComponent } from "./components/queue-row/queue-row.component";
 
 export const routes: Routes = [
     {
@@ -8,7 +9,7 @@ export const routes: Routes = [
             {
                 path: 'login',
                 component: LoginPageComponent,
-            }
+            },
         ]
     }
 ];
