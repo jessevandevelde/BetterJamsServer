@@ -61,6 +61,8 @@ export default defineConfig(
     ],
     rules: {
       '@typescript-eslint/prefer-readonly-parameter-types': 'off',
+      '@typescript-eslint/max-params': 'off',
+      '@typescript-eslint/strict-boolean-expressions': 'off',
       '@typescript-eslint/no-unused-vars': ['error', {
         args: 'all',
         argsIgnorePattern: '^_',
