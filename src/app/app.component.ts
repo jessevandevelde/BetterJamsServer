@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { QueueRowComponent } from './components/queue-row/queue-row.component';
-import { QueueRowTrackData } from './components/queue-row/queue-row.interfaces';
+import { QueueRowComponent } from './room-page/components/queue-row/queue-row.component';
 import { RouterOutlet } from '@angular/router';
 import dummyData from './dummy-data/track-data.json';
 import { Track } from './types/track.interfaces';
-import { MediaPlayerComponent } from './components/media-player/media-player.component';
+import { MediaPlayerComponent } from './room-page/components/media-player/media-player.component';
 
 @Component({
     selector: 'app-root',
@@ -15,7 +14,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 export class AppComponent {
   title = 'SpotifyBetterJams';
   dummyData = dummyData;
-  trackData: QueueRowTrackData;
+  trackData: Track;
   upvoteCount = 0;
   upvoted = false;
 

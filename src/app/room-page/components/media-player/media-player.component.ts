@@ -1,15 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import dummyData from './dummydata.json';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Track } from '../../../types/track.interfaces';
 
 @Component({
   selector: 'app-media-player',
-  imports: [],
-  standalone: true,
   templateUrl: './media-player.component.html',
   styleUrl: './media-player.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  inputs: ['dummyData'],
 })
-export default class MediaPlayerComponent {
-  dummyData = dummyData;
+export class MediaPlayerComponent { 
+  track = input.required<Track>();
+  
 }
