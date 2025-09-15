@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { QueueRowComponent } from './components/queue-row/queue-row.component';
+import { QueueRowTrackData } from './components/queue-row/queue-row.interfaces';
 import { RouterOutlet } from '@angular/router';
 import dummyData from './dummy-data/track-data.json';
 import { Track } from './types/track.interfaces';
@@ -8,12 +10,12 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    imports: [RouterOutlet, MediaPlayerComponent],
+    imports: [RouterOutlet, MediaPlayerComponent, QueueRowComponent],
 })
 export class AppComponent {
   title = 'SpotifyBetterJams';
   dummyData = dummyData;
-  trackData: Track;
+  trackData: QueueRowTrackData;
   upvoteCount = 0;
   upvoted = false;
 

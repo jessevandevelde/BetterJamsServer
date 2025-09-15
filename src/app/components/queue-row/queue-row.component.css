@@ -1,0 +1,70 @@
+.album-cover {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+h2 {
+  font-family: var(--text-font);
+  font-size: 18px;
+  margin: 0;
+  color: var(--light-gray);
+}
+
+p {
+  font-family: var(--text-font);
+  margin: 5px 0 0 0;
+  color: var(--mid-gray);
+}
+
+.queue-row {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #7F7F7F;
+  border-radius: 8px;
+  background-color: #35393F;
+}
+
+.upvote-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.icon {
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: auto; 
+  height: 60px; 
+}
+
+.icon:hover {
+  color: #1db954;
+}
+
+.upvote-count {
+  margin-bottom: 3px;
+  margin-left: 8px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.upvote-button{
+  color: var(--light-gray);
+  font-size: 24px;
+  cursor: pointer;
+}
