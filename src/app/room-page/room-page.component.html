@@ -1,0 +1,2 @@
+<app-media-player [track]="trackData"></app-media-player>
+<app-queue-row [track]="trackData" [upvoted]="upvoted" [upVoteCount]="upvoteCount" (upvote)="vote()" (removeVote)="removeVote()"></app-queue-row>
