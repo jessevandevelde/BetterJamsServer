@@ -99,6 +99,10 @@ app.get('/callback', async (req: Request, res: Response) => {
         body: params.toString(),
       });
 
+      if (!response.ok) {
+        throw Error('Unauthorized');
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
       const data = await response.json() as AuthTokensResponse;
 
@@ -116,11 +120,11 @@ app.get('/callback', async (req: Request, res: Response) => {
         }
       }
       else {
-        res.send(`Error retrieving tokens: ${JSON.stringify(data)}`);
+        throw Error('Unauthorized');
       }
     }
-    catch (error) {
-      res.send(`Error: ${String(error)}`);
+    catch (_error) {
+      res.redirect(`${clientUrl}/login?error=unauthorized`);
     }
   }
 });
