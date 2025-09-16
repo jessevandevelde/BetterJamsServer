@@ -35,8 +35,8 @@ export class MediaPlayerComponent {
         : this.progress + 1000;
       
       this.progress = progress;
-
       this.progressPercentage = this.getProgressPercentage(this.track().songDuration, progress)
+
       this.cd.detectChanges();
     }, 1000)
   }
