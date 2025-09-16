@@ -1,11 +1,14 @@
+@import url('../../../../styles/variables.css');
+
 .media-player {
   display: flex;
   flex-direction: column;
   background: var(--dark-blue); 
   border-radius: 8px;
-  padding: 10px;
   text-align: center;
-  gap: 8px;
+  gap: 16px;
+  width: 768px;
+
   @media (min-width: 768px) {
     flex-direction: row;
     text-align: left;
@@ -14,17 +17,17 @@
 }
 
 .album-cover {
-  width: 300px;
-  border-radius: 8px;
+  width: 200px;
   object-fit: cover;
   align-self: center;
+  border-radius: 16px;
   @media (min-width: 768px){ 
-    width: 340px;
-    margin-right: 15px;
+    width: 220px;
   }
 }
 
 .song-info {
+  font-weight: normal;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -32,7 +35,6 @@
 
 .song-name {
   font-size: 28px;
-  font-weight: 600;
   margin: 0;
   color: var(--light-gray);
 }
@@ -51,24 +53,28 @@
 }
 
 .pause-icon {
+  display: flex;
+  width: 48px;
+  height: 48px;
   font-size: 32px;
-  margin-bottom: 8px;
   color: #000;
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: #d9d9d9;
   border-radius: 50%;
-  padding: 15px;
+  padding: 8px;
+  align-self: center;
+  margin-bottom: 16px;
 }
 
 .bar { 
-  width: 70%;
-  height: 6px;
+  width: 100%;
+  height: 8px;
   background: var(--dark-gray);
-  border-radius: 3px;
+  border-radius: 8px;
   position: relative;
   display: flex;
   align-items: center;
-
+  align-self: flex-end;
   @media (min-width: 768px) {    
     width: 100%;
   }
@@ -86,4 +92,17 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.playback-time{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.timestamp{
+  margin: 0px;;
+  margin-top: 6px;
+  color: var(--light-gray);
+  font-size: 14px;
 }

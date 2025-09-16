@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, 
 import { Track } from '../../../types/track.interfaces';
 import { faPause } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { FaIconComponent } from "@fortawesome/angular-fontawesome";
   templateUrl: './media-player.component.html',
   styleUrl: './media-player.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FaIconComponent],
+  imports: [FaIconComponent, DatePipe],
 })
 export class MediaPlayerComponent { 
   pause = faPause
@@ -21,7 +22,7 @@ export class MediaPlayerComponent {
   
   constructor() {
     this.cd = inject(ChangeDetectorRef);
-
+    
     effect(() => {
       const track = this.track();
       const progress = this.progress // Needs to be replaced by signal input

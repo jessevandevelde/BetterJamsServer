@@ -2,17 +2,22 @@
 
 <div class="media-player">
   <img class="album-cover" [src]="_track.albumCoverUrl" />
-<div class="right">
-  <div class="song-info">
-    <h3 class="song-name">{{_track.songName}}</h3>
-    <p class="artist-name">{{_track.artistName}}</p>
-  </div>
-
-  <div class="controls">
+  <div class="right">
+    <div class="song-info">
+      <h3 class="song-name">{{_track.songName}}</h3>
+      <p class="artist-name">{{_track.artistName}}</p>
+    </div>
     <fa-icon [icon]="pause" class="pause-icon"></fa-icon>
-    <div class="bar">
-      <div class="progressbar" [style.width.%]="progressPercentage"></div>
-    </div>
-    </div>
+    <div class="controls">
 
+
+      <div class="bar">
+        <div class="progressbar" [style.width.%]="progressPercentage"></div>
+      </div>
+
+    </div>
+    <div class="playback-time">
+      <p class="timestamp">{{progress | date:'mm:ss'}}</p>
+      <p class="timestamp">{{_track.songDuration | date:'mm:ss'}}</p>
+    </div>
 
