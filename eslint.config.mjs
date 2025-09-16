@@ -63,6 +63,7 @@ export default defineConfig(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      '@typescript-eslint/class-methods-use-this': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {

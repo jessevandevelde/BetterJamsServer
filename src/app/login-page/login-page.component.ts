@@ -1,24 +1,23 @@
 import { Component, inject } from '@angular/core';
 import { LoginPageService } from './login-page.service';
-
-
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-login-page',
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css'],
 
 })
 
 export class LoginPageComponent {
-  private loginPageService: LoginPageService
+  private readonly loginPageService: LoginPageService;
 
-  constructor(){
-    this.loginPageService = inject(LoginPageService)
+  public constructor() {
+    this.loginPageService = inject(LoginPageService);
   }
 
-  protected login(){
-    this.loginPageService.login()
+  protected login(): void {
+    this.loginPageService.login();
   }
 }
