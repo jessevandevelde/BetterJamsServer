@@ -1,3 +1,72 @@
-:host {
-  display: block;
+.media-player {
+  display: flex;
+  background: var(--dark-blue); 
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.album-cover {
+  width: 340px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.song-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.song-name {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--light-gray);
+}
+
+.artist-name {
+  font-size: 28px;
+  color: var(--mid-gray);
+  margin: 4px 0 0 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pause-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  color: #000;
+  cursor: pointer;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 15px;
+}
+
+.bar {  
+  width: 1000px;
+  height: 6px;
+  background: var(--dark-gray);
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+.progressbar {
+  width: 34%;
+  height: 100%;
+  background: var(--light-gray);
+  border-radius: 3px;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,6 +1,18 @@
 @let _track = track();
 
 <div class="media-player">
-    <img [src]="_track.albumCoverUrl" alt="album cover" class="album-cover">
-    <p class="song-name">{{_track.songName}}</p>
-</div>
+  <img class="album-cover" [src]="_track.albumCoverUrl" />
+<div class="right">
+  <div class="song-info">
+    <h3 class="song-name">{{_track.songName}}</h3>
+    <p class="artist-name">{{_track.artistName}}</p>
+  </div>
+
+  <div class="controls">
+    <fa-icon [icon]="pause" class="pause-icon"></fa-icon>
+    <div class="bar">
+      <div class="progressbar"></div>
+    </div>
+    </div>
+
+
