@@ -3,6 +3,10 @@
   background: var(--dark-blue); 
   border-radius: 8px;
   padding: 10px;
+  @media (min-width: var(--desktop-width)) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .album-cover {
@@ -48,25 +52,30 @@
   padding: 15px;
 }
 
-.bar {  
-  width: 1000px;
+.bar { 
+  width: 100%;
   height: 6px;
   background: var(--dark-gray);
   border-radius: 3px;
   position: relative;
   display: flex;
   align-items: center;
+
+  @media (min-width: var(--desktop-width)) {    
+
+    }
 }
 
 
 .progressbar {
-  width: 34%;
   height: 100%;
   background: var(--light-gray);
   border-radius: 3px;
+  transition: width 0.2s ease-in-out;
 }
 
 .right {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
