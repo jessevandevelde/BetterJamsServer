@@ -88,7 +88,7 @@ app.get('/callback', async (req: Request, res: Response) => {
     params.append('grant_type', 'authorization_code');
 
     try {
-      const response = await fetch(`${spotifyUrl}/api/token`, {
+      const response = await fetch(`${spotifyUrl}/api/token2`, {
         method: 'POST',
         headers: {
           /* eslint-disable @typescript-eslint/naming-convention */
@@ -100,7 +100,9 @@ app.get('/callback', async (req: Request, res: Response) => {
       });
 
       if (!response.ok) {
-        throw Error('Unauthorized');
+        throw new Error('Failed to retrieve tokens', {
+          cause: { status: response.status, statusText: response.statusText },
+        });
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
@@ -120,10 +122,12 @@ app.get('/callback', async (req: Request, res: Response) => {
         }
       }
       else {
-        throw Error('Unauthorized');
+        throw new Error('Failed to retrieve tokens');
       }
     }
-    catch (_error) {
+    catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
       res.redirect(`${clientUrl}/login?error=unauthorized`);
     }
   }
