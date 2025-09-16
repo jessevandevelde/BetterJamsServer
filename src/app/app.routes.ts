@@ -3,12 +3,12 @@ import { LoginPageComponent } from "./login-page/login-page.component";
 import { RoomPageComponent } from "./room-page/room-page.component";
 
 export const routes: Routes = [
-    {
-        path: '',
-        children: [
-            {
-                path: 'login',
-                component: LoginPageComponent,
+  {
+    path: '',
+    children: [
+      {
+        path: 'login',
+        component: LoginPageComponent,
             },
             {
                 path:'room',
@@ -18,7 +18,7 @@ export const routes: Routes = [
                 path:'',
                 redirectTo:'room',
                 pathMatch:'full',
-            }
-        ]
-    }
+      },
+    ],
+  },
 ];
