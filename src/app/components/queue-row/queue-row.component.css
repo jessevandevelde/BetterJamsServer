@@ -1,30 +1,56 @@
 .album-cover {
-  width: 60px;
-  height: 60px;
   border-radius: 4px;
-  margin-right: 15px;
+  margin-right: 5px;
+  width: 40px;
+  height: 40px;
+
+  @media (min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 h2 {
   font-family: var(--text-font);
-  font-size: 18px;
   margin: 0;
   color: var(--light-gray);
+  font-size: 14px;
+  font-weight: normal;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 p {
   font-family: var(--text-font);
   margin: 5px 0 0 0;
   color: var(--mid-gray);
+  font-weight: normal;
+  font-size: 14px;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 .queue-row {
+  width: 100%;
+  max-width: 360px;
+  height: 56px;
   display: flex;
   align-items: center;
+  align-self: center;
   padding: 10px;
-  border: 1px solid #7F7F7F;
+  border: 0.5px solid #7F7F7F;
   border-radius: 8px;
   background-color: #35393F;
+  justify-self: center;
+
+  @media (min-width: 768px) {
+      max-width: 768px;
+      height: 72px;
+  }
 }
 
 .upvote-container {
@@ -40,31 +66,26 @@ p {
   flex-grow: 1;
 }
 
-.icon {
-  font-size: 30px;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  margin-left: auto; 
-  height: 60px; 
-}
-
-.icon:hover {
-  color: #1db954;
-}
-
 .upvote-count {
+  font-size: 14px;
   margin-bottom: 3px;
-  margin-left: 8px;
+  margin-left: 4px;
   color: white;
   font-weight: bold;
   text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 
 .upvote-button{
   color: var(--light-gray);
-  font-size: 24px;
+  font-size: 14px;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }

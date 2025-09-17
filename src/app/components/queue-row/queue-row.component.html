@@ -1,9 +1,10 @@
+<!-- eslint-disable @angular-eslint/template/prefer-ngsrc -->
 @let _track = track();
 
 <div class="queue-row">
-    <img NGsrc="_track.albumCoverUrl" 
-        alt="albumcover" 
+    <img alt="album-cover" 
         class="album-cover" 
+        [src]="_track.albumCoverUrl" 
     />
 
     <div class="text-container">
