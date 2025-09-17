@@ -1,10 +1,11 @@
-<!-- eslint-disable @angular-eslint/template/prefer-ngsrc -->
 @let _track = track();
 
 <div class="queue-row">
     <img alt="album-cover" 
         class="album-cover" 
-        [src]="_track.albumCoverUrl" 
+        height="36" 
+        width="36"
+        [ngSrc]="_track.albumCoverUrl"
     />
 
     <div class="text-container">
@@ -17,7 +18,8 @@
         <fa-icon 
             class="upvote-button" 
             (click)="toggleVote()" 
-            [icon]="upvoted() ? fasThumbsUp : faThumbsUp" />
+            [icon]="upvoted() ? fasThumbsUp : faThumbsUp" 
+            />
         <p class="upvote-count">{{ upVoteCount() }}</p>
     </div>
 </div>
