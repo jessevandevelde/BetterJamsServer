@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, input } from '@angular/core';
-import { Track } from '../../../types/track.interfaces';
+import type { Track } from '../../../types/track.interfaces';
 import { faPause } from '@fortawesome/free-solid-svg-icons';
-import { FaIconComponent } from "@fortawesome/angular-fontawesome";
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DatePipe } from '@angular/common';
-
 
 @Component({
   selector: 'app-media-player',
@@ -12,38 +11,43 @@ import { DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FaIconComponent, DatePipe],
 })
-export class MediaPlayerComponent { 
-  pause = faPause
-  track = input.required<Track>();
-  progress = 0;
-  private cd: ChangeDetectorRef;
-  
-  progressPercentage: number = 0;
-  
-  constructor() {
+
+export class MediaPlayerComponent {
+  public pause = faPause;
+  public track = input.required<Track>();
+  public progress = 0;
+  public progressPercentage = 0;
+  private readonly cd: ChangeDetectorRef;
+
+  public constructor() {
     this.cd = inject(ChangeDetectorRef);
-    
+
     effect(() => {
       const track = this.track();
-      const progress = this.progress // Needs to be replaced by signal input
+      const { progress } = this; // Needs to be replaced by signal input
 
       this.progressPercentage = this.getProgressPercentage(track.songDuration, progress);
-    })
+    });
 
     setInterval(() => {
-      const progress = this.progress >= this.track().songDuration 
-        ? 0 
-        : this.progress + 1000;
-      
+      const oneSecondInMs = 1000;
+
+      const progress = this.progress >= this.track().songDuration
+        ? 0
+        : this.progress + oneSecondInMs;
+
       this.progress = progress;
-      this.progressPercentage = this.getProgressPercentage(this.track().songDuration, progress)
+      this.progressPercentage = this.getProgressPercentage(this.track().songDuration, progress);
 
       this.cd.detectChanges();
-    }, 1000)
+    });
   }
 
   private getProgressPercentage(songDuration: number, progress: number): number {
-    this.progressPercentage = (progress / songDuration) * 100;
+    const oneHundredPercent = 100;
+
+    this.progressPercentage = (progress / songDuration) * oneHundredPercent;
+
     return this.progressPercentage;
   }
 }

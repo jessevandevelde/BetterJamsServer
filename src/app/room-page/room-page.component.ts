@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
-import { Track } from '../types/track.interfaces';
+import type { Track } from '../types/track.interfaces';
 import trackData from '../dummy-data/track-data.json';
-import { MediaPlayerComponent } from "./components/media-player/media-player.component";
+import { MediaPlayerComponent } from './components/media-player/media-player.component';
 
 @Component({
   selector: 'app-room-page',
@@ -12,14 +12,24 @@ import { MediaPlayerComponent } from "./components/media-player/media-player.com
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoomPageComponent { 
-    dummyData = trackData;
-  trackData: Track;
-  upvoteCount = 0;
-  upvoted = false;
+export class RoomPageComponent {
+  public upvoteCount = 0;
+  public upvoted = false;
+  protected dummyData = trackData;
+  protected trackData: Track;
 
-  constructor() {
+  public constructor() {
     this.trackData = this.createTrackData(trackData);
+  }
+
+  protected vote(): void {
+    this.upvoted = true;
+    this.upvoteCount++;
+  }
+
+  protected removeVote(): void {
+    this.upvoted = false;
+    this.upvoteCount--;
   }
 
   private createTrackData(data: typeof trackData): Track {
@@ -28,17 +38,6 @@ export class RoomPageComponent {
       songName: data.name,
       artistName: data.artists[0].name,
       songDuration: data.duration_ms,
-    }
-  }
-
-  protected vote() {
-    this.upvoted = true;
-    this.upvoteCount++;
-    console.log('upvoted')
-  }
-
-  protected removeVote() {
-    this.upvoted = false;
-    this.upvoteCount--;
+    };
   }
 }

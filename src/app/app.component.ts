@@ -7,5 +7,6 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.css'],
   imports: [RouterOutlet],
 })
-export class AppComponent { }
+export class AppComponent {
 
+}
