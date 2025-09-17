@@ -12,15 +12,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 
 export class LoginPageComponent {
-  private loginPageService: LoginPageService
+  private readonly loginPageService: LoginPageService;
 
   protected faSpotify = faSpotify;
 
-  constructor(){
-    this.loginPageService = inject(LoginPageService)
+  public constructor() {
+    this.loginPageService = inject(LoginPageService);
   }
 
-  protected login(){
-    this.loginPageService.login()
+  protected login(): void {
+    this.loginPageService.login();
   }
 }
