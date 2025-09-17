@@ -88,7 +88,7 @@ app.get('/callback', async (req: Request, res: Response) => {
     params.append('grant_type', 'authorization_code');
 
     try {
-      const response = await fetch(`${spotifyUrl}/api/token2`, {
+      const response = await fetch(`${spotifyUrl}/api/token`, {
         method: 'POST',
         headers: {
           /* eslint-disable @typescript-eslint/naming-convention */

@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "dotenv -e .env -- nodemon src/server.ts",
-    "production": "dotenv -e .env.production -- nodemon src/server.ts",
+    "start": "dotenv -e .env -- nodemon src/server.ts",
+    "watch:production": "dotenv -e .env.production -- nodemon src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
@@ -27,7 +26,6 @@
     "@types/express": "^5.0.3",
     "dotenv-cli": "^10.0.0",
     "eslint": "^9.35.0",
-    "globals": "^16.4.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.0",
     "typescript-eslint": "^8.43.0"
