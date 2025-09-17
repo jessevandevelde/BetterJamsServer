@@ -1,9 +1,10 @@
 import { input, output } from '@angular/core';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { QueueRowTrackData } from './queue-row.interfaces';
+import type { QueueRowTrackData } from './queue-row.interfaces';
 import { faThumbsUp as fasThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @Component({
   selector: 'app-queue-row',
   imports: [FontAwesomeModule],
@@ -12,19 +13,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QueueRowComponent {
+  public readonly upvote = output();
+  public readonly removeVote = output();
+  public track = input.required<QueueRowTrackData>();
+  public upVoteCount = input.required<number>();
+  public upvoted = input.required<boolean>();
   protected fasThumbsUp = fasThumbsUp;
   protected faThumbsUp = faThumbsUp;
 
-  track = input.required<QueueRowTrackData>();
-  upVoteCount = input.required<number>();
-  upvoted = input.required<boolean>();
-
-  upvote = output<void>();
-  removeVote = output<void>();
-
-  toggleVote() {
-    this.upvoted() 
-      ? this.removeVote.emit() 
+  protected toggleVote(): void {
+    this.upvoted()
+      ? this.removeVote.emit()
       : this.upvote.emit();
   }
 }

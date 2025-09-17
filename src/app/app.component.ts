@@ -11,14 +11,24 @@ import type { QueueRowTrackData } from './components/queue-row/queue-row.interfa
   imports: [RouterOutlet, QueueRowComponent],
 })
 export class AppComponent {
-  title = 'SpotifyBetterJams';
-  dummyData = dummyData;
-  trackData: QueueRowTrackData;
-  upvoteCount = 0;
-  upvoted = false;
+  protected title = 'SpotifyBetterJams';
+  protected dummyData = dummyData;
+  protected trackData: QueueRowTrackData;
+  protected upvoteCount = 0;
+  protected upvoted = false;
 
-  constructor() {
+  public constructor() {
     this.trackData = this.createTrackData(dummyData);
+  }
+
+  protected vote(): void {
+    this.upvoted = true;
+    this.upvoteCount++;
+  }
+
+  protected removeVote(): void {
+    this.upvoted = false;
+    this.upvoteCount--;
   }
 
   private createTrackData(data: typeof dummyData): QueueRowTrackData {
@@ -27,16 +37,5 @@ export class AppComponent {
       songName: data.name,
       artistName: data.artists[0].name,
     };
-  }
-
-  protected vote() {
-    this.upvoted = true;
-    this.upvoteCount++;
-    console.log('upvoted');
-  }
-
-  protected removeVote() {
-    this.upvoted = false;
-    this.upvoteCount--;
   }
 }

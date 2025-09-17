@@ -1,9 +1,9 @@
 @let _track = track();
 
 <div class="queue-row">
-    <img class="album-cover" 
-        [src]="_track.albumCoverUrl" 
+    <img NGsrc="_track.albumCoverUrl" 
         alt="albumcover" 
+        class="album-cover" 
     />
 
     <div class="text-container">
@@ -15,9 +15,8 @@
     <div class="upvote-container">
         <fa-icon 
             class="upvote-button" 
-            [icon]="upvoted() ? fasThumbsUp : faThumbsUp" 
-            (click)="toggleVote()">
-        </fa-icon>
+            (click)="toggleVote()" 
+            [icon]="upvoted() ? fasThumbsUp : faThumbsUp" />
         <p class="upvote-count">{{ upVoteCount() }}</p>
     </div>
 </div>

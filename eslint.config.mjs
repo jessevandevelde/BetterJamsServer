@@ -64,6 +64,13 @@ export default defineConfig(
     processor: angular.processInlineTemplates,
     rules: {
       '@typescript-eslint/class-methods-use-this': 'off',
+      '@typescript-eslint/prefer-readonly-parameter-types': 'off',
+      '@typescript-eslint/no-extraneous-class': [
+        'error',
+        {
+          allowWithDecorator: true,
+        },
+      ],
       '@angular-eslint/directive-selector': [
         'error',
         {
@@ -79,6 +86,21 @@ export default defineConfig(
           prefix: 'btj',
         },
       ],
+      '@typescript-eslint/no-magic-numbers': ['error', {
+        ignoreEnums: true,
+        ignoreDefaultValues: true,
+        ignoreReadonlyClassProperties: true,
+        ignoreClassFieldInitialValues: true,
+        ignoreArrayIndexes: true,
+        ignoreNumericLiteralTypes: true,
+        ignore: [-1, 0, 1],
+      }],
+      '@typescript-eslint/no-unused-expressions': [
+        'error',
+        {
+          allowTernary: true,
+        },
+      ],
     },
     languageOptions: {
       parserOptions: {
@@ -92,6 +114,9 @@ export default defineConfig(
     extends: [...angular.configs.templateAll],
     rules: {
       '@angular-eslint/template/i18n': 'off',
+      // disabled because it doesn't work with signal
+      // https://github.com/angular-eslint/angular-eslint/issues/1380#issuecomment-1783783808
+      '@angular-eslint/template/no-call-expression': 'off',
       '@angular-eslint/template/attributes-order': [
         'error',
         {

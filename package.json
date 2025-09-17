@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "lint:fix": "ng lint --fix"
   },
   "private": true,
   "dependencies": {

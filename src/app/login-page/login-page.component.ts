@@ -12,9 +12,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 
 export class LoginPageComponent {
-  private readonly loginPageService: LoginPageService;
-
   protected faSpotify = faSpotify;
+  private readonly loginPageService: LoginPageService;
 
   public constructor() {
     this.loginPageService = inject(LoginPageService);
