@@ -1,13 +1,13 @@
-.login-page{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100dvh;
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .auth-button {
   display: flex;
-  background-color: #1ED760 ;
+  background-color: #1ed760 ;
   color: #000;
   font-weight: bold;
   border: none;
@@ -28,3 +28,4 @@
   height: 25px;
   margin-right: 8px;
 }
+
