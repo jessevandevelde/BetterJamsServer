@@ -13,9 +13,8 @@ import { NgOptimizedImage } from '@angular/common';
 })
 
 export class LoginPageComponent {
-  private readonly loginPageService: LoginPageService;
-
   protected faSpotify = faSpotify;
+  private readonly loginPageService: LoginPageService;
 
   public constructor() {
     this.loginPageService = inject(LoginPageService);
