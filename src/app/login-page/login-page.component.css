@@ -7,7 +7,7 @@
 
 .auth-button {
   display: flex;
-  background-color: #1ed760 ;
+  background-color: #1ed760;
   color: #000;
   font-weight: bold;
   border: none;
@@ -20,7 +20,7 @@
 }
 
 .auth-button:hover {
-  background-color: #3BE477;
+  background-color: #3be477;
 }
 
 .auth-icon {
@@ -28,4 +28,3 @@
   height: 25px;
   margin-right: 8px;
 }
-

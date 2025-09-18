@@ -2,6 +2,7 @@
 export default {
   extends: [
     'stylelint-config-recommended',
+    '@stylistic/stylelint-config',
   ],
   plugins: [
     '@stylistic/stylelint-plugin',
