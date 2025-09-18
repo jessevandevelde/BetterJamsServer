@@ -6,8 +6,6 @@ import { NgOptimizedImage } from '@angular/common';
   selector: 'app-login-page',
   imports: [NgOptimizedImage],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'],
-
 })
 
 export class LoginPageComponent {
