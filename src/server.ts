@@ -14,14 +14,18 @@ const env = dotenv.config();
 
 dotenvExpand.expand(env);
 
-const serverPort = process.env.SERVER_PORT;
-const serverUrl = process.env.SERVER_URL;
-const clientUrl = process.env.CLIENT_URL;
-const spotifyUrl = process.env.SPOTIFY_API_URL;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
+/* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
+/* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
+const serverPort = process.env.SERVER_PORT as string;
+const serverUrl = process.env.SERVER_URL as string;
+const clientUrl = process.env.CLIENT_URL as string;
+const spotifyUrl = process.env.SPOTIFY_API_URL as string;
+const clientId = process.env.CLIENT_ID as string;
+const clientSecret = process.env.CLIENT_SECRET as string;
 const redirectUri = `${serverUrl}/callback`;
 const app = express();
+/* eslint-enable @typescript-eslint/non-nullable-type-assertion-style */
+/* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
 
 app.use(cookieParser());
 
@@ -71,7 +75,10 @@ app.get('/track', (req: Request, res: Response) => {
 });
 
 app.get('/callback', async (req: Request, res: Response) => {
-  const code = typeof req.query.code === 'string' ? req.query.code : null;
+  const code = typeof req.query.code === 'string'
+    ? req.query.code
+    : null;
+
   const { state } = req.cookies;
 
   if (state === null || state !== req.query.state) {
@@ -105,7 +112,6 @@ app.get('/callback', async (req: Request, res: Response) => {
         });
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
       const data = await response.json() as AuthTokensResponse;
 
       if (data.access_token && data.refresh_token) {
@@ -117,9 +123,7 @@ app.get('/callback', async (req: Request, res: Response) => {
         createCookie(res, 'access_token', data.access_token, maxAge);
         createCookie(res, 'refresh_token', data.refresh_token);
 
-        if (clientUrl) {
-          res.redirect(clientUrl);
-        }
+        res.redirect(clientUrl);
       }
       else {
         throw new Error('Failed to retrieve tokens');
@@ -133,7 +137,9 @@ app.get('/callback', async (req: Request, res: Response) => {
   }
 });
 
-app.listen(serverPort, () => {
+if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
+  app.listen(serverPort, () => {
   // eslint-disable-next-line no-console
-  console.log(`Server draait op ${serverUrl}`);
-});
+    console.log(`Server draait op ${serverUrl}`);
+  });
+}
