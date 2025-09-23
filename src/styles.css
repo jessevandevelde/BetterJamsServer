@@ -1,4 +1,4 @@
-:root{
+:root {
   --dark-blue:#181C22;
   --mid-blue: #1E232A;
   --dark-gray:#35393F;
@@ -14,7 +14,7 @@
   --border-radius-lg: 16px;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 

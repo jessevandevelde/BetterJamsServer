@@ -1,4 +1,4 @@
-.login-page{
+.login-page {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,6 +30,6 @@
   margin-right: 8px;
 }
 
-.spotify-icon{
+.spotify-icon {
   font-size: 24px;
 }
