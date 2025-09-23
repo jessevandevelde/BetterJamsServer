@@ -1,13 +1,13 @@
-.login-page{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100dvh;
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .auth-button {
   display: flex;
-  background-color: #1ED760 ;
+  background-color: #1ed760;
   color: #000;
   font-weight: bold;
   border: none;
@@ -21,7 +21,7 @@
 }
 
 .auth-button:hover {
-  background-color: #3BE477;
+  background-color: #3be477;
 }
 
 .auth-icon {
