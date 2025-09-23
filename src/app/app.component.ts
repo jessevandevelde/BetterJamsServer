@@ -7,7 +7,6 @@ import type { QueueRowTrackData } from './components/queue-row/queue-row.interfa
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
   imports: [RouterOutlet, QueueRowComponent],
 })
 export class AppComponent {
