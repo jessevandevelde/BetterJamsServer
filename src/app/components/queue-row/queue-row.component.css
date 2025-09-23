@@ -58,7 +58,7 @@
   font-size: var(--font-size-sm);
   color: var(--light-gray);
   text-align: right;
-  margin-left: 4px;
+  gap: 4px;
 
   @media (min-width: 768px) {
     font-size: var(--font-size-md);
