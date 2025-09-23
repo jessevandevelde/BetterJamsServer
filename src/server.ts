@@ -143,3 +143,12 @@ if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
     console.log(`Server draait op ${serverUrl}`);
   });
 }
+else {
+  /* eslint-disable-next-line no-console */
+  console.warn(`missing parameters 
+    clientId: ${clientId},
+    serverPort: ${serverPort},
+    serverUrl: ${serverUrl},
+    clientUrl: ${clientUrl},
+    clientSecret: ${clientSecret}`);
+}
