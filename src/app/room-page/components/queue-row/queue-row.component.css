@@ -1,72 +1,78 @@
 .album-cover {
-  width: 60px;
-  height: 60px;
-  border-radius: 4px;
-  margin-right: 15px;
-}
+  border-radius: var(--border-radius-sm);
+  margin-right: 8px;
+  width: 40px;
+  height: 40px;
 
-h2 {
-  font-family: var(--text-font);
-  font-size: 18px;
-  margin: 0;
-  color: var(--light-gray);
-}
-
-p {
-  font-family: var(--text-font);
-  margin: 5px 0 0 0;
-  color: var(--mid-gray);
-}
-
-.queue-row {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #7F7F7F;
-  border-radius: 8px;
-  background-color: #35393F;
-}
-
-.upvote-container {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
+  @media (width >= 768px) {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .text-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  font-weight: var(--font-size-md);
+  gap: 4px;
   flex-grow: 1;
 }
 
-.icon {
-  font-size: 30px;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  margin-left: auto; 
-  height: 60px; 
+.song-name,
+.artist-name {
+  font-size: 14px;
+  margin: 0;
+  font-weight: normal;
+
+  @media (width >= 768px) {
+    font-size: var(--font-size-md);
+  }
 }
 
-.icon:hover {
-  color: #1db954;
+.song-name {
+  color: var(--light-gray);
+}
+
+.artist-name {
+  color: var(--mid-gray);
+}
+
+.queue-row {
+  width: 100%;
+  background-color: var(--mid-blue);
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--dark-gray);
+  border-radius: var(--border-radius-md);
+}
+
+.upvote-container {
+  display: flex;
+  align-items: center;
 }
 
 .upvote-count {
-  margin-bottom: 3px;
-  margin-left: 8px;
-  color: white;
-  font-weight: bold;
-  text-align: center;
+  min-width: 16px;
+  font-size: var(--font-size-sm);
+  color: var(--light-gray);
+  text-align: right;
+  gap: 4px;
+
+  @media (width >= 768px) {
+    font-size: var(--font-size-md);
+    min-width: 18px;
+  }
 }
 
-
-.upvote-button{
+.upvote-button {
   color: var(--light-gray);
-  font-size: 24px;
+  font-size: var(--font-size-sm);
   cursor: pointer;
+
+  @media (width >= 768px) {
+    font-size: var(--font-size-md);
+  }
 }
 
 @media only screen and (max-width: 600px) {

@@ -1,3 +1,29 @@
-@import url('./styles/reset.css');
-@import url('./styles/variables.css');
+@import url("./styles/reset.css");
+@import url("./styles/variables.css");
 
+:root {
+  --dark-blue: #181c22;
+  --mid-blue: #1e232a;
+  --dark-gray: #35393f;
+  --mid-gray: #7f7f7f;
+  --light-gray: #d9d9d9;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 24px;
+  --font-size-xl: 28px;
+  --text-font: "Arial, Helvetica, sans-serif", sans-serif;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--dark-blue);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
