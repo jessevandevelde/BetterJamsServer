@@ -137,6 +137,52 @@ app.get('/callback', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/search', async (req: Request, res: Response): Promise<Response> => {
+  const query = req.query.q as string | undefined;
+  const missingSearchQuery = 400;
+  const spotifyApiError = 500;
+
+  if (!query) {
+    return res.status(missingSearchQuery).json({ error: 'Missing search query' });
+  }
+
+  /* eslint-disable-next-line @typescript-eslint/naming-convention */
+  const { access_token } = req.cookies;
+
+  console.log(req);
+
+  try {
+    const response = await fetch(
+      `https://api.spotify.com/v1/search?${querystring.stringify({
+        q: query,
+        type: 'track',
+        limit: 10,
+      })}`,
+      {
+        headers: {
+          authorization: `Bearer ${access_token}`,
+        },
+      },
+    );
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: `Spotify API error: ${response.statusText}`,
+      });
+    }
+
+    const data: unknown = await response.json();
+
+    return res.json(data);
+  }
+  catch (err) {
+    /* eslint-disable-next-line no-console */
+    console.error(err);
+
+    return res.status(spotifyApiError).json({ error: 'Failed to search Spotify API' });
+  }
+});
+
 if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
   app.listen(serverPort, () => {
   // eslint-disable-next-line no-console
