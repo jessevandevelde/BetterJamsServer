@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 
 export class LoginPageService {
+  protected readonly apiCallLink = 'http://127.0.0.1:3000';
+
   public login(): void {
-    window.location.href = 'http://localhost:3000/login';
+    window.location.href = `${this.apiCallLink}/login`;
   }
 }
