@@ -1,10 +1,11 @@
 @let _track = track();
-
+  <!-- eslint-disable @angular-eslint/template/prefer-ngsrc -->
 <div class="queue-row">
   <img alt="album-cover" 
     class="album-cover" 
-    ngSrc="_track.albumCoverUrl" 
+    [src]="_track.albumCoverUrl" 
   />
+  <!-- eslint-enable @angular-eslint/template/prefer-ngsrc -->
   
   <div class="text-container">
     <h2>{{ _track.songName }}</h2>

@@ -85,7 +85,7 @@
   height: 100%;
   background: var(--light-gray);
   border-radius: 3px;
-  transition: width 0.2s ease-in-out;
+  transition: width 0.2s ease;
 }
 
 .right {

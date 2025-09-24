@@ -1,7 +1,8 @@
 @let _track = track();
 
 <div class="media-player">
-  <img alt="album-cover" class="album-cover" ngSrc="_track.albumCoverUrl" />
+  <!-- eslint-disable-next-line @angular-eslint/template/prefer-ngsrc -->
+  <img alt="album-cover" class="album-cover" [src]="_track.albumCoverUrl" />
   <div class="right">
     <div class="song-info">
       <h3 class="song-name">{{_track.songName}}</h3>

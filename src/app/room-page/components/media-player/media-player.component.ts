@@ -4,6 +4,8 @@ import { faPause } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DatePipe } from '@angular/common';
 
+const ONE_SECOND_IN_MS = 1000;
+
 @Component({
   selector: 'app-media-player',
   templateUrl: './media-player.component.html',
@@ -30,17 +32,15 @@ export class MediaPlayerComponent {
     });
 
     setInterval(() => {
-      const oneSecondInMs = 1000;
-
       const progress = this.progress >= this.track().songDuration
         ? 0
-        : this.progress + oneSecondInMs;
+        : this.progress + ONE_SECOND_IN_MS;
 
       this.progress = progress;
       this.progressPercentage = this.getProgressPercentage(this.track().songDuration, progress);
 
       this.cd.detectChanges();
-    });
+    }, ONE_SECOND_IN_MS);
   }
 
   private getProgressPercentage(songDuration: number, progress: number): number {
