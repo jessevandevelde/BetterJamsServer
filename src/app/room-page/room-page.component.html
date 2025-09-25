@@ -1,6 +1,6 @@
 <div class="roompage">
 
-<app-media-player class="media-player" [track]="trackData" />
+<app-media-player class="media-player" (pauseTrack)="pauseTrack()" (playTrack)="playTrack()" [isPlaying]="isPlaying" [track]="trackData" />
 
 <!-- foreach track in queue functie maken -->
 <div class="queue">

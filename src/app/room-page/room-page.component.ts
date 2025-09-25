@@ -15,6 +15,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 export class RoomPageComponent {
   public upvoteCount = 0;
   public upvoted = false;
+  public isPlaying = true;
   protected dummyData = trackData;
   protected trackData: Track;
 
@@ -30,6 +31,14 @@ export class RoomPageComponent {
   protected removeVote(): void {
     this.upvoted = false;
     this.upvoteCount--;
+  }
+
+  protected pauseTrack(): void {
+    this.isPlaying = false;
+  }
+
+  protected playTrack(): void {
+    this.isPlaying = true;
   }
 
   private createTrackData(data: typeof trackData): Track {

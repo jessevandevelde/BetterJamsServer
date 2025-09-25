@@ -8,7 +8,7 @@
       <h3 class="song-name">{{_track.songName}}</h3>
       <p class="artist-name">{{_track.artistName}}</p>
     </div>
-    <fa-icon class="pause-icon" [icon]="pause" />
+    <fa-icon class="pause-icon" (click)="togglePause()" [icon]="isPlaying() ? faPause : faPlay"  />
     <div class="controls">
 
 
@@ -22,4 +22,3 @@
       <p class="timestamp">{{progress | date:'mm:ss'}}</p>
       <p class="timestamp">{{_track.songDuration | date:'mm:ss'}}</p>
     </div>
-
