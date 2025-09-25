@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import dummyData from './components/queue-row/dummy-data.json';
 import type { QueueRowTrackData } from './components/queue-row/queue-row.interfaces';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  imports: [RouterOutlet, QueueRowComponent],
+  imports: [QueueRowComponent, SearchBarComponent],
 })
 export class AppComponent {
   protected title = 'SpotifyBetterJams';

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { SearchBarService } from './search-bar.service';
 
 @Component({
   selector: 'btj-search-bar',
@@ -7,4 +8,16 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './search-bar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchBarComponent { }
+export class SearchBarComponent {
+  private readonly searchBarService: SearchBarService;
+
+  public constructor() {
+    this.searchBarService = inject(SearchBarService);
+  }
+
+  protected search(): void {
+    const q = 'aint hard';
+
+    this.searchBarService.search(q).subscribe();
+  }
+}
