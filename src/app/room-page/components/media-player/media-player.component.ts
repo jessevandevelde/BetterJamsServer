@@ -37,7 +37,7 @@ export class MediaPlayerComponent {
 
       this.progressPercentage = this.getProgressPercentage(track.songDuration, progress);
     });
-
+    // move to room page
     setInterval(() => {
       if (this.isPlaying()) {
         const progress = this.progress >= this.track().songDuration
@@ -52,6 +52,7 @@ export class MediaPlayerComponent {
     }, ONE_SECOND_IN_MS);
   }
 
+  // tot hier
   protected togglePause(): void {
     this.isPlaying()
       ? this.pauseTrack.emit()
