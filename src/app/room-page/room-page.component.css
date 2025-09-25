@@ -1,4 +1,4 @@
-.roompage{
+.roompage {
   max-width: 768px;
   width: 100%;
   margin: 32px auto 0;
@@ -7,5 +7,11 @@
 
 .media-player {
   display: block;
-  margin-bottom: 32px;
+  margin-bottom: 8px;
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

@@ -1,19 +1,18 @@
-@import url('../../../../styles/variables.css');
+@import url("../../../../styles/variables.css");
 
 .media-player {
   display: flex;
   flex-direction: column;
-  background: var(--dark-blue); 
+  background: var(--dark-blue);
   border-radius: 8px;
   text-align: center;
   gap: 16px;
-  width: 768px;
+  width: 100%;
 
-  @media (min-width: 768px) {
+  @media (width >= 768px) {
     flex-direction: row;
     text-align: left;
   }
-
 }
 
 .album-cover {
@@ -21,7 +20,8 @@
   object-fit: cover;
   align-self: center;
   border-radius: 16px;
-  @media (min-width: 768px){ 
+
+  @media (width >= 768px) {
     width: 220px;
   }
 }
@@ -31,6 +31,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
 .song-name {
@@ -42,7 +43,7 @@
 .artist-name {
   font-size: 28px;
   color: var(--mid-gray);
-  margin: 4px 0 0 0;
+  margin: 0;
 }
 
 .controls {
@@ -64,9 +65,10 @@
   padding: 8px;
   align-self: center;
   margin-bottom: 16px;
+  margin-top: 16px;
 }
 
-.bar { 
+.bar {
   width: 100%;
   height: 8px;
   background: var(--dark-gray);
@@ -75,11 +77,11 @@
   display: flex;
   align-items: center;
   align-self: flex-end;
-  @media (min-width: 768px) {    
+
+  @media (width >= 768px) {
     width: 100%;
   }
 }
-
 
 .progressbar {
   height: 100%;
@@ -94,14 +96,14 @@
   flex-grow: 1;
 }
 
-.playback-time{
+.playback-time {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.timestamp{
-  margin: 0px;;
+.timestamp {
+  margin: 0;
   margin-top: 6px;
   color: var(--light-gray);
   font-size: 14px;

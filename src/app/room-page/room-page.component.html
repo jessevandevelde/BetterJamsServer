@@ -1,5 +1,10 @@
 <div class="roompage">
 
 <app-media-player class="media-player" [track]="trackData" />
-<app-queue-row (removeVote)="removeVote()" (upvote)="vote()" [track]="trackData" [upVoteCount]="upvoteCount" [upvoted]="upvoted" />
+
+<!-- foreach track in queue functie maken -->
+<div class="queue">
+  <app-queue-row (removeVote)="removeVote()" (upvote)="vote()" [track]="trackData" [upVoteCount]="upvoteCount" [upvoted]="upvoted" />
+  <app-queue-row (removeVote)="removeVote()" (upvote)="vote()" [track]="trackData" [upVoteCount]="upvoteCount" [upvoted]="upvoted" />
+</div>
 </div>
