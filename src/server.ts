@@ -140,6 +140,7 @@ app.get('/callback', async (req: Request, res: Response) => {
 app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   const query = req.query.q as string | undefined;
   const missingSearchQuery = 400;
+  const badCookie = 401;
   const spotifyApiError = 500;
 
   if (!query) {
@@ -149,7 +150,9 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
   const { access_token } = req.cookies;
 
-  console.log(req);
+  if (!access_token) {
+    return res.status(badCookie).json({ error: 'Unauthorized: no access token' });
+  }
 
   try {
     const response = await fetch(
