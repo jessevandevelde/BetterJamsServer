@@ -1,3 +1,40 @@
-:host {
-  display: block;
+.search-bar {
+  display: flex;
+  width: 678px;
+  height: 34px;
+  background-color: var(--mid-blue);
+  border-radius: 8px;
+  padding: 8px;
+  gap: 4px;
+  margin: 12px auto;
+}
+
+.search-bar input {
+  background-color: var(--mid-blue);
+  align-self: center;
+  color: var(--light-gray);
+  border-radius: 8px;
+  width: 90%;
+  border: none;
+}
+
+input::placeholder {
+  color: var(--mid-gray);
+}
+
+.search-bar fa-icon {
+  color: var(--light-gray);
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.close {
+  cursor: pointer;
 }
