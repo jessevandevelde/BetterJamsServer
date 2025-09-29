@@ -21,8 +21,12 @@
   background-color: var(--mid-blue);
   align-self: center;
   color: var(--light-gray);
-  width: 90%;
   border: none;
+
+  @media (width >= 768px) {
+    max-width: 678px;
+    width: 100%;
+  }
 }
 
 input::placeholder {
