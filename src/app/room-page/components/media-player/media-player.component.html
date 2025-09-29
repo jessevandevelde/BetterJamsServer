@@ -1,8 +1,8 @@
 @let _track = track();
 
 <div class="media-player">
-  <!-- eslint-disable-next-line @angular-eslint/template/prefer-ngsrc -->
-  <img alt="album-cover" class="album-cover" [src]="_track.albumCoverUrl" />
+   
+  <img alt="album-cover" class="album-cover" height="500" width="500" [ngSrc]="_track.albumCoverUrl" />
   <div class="right">
     <div class="song-info">
       <h3 class="song-name">{{_track.songName}}</h3>
@@ -14,11 +14,11 @@
 
       <div class="bar">
         <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
-        <div class="progressbar" [style.width.%]="progressPercentage"></div>
+        <div class="progressbar" [style.width.%]="progressPercentage()"></div>
       </div>
 
     </div>
     <div class="playback-time">
-      <p class="timestamp">{{progress | date:'mm:ss'}}</p>
+      <p class="timestamp">{{progress() | date:'mm:ss'}}</p>
       <p class="timestamp">{{_track.songDuration | date:'mm:ss'}}</p>
     </div>

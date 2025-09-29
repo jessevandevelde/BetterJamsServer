@@ -16,6 +16,7 @@
 }
 
 .album-cover {
+  height: 200px;
   width: 200px;
   object-fit: cover;
   align-self: center;
@@ -23,6 +24,7 @@
 
   @media (width >= 768px) {
     width: 220px;
+    height: 220px;
   }
 }
 

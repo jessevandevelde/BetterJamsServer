@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import type { Track } from '../types/track.interfaces';
 import trackData from '../dummy-data/track-data.json';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
+
+const ONE_SECOND_IN_MS = 1000;
 
 @Component({
   selector: 'app-room-page',
@@ -16,11 +18,28 @@ export class RoomPageComponent {
   public upvoteCount = 0;
   public upvoted = false;
   public isPlaying = true;
+
   protected dummyData = trackData;
   protected trackData: Track;
+  protected progress = 0;
+  protected progressPercentage = 0;
+
+  private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   public constructor() {
     this.trackData = this.createTrackData(trackData);
+
+    setInterval(() => {
+      if (this.isPlaying) {
+        const progress = this.progress >= this.trackData.songDuration
+          ? 0
+          : this.progress + ONE_SECOND_IN_MS;
+
+        this.progress = progress;
+        this.progressPercentage = this.getProgressPercentage(this.trackData.songDuration, progress);
+        this.cd.detectChanges();
+      }
+    }, ONE_SECOND_IN_MS);
   }
 
   protected vote(): void {
@@ -48,5 +67,14 @@ export class RoomPageComponent {
       artistName: data.artists[0].name,
       songDuration: data.duration_ms,
     };
+  }
+
+  private getProgressPercentage(songDuration: number, progress: number): number {
+    const oneHundredPercent = 100;
+
+    this.progressPercentage = (progress / songDuration) * oneHundredPercent;
+    console.log(this.progressPercentage);
+
+    return this.progressPercentage;
   }
 }
