@@ -1,6 +1,13 @@
 <div class="roompage">
 
-<app-media-player class="media-player" (pauseTrack)="pauseTrack()" (playTrack)="playTrack()" (progress)="progressPercentage" [isPlaying]="isPlaying" [track]="trackData" />
+<app-media-player class="media-player" 
+  (pauseTrack)="pauseTrack()"
+  (playTrack)="playTrack()"
+  [isPlaying]="isPlaying"
+  [progress]="progress"
+  [progressPercentage]="progressPercentage"
+  [track]="trackData"
+/>
 
 <!-- foreach track in queue function maken -->
 <div class="queue">

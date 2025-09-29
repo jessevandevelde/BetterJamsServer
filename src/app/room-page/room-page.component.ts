@@ -73,7 +73,6 @@ export class RoomPageComponent {
     const oneHundredPercent = 100;
 
     this.progressPercentage = (progress / songDuration) * oneHundredPercent;
-    console.log(this.progressPercentage);
 
     return this.progressPercentage;
   }
