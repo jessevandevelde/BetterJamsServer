@@ -19,10 +19,11 @@ dotenvExpand.expand(env);
 const serverPort = process.env.SERVER_PORT as string;
 const serverUrl = process.env.SERVER_URL as string;
 const clientUrl = process.env.CLIENT_URL as string;
-const spotifyUrl = process.env.SPOTIFY_API_URL as string;
+const spotifyUrl = process.env.SPOTIFY_ACCOUNT_URL as string;
 const clientId = process.env.CLIENT_ID as string;
 const clientSecret = process.env.CLIENT_SECRET as string;
 const redirectUri = `${serverUrl}/callback`;
+const spotifyApiUrl = process.env.SPOTIFY_API_URL as string;
 const app = express();
 /* eslint-enable @typescript-eslint/non-nullable-type-assertion-style */
 /* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
@@ -156,10 +157,10 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
 
   try {
     const response = await fetch(
-      `https://api.spotify.com/v1/search?${querystring.stringify({
+      `${spotifyApiUrl}/search?${querystring.stringify({
         q: query,
         type: 'track',
-        limit: 10,
+        limit: 4,
       })}`,
       {
         headers: {
