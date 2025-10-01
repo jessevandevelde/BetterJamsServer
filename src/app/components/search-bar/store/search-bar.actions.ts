@@ -16,3 +16,7 @@ export const searchTracksFailure = createAction(
   '[Search], searching error',
   props<{ error: HttpErrorResponse }>(),
 );
+
+export const resetSearchField = createAction(
+  '[Search], reset',
+);

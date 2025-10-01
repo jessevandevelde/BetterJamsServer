@@ -1,6 +1,6 @@
 <div class="search-bar">
     <fa-icon [icon]="magnifyingGlass" />
-    <input class="search-input" placeholder="Search" type="text" (input)="searchTracks($event.target.value);">
+    <input class="search-input" placeholder="Search" type="text" (input)="searchTracks($event.target.value);" [value]="query()">
     <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
 </div>
 

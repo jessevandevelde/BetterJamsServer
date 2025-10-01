@@ -19,10 +19,12 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
 
-  on(SearchBarActions.searchTracks, (state): State => ({
+  on(SearchBarActions.searchTracks, (state, { query }): State => ({
     ...state,
     isLoading: true,
     hasError: false,
+    query,
+    tracks: [],
   })),
 
   on(SearchBarActions.searchTracksSuccess, (state, { tracks }): State => ({
@@ -36,5 +38,12 @@ export const reducer = createReducer(
     ...state,
     isLoading: false,
     hasError: true,
+    tracks: [],
+  })),
+
+  on(SearchBarActions.resetSearchField, (state): State => ({
+    ...state,
+    isLoading: false,
+    query: '',
   })),
 );

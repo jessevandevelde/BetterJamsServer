@@ -1,7 +1,10 @@
+import type { Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SearchBarService } from './search-bar.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
+import { Store } from '@ngrx/store';
+import { SearchBarActions, SearchBarSelectors } from './store';
 
 @Component({
   selector: 'btj-search-bar',
@@ -14,20 +17,27 @@ export class SearchBarComponent {
   protected magnifyingGlass = faMagnifyingGlass;
   protected closeIcon = faX;
 
+  protected query: Signal<string>;
   private readonly searchBarService: SearchBarService;
+  private readonly store: Store;
   public constructor() {
     this.searchBarService = inject(SearchBarService);
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+    this.store = inject(Store);
+
+    this.query = this.store.selectSignal(SearchBarSelectors.selectQuery);
   }
 
-  protected searchTracks(q: string): void {
-    this.searchBarService.search(q).subscribe();
+  protected searchTracks(query: string): void {
+    if (query) {
+      this.store.dispatch(SearchBarActions.searchTracks({ query }));
+    }
+    else {
+      this.store.dispatch(SearchBarActions.resetSearchField());
+    }
   }
 
   protected clearInput(): void {
-    const searchField = document.querySelector<HTMLInputElement>('.search-input');
-
-    if (searchField !== null) {
-      searchField.value = '';
-    }
+    this.store.dispatch(SearchBarActions.resetSearchField());
   }
 }
