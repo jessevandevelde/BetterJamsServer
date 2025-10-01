@@ -4,6 +4,7 @@ import dummyData from './components/queue-row/dummy-data.json';
 import type { QueueRowTrackData } from './components/queue-row/queue-row.interfaces';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import type { Track } from './components/search-bar/search-bar.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,7 @@ export class AppComponent {
     this.upvoteCount--;
   }
 
-  private createTrackData(data: typeof dummyData): QueueRowTrackData {
+  private createTrackData(data: Track): QueueRowTrackData {
     return {
       albumCoverUrl: data.album.images[0].url,
       songName: data.name,

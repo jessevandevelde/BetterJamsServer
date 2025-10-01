@@ -3,8 +3,6 @@ import { SearchBarService } from './search-bar.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 
-;
-
 @Component({
   selector: 'btj-search-bar',
   imports: [FaIconComponent],
@@ -21,9 +19,7 @@ export class SearchBarComponent {
     this.searchBarService = inject(SearchBarService);
   }
 
-  protected search(): void {
-    const q = 'aint hard';
-
+  protected searchTracks(q: string): void {
     this.searchBarService.search(q).subscribe();
   }
 
