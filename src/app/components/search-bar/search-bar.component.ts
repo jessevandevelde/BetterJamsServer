@@ -1,6 +1,5 @@
 import type { Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SearchBarService } from './search-bar.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
@@ -18,10 +17,9 @@ export class SearchBarComponent {
   protected closeIcon = faX;
 
   protected query: Signal<string>;
-  private readonly searchBarService: SearchBarService;
   private readonly store: Store;
+
   public constructor() {
-    this.searchBarService = inject(SearchBarService);
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.store = inject(Store);
 
