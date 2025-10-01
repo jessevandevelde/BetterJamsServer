@@ -6,19 +6,20 @@
   <div class="right">
     <div class="song-info">
       <h3 class="song-name">{{_track.songName}}</h3>
+      
       <p class="artist-name">{{_track.artistName}}</p>
     </div>
     <fa-icon class="pause-icon" (click)="togglePause()" [icon]="isPlaying() ? faPause : faPlay"  />
     <div class="controls">
-
-
       <div class="bar">
         <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
         <div class="progressbar" [style.width.%]="progressPercentage()"></div>
       </div>
-
     </div>
     <div class="playback-time">
       <p class="timestamp">{{progress() | date:'mm:ss'}}</p>
+      
       <p class="timestamp">{{_track.songDuration | date:'mm:ss'}}</p>
     </div>
+  </div>
+</div>
