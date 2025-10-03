@@ -1,5 +1,15 @@
-<div class="search-bar">
-    <fa-icon [icon]="magnifyingGlass" />
-    <input class="search-input" placeholder="Search" type="text">
-    <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
+<div class="search-bar" [class.show-dropdown]="showDropdown">
+  <fa-icon [icon]="magnifyingGlass" />
+  <input 
+    class="search-input" 
+    placeholder="Search" 
+    type="text" 
+    (click)="toggleDropdown()">
+  <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
+
+  @if (showDropdown) {
+    <div class="search-dropdown">
+      <btj-search-dropdown />
+    </div>
+  }
 </div>

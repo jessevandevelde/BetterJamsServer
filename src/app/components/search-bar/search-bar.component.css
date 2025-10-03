@@ -1,27 +1,28 @@
 .search-bar {
   display: flex;
+  align-items: center;
   background-color: var(--mid-blue);
   border-radius: 8px;
   padding: 8px;
   gap: 4px;
   margin: 12px auto;
+  margin-bottom: 12px;
+  flex-direction: row;
+  position: relative;
+  z-index: 2;
 
   @media (width >= 768px) {
-    max-width: 678px;
+    max-width: 768px;
     height: 34px;
   }
 }
 
-.close {
-  color: var(--light-gray);
-  cursor: pointer;
-}
-
 .search-bar input {
   background-color: var(--mid-blue);
-  align-self: center;
   color: var(--light-gray);
   border: none;
+  flex: 1;
+  font-size: 14px;
 
   @media (width >= 768px) {
     max-width: 678px;
@@ -33,8 +34,8 @@ input::placeholder {
   color: var(--mid-gray);
 }
 
-.search-bar fa-icon {
-  color: var(--light-gray);
+input:focus::placeholder {
+  color: transparent;
 }
 
 textarea:focus,
@@ -42,6 +43,69 @@ input:focus {
   outline: none;
 }
 
-input:focus::placeholder {
-  color: transparent;
+/* ICONS */
+.search-bar fa-icon {
+  color: var(--light-gray);
+}
+
+.close {
+  color: var(--light-gray);
+  cursor: pointer;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 6px;
+  border-radius: 8px;
+  background-color: var(--light-gray);
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+
+  @media (width >= 768px) {
+    width: 100%;
+  }
+}
+
+.search-bar.show-dropdown .search-dropdown {
+  display: flex;
+}
+
+btj-search-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 6px;
+  background-color: var(--mid-blue);
+}
+
+btj-search-dropdown img {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+
+  @media (width >= 768px) {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+btj-search-dropdown .text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+btj-search-dropdown .text-container p {
+  margin: 0;
+  line-height: 1.2;
+  font-size: 14px;
+
+  @media (width >= 768px) {
+    font-size: var(--font-size-md);
+  }
 }

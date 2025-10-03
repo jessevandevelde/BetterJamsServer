@@ -1,0 +1,62 @@
+.dropdown {
+  background-color: var(--mid-blue);
+  height: 240px;
+  border-radius: 8px;
+
+  @media (width >= 768px) {
+    width: 768px;
+    height: 240px;
+  }
+}
+
+.dropdown-row.queue-row {
+  width: 100%;
+  background-color: var(--mid-blue);
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--dark-gray);
+  border-radius: var(--border-radius-md);
+  gap: 12px;
+  cursor: pointer;
+}
+
+/* album cover */
+.album-cover {
+  border-radius: var(--border-radius-sm);
+  margin-right: 8px;
+  width: 40px;
+  height: 40px;
+
+  @media (width >= 768px) {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* text */
+.text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.song-name,
+.artist-name {
+  font-size: 14px;
+  margin: 0;
+  font-weight: normal;
+
+  @media (width >= 768px) {
+    font-size: var(--font-size-md);
+  }
+}
+
+.song-name {
+  color: var(--light-gray);
+}
+
+.artist-name {
+  color: var(--light-gray);
+}
