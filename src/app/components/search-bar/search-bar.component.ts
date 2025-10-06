@@ -3,10 +3,11 @@ import { SearchBarService } from './search-bar.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 import { SearchDropdownComponent } from '../dropdown/dropdown.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 @Component({
   selector: 'btj-search-bar',
-  imports: [FaIconComponent, SearchDropdownComponent],
+  imports: [FaIconComponent, SearchDropdownComponent, SearchResultComponent],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
