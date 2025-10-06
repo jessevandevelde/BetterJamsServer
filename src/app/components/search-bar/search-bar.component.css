@@ -15,9 +15,6 @@
   }
 }
 
-.search-dropdown {
-  width: 100%;
-}
 .search-bar input {
   background-color: var(--dark-blue);
   color: var(--light-gray);
@@ -34,7 +31,8 @@
   position: absolute;
   left: 0;
   top: 28px;
-  
+  width: 100%;
+
   @media (width >= 768px) {
     top: 37px;
   }

@@ -1,7 +1,7 @@
-.button {
+:host {
   background: transparent;
   border: 1px solid var(--dark-gray);
-  border-radius: 10px;
+  border-radius: 16px;
   padding: 4px 12px;
   color: var(--light-gray);
   font-size: 14px;
