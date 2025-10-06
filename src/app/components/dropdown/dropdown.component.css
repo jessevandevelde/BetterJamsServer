@@ -1,14 +1,9 @@
 .dropdown {
-  background-color: var(--mid-blue);
+  background-color: var(--dark-blue);
   border-radius: 8px;
   padding: 8px;
   width: 100%;
-  max-width: 768px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
-
-.dropdown-component {
-  width: 100%;
 }
