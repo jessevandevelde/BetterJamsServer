@@ -17,7 +17,7 @@ export class SearchBarService {
   public search(query: string): Observable<unknown> {
     return this.httpClient.get(`${spotifyApiCallLink}/search`, {
       params: {
-        q: query,
+        query: query,
       },
       withCredentials: true,
     });
