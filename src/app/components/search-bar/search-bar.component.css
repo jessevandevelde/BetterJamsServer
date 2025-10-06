@@ -3,22 +3,22 @@
   align-items: center;
   background-color: var(--mid-blue);
   border-radius: 8px;
-  gap: 4px;
   margin: 12px auto;
   width: 100%;
   max-width: 768px;
   height: 24px;
   transition: 0.5s ease;
+  border: 1px solid var(--dark-gray);
 
   @media (width >= 768px) {
     max-width: 768px;
     height: 34px;
-    padding: 8px 12px;
+    width: 100%;
+    padding: 8px 8px;
   }
 }
 
 .search-bar input {
-  flex: 1;
   background-color: var(--mid-blue);
   color: var(--light-gray);
   border: none;
@@ -38,6 +38,7 @@ input::placeholder {
   color: var(--mid-gray);
   flex-shrink: 0;
   transition: 0.5s ease;
+  margin-left: 0;
 }
 
 .close {
