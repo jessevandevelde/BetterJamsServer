@@ -1,0 +1,17 @@
+.roompage {
+  max-width: 768px;
+  width: 100%;
+  margin: 32px auto 0;
+  padding-inline: 8px;
+}
+
+.media-player {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

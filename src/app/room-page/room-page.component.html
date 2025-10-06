@@ -1,0 +1,17 @@
+<div class="roompage">
+
+  <app-media-player class="media-player" 
+    (pauseTrack)="pauseTrack()"
+    (playTrack)="playTrack()"
+    [isPlaying]="isPlaying"
+    [progress]="progress"
+    [track]="trackData"
+  />
+
+<!-- foreach track in queue function maken -->
+  <div class="queue">
+    <app-queue-row (removeVote)="removeVote()" (upvote)="vote()" [track]="trackData" [upVoteCount]="upvoteCount" [upvoted]="upvoted" />
+    <app-queue-row (removeVote)="removeVote()" (upvote)="vote()" [track]="trackData" [upVoteCount]="upvoteCount" [upvoted]="upvoted" />
+  </div>
+</div>
+
