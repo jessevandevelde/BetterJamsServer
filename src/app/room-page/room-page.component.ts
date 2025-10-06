@@ -36,7 +36,6 @@ export class RoomPageComponent {
           : this.progress + ONE_SECOND_IN_MS;
 
         this.progress = progress;
-        this.progressPercentage = this.getProgressPercentage(this.trackData.songDuration, progress);
         this.cd.detectChanges();
       }
     }, ONE_SECOND_IN_MS);
@@ -67,11 +66,5 @@ export class RoomPageComponent {
       artistName: data.artists[0].name,
       songDuration: data.duration_ms,
     };
-  }
-
-  private getProgressPercentage(songDuration: number, progress: number): number {
-    const oneHundredPercent = 100;
-
-    return (progress / songDuration) * oneHundredPercent;
   }
 }

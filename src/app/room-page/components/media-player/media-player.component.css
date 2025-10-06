@@ -29,7 +29,6 @@
 }
 
 .song-info {
-  font-weight: normal;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -37,12 +36,14 @@
 }
 
 .song-name {
+  font-weight: normal;
   font-size: 28px;
   margin: 0;
   color: var(--light-gray);
 }
 
 .artist-name {
+  font-weight: normal;
   font-size: 28px;
   color: var(--mid-gray);
   margin: 0;
@@ -60,9 +61,9 @@
   width: 48px;
   height: 48px;
   font-size: 32px;
-  color: #000;
+  color: var(--dark-blue);
   cursor: pointer;
-  background-color: #d9d9d9;
+  background-color: var(--light-gray);
   border-radius: 50%;
   padding: 8px;
   align-self: center;
@@ -106,7 +107,7 @@
 
 .timestamp {
   margin: 0;
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--light-gray);
   font-size: 14px;
 }

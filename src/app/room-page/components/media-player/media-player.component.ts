@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
 import type { Track } from '../../../types/track.interfaces';
 import { faPause } from '@fortawesome/free-solid-svg-icons';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -14,8 +14,8 @@ import { DatePipe, NgOptimizedImage } from '@angular/common';
 })
 
 export class MediaPlayerComponent {
-  public progress = input(0);
-  public progressPercentage = input(0);
+  public progress = input.required<number>();
+
   public isPlaying = input.required<boolean>();
   public track = input.required<Track>();
   protected pauseTrack = output();
@@ -24,9 +24,27 @@ export class MediaPlayerComponent {
   protected faPause = faPause;
   protected faPlay = faPlay;
 
+  protected readonly progressPercentage = signal(0);
+
+  public constructor() {
+    this.initializeProgressEffect();
+  }
+
   protected togglePause(): void {
     this.isPlaying()
       ? this.pauseTrack.emit()
       : this.playTrack.emit();
+  }
+
+  private initializeProgressEffect(): void {
+    effect(() => {
+      this.progressPercentage.set(this.getProgressPercentage(this.track().songDuration, this.progress()));
+    });
+  }
+
+  private getProgressPercentage(songDuration: number, progress: number): number {
+    const oneHundredPercent = 100;
+
+    return (progress / songDuration) * oneHundredPercent;
   }
 }
