@@ -3,14 +3,14 @@
   align-items: center;
   background-color: var(--mid-blue);
   border-radius: 8px;
-  margin: 12px auto;
   width: 100%;
-  transition: 0.5s ease;
+  transition: 0.2s ease-in-out;
   border: 1px solid var(--dark-gray);
+  padding: 4px;
 
   @media (width >= 768px) {
     width: 100%;
-    padding: 8px 8px;
+    padding: 8px;
   }
 }
 
@@ -31,16 +31,18 @@ input::placeholder {
 }
 
 .search-icon {
+  font-size: 16px;
   color: var(--mid-gray);
   flex-shrink: 0;
-  transition: 0.5s ease;
+  transition: 0.2s ease-in-out;
   margin-left: 0;
 }
 
 .close {
+  font-size: 16px;
   cursor: default;
   color: transparent;
-  transition: 0.5s ease;
+  transition: 0.2s ease-in-out;
 }
 
 textarea:focus,
