@@ -22,8 +22,8 @@ const clientUrl = process.env.CLIENT_URL as string;
 const spotifyUrl = process.env.SPOTIFY_ACCOUNT_URL as string;
 const clientId = process.env.CLIENT_ID as string;
 const clientSecret = process.env.CLIENT_SECRET as string;
-const spotifyApiUrl = process.env.SPOTIFY_API_URL as string;
 const redirectUri = `${serverUrl}/callback`;
+const spotifyApiUrl = process.env.SPOTIFY_API_URL as string;
 const app = express();
 /* eslint-enable @typescript-eslint/non-nullable-type-assertion-style */
 /* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
@@ -156,8 +156,6 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   }
 
   try {
-    debugger;
-
     const response = await fetch(
       `${spotifyApiUrl}/search?${querystring.stringify({
         q: query,

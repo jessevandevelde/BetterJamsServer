@@ -2,7 +2,7 @@
   "name": "betterjamsserver",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "dotenv -e .env -- nodemon src/server.ts",
     "watch:production": "dotenv -e .env.production -- nodemon src/server.ts",
