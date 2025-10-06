@@ -3,13 +3,14 @@ import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import type { Track } from '../types/track.interfaces';
 import trackData from '../dummy-data/track-data.json';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
+import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 
 const ONE_SECOND_IN_MS = 1000;
 
 @Component({
   selector: 'app-room-page',
   standalone: true,
-  imports: [QueueRowComponent, MediaPlayerComponent],
+  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent],
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
