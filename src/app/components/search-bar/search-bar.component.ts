@@ -23,9 +23,9 @@ export class SearchBarComponent {
   }
 
   protected search(): void {
-    const q = 'aint hard';
+    const query = 'aint hard';
 
-    this.searchBarService.search(q).subscribe();
+    this.searchBarService.search(query).subscribe();
   }
 
   protected clearInput(): void {
