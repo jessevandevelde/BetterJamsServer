@@ -50,6 +50,7 @@
 .upvote-container {
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .upvote-count {
@@ -57,7 +58,7 @@
   font-size: var(--font-size-sm);
   color: var(--light-gray);
   text-align: right;
-  gap: 4px;
+  margin: 0;
 
   @media (width >= 768px) {
     font-size: var(--font-size-md);

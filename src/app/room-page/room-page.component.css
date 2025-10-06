@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  height: 56px;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--dark-gray);
+}
+.search-bar {
+  flex-grow: 1;
+  max-width: 768px;
+}
+
+.roompage {
+  max-width: 768px;
+  width: 100%;
+  margin: 32px auto 0;
+  padding-inline: 8px;
+}
+
+.media-player {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

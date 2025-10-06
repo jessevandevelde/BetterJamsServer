@@ -1,11 +1,11 @@
 @let _track = track();
-
 <div class="queue-row">
   <img 
-    alt="album-cover" 
+    alt="album-cover"
     class="album-cover" 
-    height="36" 
-    width="36"
+    height="500" 
+    priority
+    width="500"
     [ngSrc]="_track.albumCoverUrl"
   />
   
@@ -16,11 +16,11 @@
   </div>
   
   <div class="upvote-container">
-    <fa-icon 
-      class="upvote-button" 
+    <fa-icon class="upvote-button"
       (click)="toggleVote()" 
       [icon]="upvoted() ? fasThumbsUp : faThumbsUp" 
     />
+
     <p class="upvote-count">{{ upVoteCount() }}</p>
   </div>
 </div>
