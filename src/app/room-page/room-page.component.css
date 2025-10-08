@@ -9,6 +9,7 @@
 .search-bar {
   flex-grow: 1;
   max-width: 768px;
+  padding-inline: 8px;
 }
 
 .roompage {
@@ -20,10 +21,6 @@
   @media (width >= 768px) {
     padding-inline: 16px;
   }
-}
-
-.search-dropdown {
-  overflow-y: hidden;
 }
 
 .media-player {

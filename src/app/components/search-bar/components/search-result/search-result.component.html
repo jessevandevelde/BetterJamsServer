@@ -8,5 +8,5 @@
       <p class="artist-name">{{ _track.artistName }}</p>
     </div>
   </div>
-  <button btjButton type="button"><fa-icon [icon]="addToQueueButton" /></button>
+  <button btjButton type="button" (click)="addSong.emit()"><fa-icon [icon]="addToQueueButton" /></button>
 </div>

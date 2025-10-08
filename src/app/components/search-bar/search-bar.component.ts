@@ -15,6 +15,7 @@ import type { Track } from 'src/app/types/track.interfaces';
 })
 export class SearchBarComponent {
   public tracks = input<Track[]>();
+  public addSong = output<Track>();
   protected searchValueChange = output<string>();
 
   protected magnifyingGlass = faMagnifyingGlass;
