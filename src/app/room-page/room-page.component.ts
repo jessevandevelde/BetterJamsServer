@@ -22,6 +22,7 @@ export class RoomPageComponent {
 
   protected dummyData = trackData;
   protected trackData: Track;
+  protected tracks: Track[];
   protected progress = 0;
   protected progressPercentage = 0;
 
@@ -29,6 +30,7 @@ export class RoomPageComponent {
 
   public constructor() {
     this.trackData = this.createTrackData(trackData);
+    this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
 
     setInterval(() => {
       if (this.isPlaying) {

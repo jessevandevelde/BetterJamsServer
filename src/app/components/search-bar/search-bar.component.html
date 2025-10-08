@@ -4,13 +4,17 @@
     class="search-input" 
     placeholder="Search" 
     type="text" 
-    (click)="toggleDropdown()">
+    (click)="toggleDropdown()"
+    (input)="search($event)">
+
   <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
 
   @if (showDropdown) {
     <div class="search-dropdown">
-      <btj-search-dropdown> 
-        <btj-search-result />
+      <btj-search-dropdown>
+        @for (track of tracks(); track $index) {
+          <btj-search-result [track]="track" />
+        }
       </btj-search-dropdown>
     </div>
   }
