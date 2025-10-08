@@ -1,5 +1,5 @@
 <div class="header">
-  <btj-search-bar class="search-bar" [tracks]="tracks" />
+  <btj-search-bar class="search-bar" (addSong)="addSong($event);" (clearSearch)="clearSearch();" (searchValueChange)="searchSong($event)" [tracks]="tracks" [value]="searchValue()" />
 </div>
 
 <div class="roompage">

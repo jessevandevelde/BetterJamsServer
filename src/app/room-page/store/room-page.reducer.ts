@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import type { Track } from '../search-bar.interfaces';
-import { SearchBarActions } from '.';
+import type { Track } from '../../components/search-bar/search-bar.interfaces';
+import { RoomPageActions } from '.';
 
 export interface State {
   tracks: Track[]
@@ -19,7 +19,7 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
 
-  on(SearchBarActions.searchTracks, (state, { query }): State => ({
+  on(RoomPageActions.searchTracks, (state, { query }): State => ({
     ...state,
     isLoading: true,
     hasError: false,
@@ -27,21 +27,21 @@ export const reducer = createReducer(
     tracks: [],
   })),
 
-  on(SearchBarActions.searchTracksSuccess, (state, { tracks }): State => ({
+  on(RoomPageActions.searchTracksSuccess, (state, { tracks }): State => ({
     ...state,
     isLoading: false,
     tracks,
     hasError: false,
   })),
 
-  on(SearchBarActions.searchTracksFailure, (state): State => ({
+  on(RoomPageActions.searchTracksFailure, (state): State => ({
     ...state,
     isLoading: false,
     hasError: true,
     tracks: [],
   })),
 
-  on(SearchBarActions.resetSearchField, (state): State => ({
+  on(RoomPageActions.resetSearchField, (state): State => ({
     ...state,
     isLoading: false,
     query: '',

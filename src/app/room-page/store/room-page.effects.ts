@@ -5,33 +5,33 @@ import { catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
 import { Actions } from '@ngrx/effects';
 import { createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
-import { SearchBarActions } from '.';
-import { SearchBarService } from '../search-bar.service';
+import { RoomPageActions } from '.';
+import { RoomPageService } from '../room-page.service';
 
 const DEBOUNCE_TIME = 500;
 
 @Injectable({
   providedIn: 'root',
 })
-export class SearchBarEffects {
+export class RoomPageEffects {
   public searchTrack$ = createEffect(() => {
     return this.actions.pipe(
-      ofType(SearchBarActions.searchTracks),
+      ofType(RoomPageActions.searchTracks),
       debounceTime(DEBOUNCE_TIME),
       filter(({ query }) => !!query),
       switchMap(({ query }) => this.searchBarService.search(query).pipe(
         map((tracks) => {
-          return SearchBarActions.searchTracksSuccess({ tracks });
+          return RoomPageActions.searchTracksSuccess({ tracks });
         }),
       )),
       /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-      catchError(error => of(SearchBarActions.searchTracksFailure({ error }))),
+      catchError(error => of(RoomPageActions.searchTracksFailure({ error }))),
     );
   });
 
   public constructor(
     private readonly actions: Actions,
-    private readonly searchBarService: SearchBarService,
+    private readonly searchBarService: RoomPageService,
   ) {
 
   }

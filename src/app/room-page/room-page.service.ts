@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import { spotifyApiCallLink } from 'src/app/environment';
-import type { Track } from './search-bar.interfaces';
+import type { Track } from '../components/search-bar/search-bar.interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 
-export class SearchBarService {
+export class RoomPageService {
   private readonly httpClient: HttpClient;
 
   public constructor() {

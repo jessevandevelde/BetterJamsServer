@@ -6,7 +6,8 @@
     type="text" 
     (blur)="toggleDropdown()"
     (focus)="toggleDropdown()"
-    (input)="search($event)">
+    (input)="search($event)"
+    [value]="value()">
 
   <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
 

@@ -1,4 +1,4 @@
-import type { State } from './search-bar.reducer';
+import type { State } from './room-page.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const selectSearchBarState = createFeatureSelector<State>('search');
