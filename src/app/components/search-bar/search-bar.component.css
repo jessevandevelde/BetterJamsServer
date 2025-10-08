@@ -1,0 +1,68 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--mid-blue);
+  border-radius: 8px;
+  width: 100%;
+  transition: 0.2s ease-in-out;
+  border: 1px solid var(--dark-gray);
+  padding: 4px;
+
+  @media (width >= 768px) {
+    width: 100%;
+    padding: 8px;
+  }
+}
+
+.search-bar input {
+  background-color: var(--mid-blue);
+  color: var(--light-gray);
+  border: none;
+  font-size: 14px;
+  width: 100%;
+
+  @media (width >= 768px) {
+    font-size: 16px;
+  }
+}
+
+input::placeholder {
+  color: var(--mid-gray);
+}
+
+.search-icon {
+  font-size: 16px;
+  color: var(--mid-gray);
+  flex-shrink: 0;
+  transition: 0.2s ease-in-out;
+  margin-left: 0;
+}
+
+.close {
+  font-size: 16px;
+  cursor: default;
+  color: transparent;
+  transition: 0.2s ease-in-out;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+.search-bar:focus-within {
+  border: 1px solid var(--light-gray);
+}
+
+.search-bar:focus-within .search-icon {
+  color: var(--light-gray);
+}
+
+.search-bar input:not(:placeholder-shown) ~ fa-icon.close {
+  color: var(--light-gray);
+  cursor: pointer;
+}
