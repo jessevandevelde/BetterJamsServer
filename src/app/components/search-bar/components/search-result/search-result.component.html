@@ -1,0 +1,12 @@
+@let _track = track();
+
+<div class="dropdown-row">
+  <div class="content-container">
+    <img alt="Album cover" class="album-cover" height="500" width="500" [ngSrc]="_track.albumCoverUrl">
+    <div class="text-container">
+      <p class="song-name">{{ _track.songName }}</p>
+      <p class="artist-name">{{ _track.artistName }}</p>
+    </div>
+  </div>
+  <button btjButton type="button" (click)="addSong.emit()"><fa-icon [icon]="addToQueueButton" /></button>
+</div>

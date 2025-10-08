@@ -1,6 +1,22 @@
-<div class="search-bar">
-    <fa-icon [icon]="magnifyingGlass" />
-    <input class="search-input" placeholder="Search" type="text" (input)="searchTracks($event.target.value);" [value]="query()">
-    <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
-</div>
+<div class="search-bar" [class.show-dropdown]="showDropdown">
+  <fa-icon class="search-icon" [icon]="magnifyingGlass" />
+  <input 
+    class="search-input" 
+    placeholder="Search" 
+    type="text" 
+    (blur)="toggleDropdown()"
+    (focus)="toggleDropdown()"
+    (input)="search($event)">
 
+  <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
+
+  @if (showDropdown) {
+    <div class="search-dropdown">
+      <btj-search-dropdown>
+        @for (track of tracks(); track $index) {
+          <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
+        }
+      </btj-search-dropdown>
+    </div>
+  }
+</div>

@@ -1,5 +1,6 @@
 import type { Routes } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { RoomPageComponent } from './room-page/room-page.component';
 import { provideState } from '@ngrx/store';
 import { reducer } from './components/search-bar/store/search-bar.reducer';
 import { provideEffects } from '@ngrx/effects';
@@ -16,6 +17,15 @@ export const routes: Routes = [
       {
         path: 'login',
         component: LoginPageComponent,
+      },
+      {
+        path: 'room',
+        component: RoomPageComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'room',
+        pathMatch: 'full',
       },
     ],
   },
