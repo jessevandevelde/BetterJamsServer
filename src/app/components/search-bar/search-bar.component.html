@@ -4,7 +4,8 @@
     class="search-input" 
     placeholder="Search" 
     type="text" 
-    (click)="toggleDropdown()"
+    (blur)="toggleDropdown()"
+    (focus)="toggleDropdown()"
     (input)="search($event)">
 
   <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
