@@ -3,14 +3,14 @@ import type { Track } from '../../components/search-bar/search-bar.interfaces';
 import { RoomPageActions } from '.';
 
 export interface State {
-  tracks: Track[]
+  searchResults: Track[]
   isLoading: boolean
   query: string
   hasError: boolean
 }
 
 export const initialState: State = {
-  tracks: [],
+  searchResults: [],
   isLoading: false,
   query: '',
   hasError: false,
@@ -24,13 +24,13 @@ export const reducer = createReducer(
     isLoading: true,
     hasError: false,
     query,
-    tracks: [],
+    searchResults: [],
   })),
 
-  on(RoomPageActions.searchTracksSuccess, (state, { tracks }): State => ({
+  on(RoomPageActions.searchTracksSuccess, (state, { searchResults }): State => ({
     ...state,
     isLoading: false,
-    tracks,
+    searchResults,
     hasError: false,
   })),
 
@@ -38,7 +38,7 @@ export const reducer = createReducer(
     ...state,
     isLoading: false,
     hasError: true,
-    tracks: [],
+    searchResults: [],
   })),
 
   on(RoomPageActions.resetSearchField, (state): State => ({

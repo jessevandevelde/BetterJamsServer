@@ -9,7 +9,7 @@ export const searchTracks = createAction(
 
 export const searchTracksSuccess = createAction(
   '[Search] searched tracks successfully',
-  props<{ tracks: Track[] }>(),
+  props<{ searchResults: Track[] }>(),
 );
 
 export const searchTracksFailure = createAction(

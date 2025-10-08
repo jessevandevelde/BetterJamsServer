@@ -20,8 +20,8 @@ export class RoomPageEffects {
       debounceTime(DEBOUNCE_TIME),
       filter(({ query }) => !!query),
       switchMap(({ query }) => this.searchBarService.search(query).pipe(
-        map((tracks) => {
-          return RoomPageActions.searchTracksSuccess({ tracks });
+        map((searchResults) => {
+          return RoomPageActions.searchTracksSuccess({ searchResults });
         }),
       )),
       /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */

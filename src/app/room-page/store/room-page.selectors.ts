@@ -5,7 +5,7 @@ export const selectSearchBarState = createFeatureSelector<State>('search');
 
 export const selectTracks = createSelector(
   selectSearchBarState,
-  state => state.tracks,
+  state => state.searchResults,
 );
 
 export const selectQuery = createSelector(

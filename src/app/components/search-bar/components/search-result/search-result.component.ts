@@ -1,6 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; // fontawesome import
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import type { Track } from 'src/app/types/track.interfaces';

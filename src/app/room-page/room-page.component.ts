@@ -23,7 +23,6 @@ export class RoomPageComponent {
   public upvoteCount = 0;
   public upvoted = false;
   public isPlaying = true;
-
   protected dummyData = trackData;
   protected trackData: Track;
   protected tracks: Track[];
