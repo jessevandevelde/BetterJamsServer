@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, type Observable } from 'rxjs';
 import { spotifyApiCallLink } from 'src/app/environment';
-import { Track } from '../components/search-bar/search-bar.interfaces';
-import type { SearchResultsRemote } from '../components/search-bar/search-bar.interfaces';
+import { Track } from '../types/track.interfaces';
+import type { SearchResultsRemote } from '../types/track.interfaces';
 
 @Injectable({
   providedIn: 'root',

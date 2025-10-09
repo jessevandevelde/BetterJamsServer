@@ -37,7 +37,11 @@ export class SearchBarComponent {
     this.clearSearch.emit();
   }
 
-  protected toggleDropdown(): void {
-    this.showDropdown = !this.showDropdown;
+  protected openDropdown(): void {
+    this.showDropdown = true;
+  }
+
+  protected closeDropdown(): void {
+    this.showDropdown = false;
   }
 }

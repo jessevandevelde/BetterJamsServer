@@ -40,6 +40,14 @@
   }
 }
 
+.dropdown-content {
+  overflow-y: auto;
+
+  @media (width >= 768px) {
+    max-height: 500px;
+  }
+}
+
 input::placeholder {
   color: var(--mid-gray);
 }

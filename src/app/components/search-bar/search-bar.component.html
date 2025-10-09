@@ -4,8 +4,8 @@
     class="search-input" 
     placeholder="Search" 
     type="text" 
-    (blur)="toggleDropdown()"
-    (focus)="toggleDropdown()"
+    (blur)="closeDropdown()"
+    (focus)="openDropdown()"
     (input)="search($event)"
     [value]="value()">
 
@@ -14,9 +14,11 @@
   @if (showDropdown) {
     <div class="search-dropdown">
       <btj-search-dropdown>
-        @for (track of tracks(); track $index) {
-          <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
-        }
+        <div class="dropdown-content">
+          @for (track of tracks(); track $index) {
+            <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
+          }
+        </div>
       </btj-search-dropdown>
     </div>
   }

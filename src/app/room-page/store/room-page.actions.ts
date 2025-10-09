@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import type { Track } from '../../components/search-bar/search-bar.interfaces';
+import type { Track } from '../../types/track.interfaces';
 import type { HttpErrorResponse } from '@angular/common/http';
 
 export const searchTracks = createAction(

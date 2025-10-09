@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import type { Track } from '../../components/search-bar/search-bar.interfaces';
+import type { Track } from '../../types/track.interfaces';
 import { RoomPageActions } from '.';
 
 export interface State {
