@@ -4,10 +4,11 @@ import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 import { SearchDropdownComponent } from '../dropdown/dropdown.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import type { Track } from 'src/app/types/track.interfaces';
+import { LoadingStateComponent } from '../loading-state/loading-state.component';
 
 @Component({
   selector: 'btj-search-bar',
-  imports: [FaIconComponent, SearchDropdownComponent, SearchResultComponent],
+  imports: [FaIconComponent, SearchDropdownComponent, SearchResultComponent, LoadingStateComponent],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,6 +17,7 @@ export class SearchBarComponent {
   public tracks = input<Track[]>();
   public addSong = output<Track>();
   public value = input<string>('');
+  public isLoading = input<boolean>();
   protected searchValueChange = output<string>();
   protected clearSearch = output();
 
