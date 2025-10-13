@@ -11,16 +11,16 @@
 
   <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
 
-  @if (showDropdown) {
+  @if (showDropdown && value()) {
     <div class="search-dropdown">
       <btj-search-dropdown>
         <div class="dropdown-content">
           @if (isLoading() === true) {
             <btj-loading-state />
           } @else{
-          @for (track of tracks(); track $index) {
-            <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
-          }
+            @for (track of tracks(); track $index) {
+              <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
+            }
           }
         </div>
       
