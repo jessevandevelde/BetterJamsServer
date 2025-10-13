@@ -139,7 +139,7 @@ app.get('/callback', async (req: Request, res: Response) => {
 });
 
 app.get('/search', async (req: Request, res: Response): Promise<Response> => {
-  const query = req.query.q as string | undefined;
+  const query = req.query.query as string | undefined;
   const missingSearchQuery = 400;
   const badCookie = 401;
   const spotifyApiError = 500;
@@ -160,7 +160,7 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
       `${spotifyApiUrl}/search?${querystring.stringify({
         q: query,
         type: 'track',
-        limit: 4,
+        limit: 20,
       })}`,
       {
         headers: {
