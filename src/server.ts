@@ -9,6 +9,7 @@ import dotenvExpand from 'dotenv-expand';
 import dotenv from 'dotenv';
 import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
+import queueRoutes from './queue';
 
 const env = dotenv.config();
 
@@ -34,6 +35,8 @@ app.use(cors ({
   origin: clientUrl,
   credentials: true,
 }));
+
+app.use('/queue', queueRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('test');
