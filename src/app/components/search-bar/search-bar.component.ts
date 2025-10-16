@@ -33,9 +33,6 @@ export class SearchBarComponent {
     const target = event.target as HTMLInputElement;
 
     this.searchValueChange.emit(target.value);
-
-    /* eslint-disable-next-line no-console */
-    console.log(target.value);
   }
 
   protected clearInput(): void {
@@ -43,6 +40,7 @@ export class SearchBarComponent {
 
     if (searchField !== null) {
       searchField.value = '';
+      searchField.focus();
     }
   }
 

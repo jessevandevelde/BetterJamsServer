@@ -29,14 +29,16 @@
 }
 
 .search-dropdown {
-  position: absolute;
+  position: fixed;
   left: 0;
-  top: 42px;
+  top: 56px;
   width: 100%;
   height: calc(100dvh - 57px);
 
   @media (width >= 768px) {
-    top: 37px;
+    position: absolute;
+    top: 39px;
+    height: 100%;
   }
 }
 
