@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import express from 'express';
+import express, { json } from 'express';
 import { randomBytes } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 import querystring from 'node:querystring';
@@ -35,6 +35,8 @@ app.use(cors ({
   origin: clientUrl,
   credentials: true,
 }));
+
+app.use(json());
 
 app.use('/queue', queueRoutes);
 
@@ -142,7 +144,7 @@ app.get('/callback', async (req: Request, res: Response) => {
 });
 
 app.get('/search', async (req: Request, res: Response): Promise<Response> => {
-  const query = req.query.q as string | undefined;
+  const query = req.query.query as string | undefined;
   const missingSearchQuery = 400;
   const badCookie = 401;
   const spotifyApiError = 500;
@@ -161,9 +163,9 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   try {
     const response = await fetch(
       `${spotifyApiUrl}/search?${querystring.stringify({
-        q: query,
+        query,
         type: 'track',
-        limit: 4,
+        limit: 20,
       })}`,
       {
         headers: {

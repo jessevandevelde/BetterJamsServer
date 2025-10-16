@@ -1,11 +1,9 @@
-export function updateQueue(req, res): void {
-  // class die de state bijhoud voor de queue
+import type { Request, Response } from 'express';
+import { Queue } from './queue';
+import type { QueueTrack } from './queue.interfaces';
 
-  // private queue opzetten
+const queue = new Queue();
 
-  // getter functie voor de array van de queue
-
-  // setter functie
-
-  // track interface uit de frontend binnen krijgen
+export function updateQueue(req: Request, _res: Response): void {
+  queue.addToQueue(req.body as QueueTrack);
 }
