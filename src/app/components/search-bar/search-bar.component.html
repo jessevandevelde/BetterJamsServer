@@ -1,10 +1,9 @@
-<div class="search-bar" [class.show-dropdown]="showDropdown">
+<div class="search-bar" (blur)="closeDropdown()" [class.show-dropdown]="showDropdown">
   <fa-icon class="search-icon" [icon]="magnifyingGlass" />
   <input 
     class="search-input" 
     placeholder="Search" 
     type="text" 
-    (blur)="closeDropdown()"
     (focus)="openDropdown()"
     (input)="search($event)"
     [value]="value()">
@@ -19,7 +18,7 @@
             <btj-loading-state />
           } @else{
             @for (track of tracks(); track $index) {
-              <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
+              <btj-search-result (addSong)="add($event)" [track]="track" />
             }
           }
         </div>

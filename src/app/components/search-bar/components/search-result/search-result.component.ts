@@ -12,8 +12,14 @@ import type { Track } from 'src/app/types/track.interfaces';
   styleUrl: './search-result.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class SearchResultComponent {
   public track = input.required<Track>();
-  public addSong = output();
+  public addSong = output<Track>();
   protected addToQueueButton = faPlus;
+
+  protected add(track: Track): void {
+    console.log(track);
+    this.addSong.emit(track);
+  }
 }

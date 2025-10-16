@@ -32,6 +32,11 @@ export class SearchBarComponent {
     this.searchValueChange.emit(target.value);
   }
 
+  protected add(track: Track): void {
+    console.log(track);
+    this.addSong.emit(track);
+  }
+
   protected clearInput(): void {
     this.clearSearch.emit();
   }

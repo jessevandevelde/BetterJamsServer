@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
 import { selectIsLoading, selectQuery } from './store/room-page.selectors';
 import { selectTracks } from './store/room-page.selectors';
+import { RoomPageService } from './room-page.service';
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -34,6 +35,8 @@ export class RoomPageComponent {
   protected searchResult: Signal<Track[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
+  private readonly roomPageService = inject(RoomPageService);
+
   public constructor() {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.store = inject(Store);
@@ -82,10 +85,7 @@ export class RoomPageComponent {
   }
 
   protected addSong(track: Track): void {
-    /* eslint-disable-next-line no-console */
-    console.log('test');
-    /* eslint-disable-next-line no-console */
-    console.log(track);
+    this.roomPageService.postSong(track).subscribe();
   }
 
   private createTrackData(data: typeof trackData): Track {
