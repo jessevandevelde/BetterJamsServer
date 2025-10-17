@@ -5,7 +5,7 @@ export class Queue {
 
   public addToQueue(track: QueueTrack): void {
     this.queue.push(track);
-    console.log('Track added:', track);
+    /* eslint-disable-next-line no-console */
+    console.log('Track added:', this.queue);
   }
-  // get queue
 }

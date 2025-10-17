@@ -12,7 +12,12 @@ const eslintConfig = defineConfig(
         'error',
         'always-multiline',
       ],
-      'no-console': 'error',
+      'no-console': [
+        'error',
+        {
+          allow: ['warn', 'error'],
+        },
+      ],
       'no-restricted-syntax': 'error',
       '@stylistic/padding-line-between-statements': ['error',
         { blankLine: 'always', prev: '*', next: 'return' },
@@ -69,6 +74,15 @@ export default defineConfig(
         caughtErrorsIgnorePattern: '^_',
         destructuredArrayIgnorePattern: '^_',
         ignoreRestSiblings: true,
+      }],
+      '@typescript-eslint/no-magic-numbers': ['error', {
+        ignoreEnums: true,
+        ignoreDefaultValues: true,
+        ignoreReadonlyClassProperties: true,
+        ignoreClassFieldInitialValues: true,
+        ignoreArrayIndexes: true,
+        ignoreNumericLiteralTypes: true,
+        ignore: [-1, 0, 1],
       }],
     },
     languageOptions: {

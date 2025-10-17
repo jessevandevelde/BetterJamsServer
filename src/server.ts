@@ -10,6 +10,8 @@ import dotenv from 'dotenv';
 import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
+import { isAuthorizedMiddleware } from './auth/auth-middleware';
+import { HttpStatusCode } from './helpers/response-status-codes.enums';
 
 const env = dotenv.config();
 
@@ -37,6 +39,8 @@ app.use(cors ({
 }));
 
 app.use(json());
+
+app.use(isAuthorizedMiddleware);
 
 app.use('/queue', queueRoutes);
 
@@ -145,20 +149,13 @@ app.get('/callback', async (req: Request, res: Response) => {
 
 app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   const query = req.query.query as string | undefined;
-  const missingSearchQuery = 400;
-  const badCookie = 401;
-  const spotifyApiError = 500;
 
   if (!query) {
-    return res.status(missingSearchQuery).json({ error: 'Missing search query' });
+    return res.status(HttpStatusCode.badRequest).json({ error: 'Missing search query' });
   }
 
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
   const { access_token } = req.cookies;
-
-  if (!access_token) {
-    return res.status(badCookie).json({ error: 'Unauthorized: no access token' });
-  }
 
   try {
     const response = await fetch(
@@ -185,10 +182,9 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
     return res.json(data);
   }
   catch (err) {
-    /* eslint-disable-next-line no-console */
     console.error(err);
 
-    return res.status(spotifyApiError).json({ error: 'Failed to search Spotify API' });
+    return res.status(HttpStatusCode.serverError).json({ error: 'Failed to search Spotify API' });
   }
 });
 
@@ -199,7 +195,6 @@ if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
   });
 }
 else {
-  /* eslint-disable-next-line no-console */
   console.warn(`missing parameters 
     clientId: ${clientId},
     serverPort: ${serverPort},
