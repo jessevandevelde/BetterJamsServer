@@ -30,18 +30,11 @@ export class RoomPageService {
   }
 
   public postSong(track: Track): Observable<Track> {
-    console.log(track);
-
     return this.httpClient.post<Track>(`${spotifyApiCallLink}/queue`, track, {
+      withCredentials: true,
       params: {
         check: true,
       },
-    });
-  }
-
-  public getQueue(): Observable<Track[]> {
-    return this.httpClient.get<Track[]>(`${spotifyApiCallLink}/queue`, {
-      withCredentials: true,
     });
   }
 }
