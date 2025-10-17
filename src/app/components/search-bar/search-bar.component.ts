@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
+import type { ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, viewChild } from '@angular/core';
 import { SearchBarService } from './search-bar.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +23,7 @@ export class SearchBarComponent {
   protected closeIcon = faX;
   protected showDropdown = false;
 
+  private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput');
   private readonly searchBarService: SearchBarService;
 
   public constructor() {
@@ -36,11 +38,11 @@ export class SearchBarComponent {
   }
 
   protected clearInput(): void {
-    const searchField = document.querySelector<HTMLInputElement>('.search-input');
+    const searchInput = this.searchInput();
 
-    if (searchField !== null) {
-      searchField.value = '';
-      searchField.focus();
+    if (searchInput) {
+      searchInput.nativeElement.value = '';
+      searchInput.nativeElement.focus();
     }
   }
 
