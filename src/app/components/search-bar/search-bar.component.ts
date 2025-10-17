@@ -1,37 +1,52 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import type { ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, viewChild } from '@angular/core';
 import { SearchBarService } from './search-bar.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
-
-;
+import { SearchDropdownComponent } from '../dropdown/dropdown.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
+import type { Track } from 'src/app/types/track.interfaces';
 
 @Component({
   selector: 'btj-search-bar',
-  imports: [FaIconComponent],
+  imports: [FaIconComponent, SearchDropdownComponent, SearchResultComponent],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
+  public tracks = input<Track[]>();
+  public addSong = output<Track>();
+  protected searchValueChange = output<string>();
+
   protected magnifyingGlass = faMagnifyingGlass;
   protected closeIcon = faX;
+  protected showDropdown = false;
 
+  private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput');
   private readonly searchBarService: SearchBarService;
+
   public constructor() {
     this.searchBarService = inject(SearchBarService);
   }
 
-  protected search(): void {
-    const query = 'aint hard';
+  protected search(event: Event): void {
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
+    const target = event.target as HTMLInputElement;
 
-    this.searchBarService.search(query).subscribe();
+    this.searchValueChange.emit(target.value);
   }
 
   protected clearInput(): void {
-    const searchField = document.querySelector<HTMLInputElement>('.search-input');
+    const searchInput = this.searchInput();
 
-    if (searchField !== null) {
-      searchField.value = '';
+    if (searchInput) {
+      searchInput.nativeElement.value = '';
+      searchInput.nativeElement.focus();
     }
+  }
+
+  protected toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
   }
 }

@@ -5,25 +5,39 @@
   justify-content: center;
   border-bottom: 1px solid var(--dark-gray);
 }
+
 .search-bar {
   flex-grow: 1;
   max-width: 768px;
+  padding-inline: 8px;
 }
 
 .roompage {
   max-width: 768px;
   width: 100%;
-  margin: 32px auto 0;
+  margin: 0 auto;
   padding-inline: 8px;
+
+  @media (width >= 768px) {
+    padding-inline: 16px;
+  }
 }
 
 .media-player {
   display: block;
-  margin-bottom: 8px;
+  margin-block: 16px;
+
+  @media (width >= 768px) {
+    margin-block: 32px;
+  }
 }
 
 .queue {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
+
+  @media (width >= 768px) {
+    gap: 16px;
+  }
 }

@@ -1,5 +1,5 @@
 <div class="header">
-  <btj-search-bar class="search-bar" />
+  <btj-search-bar class="search-bar" [tracks]="tracks" />
 </div>
 
 <div class="roompage">
@@ -11,10 +11,18 @@
     [track]="trackData"
   />
 
-<!-- foreach track in queue function maken -->
   <div class="queue">
-    <app-queue-row (removeVote)="removeVote()" (upvote)="vote()" [track]="trackData" [upVoteCount]="upvoteCount" [upvoted]="upvoted" />
-    <app-queue-row (removeVote)="removeVote()" (upvote)="vote()" [track]="trackData" [upVoteCount]="upvoteCount" [upvoted]="upvoted" />
+    @for (item of tracks; track $index) {
+    <app-queue-row
+      (removeVote)="removeVote()"
+      (upvote)="vote()"
+      [track]="trackData"
+      [upVoteCount]="upvoteCount"
+      [upvoted]="upvoted" 
+    />
+    }  @empty {
+      <p>search songs to queue</p>
+    }
   </div>
 </div>
 
