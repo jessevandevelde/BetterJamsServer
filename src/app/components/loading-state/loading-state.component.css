@@ -1,7 +1,15 @@
 .loader {
   display: flex;
   flex-direction: row;
+  padding-top: 8px;
+  padding-bottom: 8px;
   gap: 4px;
+  justify-content: center;
+
+  @media (width >= 678px) {
+    padding-top: 16px;
+    padding-bottom: 16px;;
+  }
 }
 
 .dot {
@@ -11,7 +19,6 @@
   background-color: var(--light-gray);
   opacity: 0;
   animation: loading 1.2s infinite ease-in-out;
-  align-items: center;
 }
 
 .dot:nth-child(1) {
