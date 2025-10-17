@@ -7,7 +7,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery } from './store/room-page.selectors';
+import { selectIsLoading, selectQuery } from './store/room-page.selectors';
 import { selectTracks } from './store/room-page.selectors';
 
 const ONE_SECOND_IN_MS = 1000;
@@ -24,6 +24,7 @@ export class RoomPageComponent {
   public upvoteCount = 0;
   public upvoted = false;
   public isPlaying = true;
+  public isLoading: Signal<boolean>;
   protected dummyData = trackData;
   protected trackData: Track;
   protected tracks: Track[];
@@ -38,7 +39,7 @@ export class RoomPageComponent {
     this.store = inject(Store);
     this.searchValue = this.store.selectSignal(selectQuery);
     this.searchResult = this.store.selectSignal(selectTracks);
-
+    this.isLoading = this.store.selectSignal(selectIsLoading);
     this.trackData = this.createTrackData(trackData);
     this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
 
