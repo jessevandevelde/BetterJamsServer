@@ -1,5 +1,5 @@
 import type { ElementRef } from '@angular/core';
-import { ChangeDetectionStrategy, Component, effect, input, output, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, viewChild } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 import { SearchDropdownComponent } from '../dropdown/dropdown.component';
@@ -26,10 +26,6 @@ export class SearchBarComponent {
 
   private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput');
 
-  public constructor() {
-    this.initializeTracksEffect();
-  }
-
   protected search(event: Event): void {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
     const target = event.target as HTMLInputElement;
@@ -47,24 +43,10 @@ export class SearchBarComponent {
   }
 
   protected openDropdown(): void {
-    if (!this.value()) {
-      return;
-    }
-
     this.showDropdown = true;
   }
 
   protected closeDropdown(): void {
     this.showDropdown = false;
-  }
-
-  private initializeTracksEffect(): void {
-    effect(() => {
-      if (!this.showDropdown) {
-        return;
-      }
-
-      this.tracks()?.length ? this.openDropdown() : this.closeDropdown();
-    });
   }
 }
