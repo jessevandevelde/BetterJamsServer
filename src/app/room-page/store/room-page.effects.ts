@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
-/* eslint-disable @typescript-eslint/parameter-properties */
-/* eslint-disable @angular-eslint/prefer-inject */
+/* eslint-disable @angular-eslint/prefer-inject,  @typescript-eslint/consistent-type-imports, @typescript-eslint/parameter-properties */
 import { catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
 import { Actions } from '@ngrx/effects';
 import { createEffect, ofType } from '@ngrx/effects';

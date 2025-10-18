@@ -44,12 +44,12 @@ export class SearchBarComponent {
     }
   }
 
-  protected openDropdown(): void {
+  protected focus(): void {
     this.isFocused = true;
     this.showDropdown = true;
   }
 
-  protected closeDropdown(): void {
+  protected blur(): void {
     this.isFocused = false;
     this.showDropdown = false;
   }

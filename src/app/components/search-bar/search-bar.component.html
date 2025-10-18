@@ -4,8 +4,8 @@
     class="search-input" 
     placeholder="Search" 
     type="text" 
-    (blur)="closeDropdown()"
-    (focus)="openDropdown()"
+    (blur)="blur()"
+    (focus)="focus()"
     (input)="search($event)"
     [value]="value()"
     #searchInput>
@@ -17,7 +17,9 @@
       <btj-search-dropdown>
         <div class="dropdown-content">
           @if (isLoading() === true) {
-            <btj-loading-state />
+            <div class="loading">
+             <btj-loading-state />
+            </div>
           } @else{
             @for (track of tracks(); track $index) {
               <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
