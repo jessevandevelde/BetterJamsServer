@@ -4,19 +4,29 @@
     class="search-input" 
     placeholder="Search" 
     type="text" 
-    (blur)="toggleDropdown()"
-    (focus)="toggleDropdown()"
+    (blur)="blur()"
+    (focus)="focus()"
     (input)="search($event)"
+    [value]="query()"
     #searchInput>
 
   <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
 
-  @if (showDropdown) {
+  @if (showDropdown && query() && (searchResults()?.length || isLoading())) {
     <div class="search-dropdown">
       <btj-search-dropdown>
-        @for (track of tracks(); track $index) {
-          <btj-search-result (addSong)="addSong.emit(track)" [track]="track" />
-        }
+        <div class="dropdown-content">
+          @if (isLoading()) {
+            <div class="loading">
+             <btj-loading-state />
+            </div>
+          } @else{
+            @for (track of searchResults(); track $index) {
+              <btj-search-result (addTrack)="addTrack.emit(track)" [track]="track" />
+            }
+          }
+        </div>
+      
       </btj-search-dropdown>
     </div>
   }

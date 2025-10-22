@@ -28,6 +28,8 @@
     "@fortawesome/free-brands-svg-icons": "^7.0.1",
     "@fortawesome/free-regular-svg-icons": "^7.0.1",
     "@fortawesome/free-solid-svg-icons": "^7.0.1",
+    "@ngrx/effects": "^20.0.1",
+    "@ngrx/store": "^20.0.1",
     "rxjs": "~7.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
@@ -36,6 +38,7 @@
     "@angular-devkit/build-angular": "^20.2.2",
     "@angular/cli": "^20.2.2",
     "@angular/compiler-cli": "^20.2.4",
+    "@ngrx/store-devtools": "^20.0.1",
     "@stylistic/eslint-plugin": "^5.3.1",
     "@stylistic/stylelint-config": "^3.0.1",
     "@stylistic/stylelint-plugin": "^4.0.0",

@@ -1,9 +1,14 @@
+import type { Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import type { Track } from '../types/track.interfaces';
 import trackData from '../dummy-data/track-data.json';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
+import { Store } from '@ngrx/store';
+import { RoomPageActions } from './store';
+import { selectSearchIsLoading, selectQuery } from './store/room-page.selectors';
+import { selectSearchResults } from './store/room-page.selectors';
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -19,22 +24,28 @@ export class RoomPageComponent {
   public upvoteCount = 0;
   public upvoted = false;
   public isPlaying = true;
-
+  public isLoading: Signal<boolean>;
   protected dummyData = trackData;
   protected trackData: Track;
   protected tracks: Track[];
   protected progress = 0;
   protected progressPercentage = 0;
-
+  protected searchQuery: Signal<string>;
+  protected searchResults: Signal<Track[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
-
+  private readonly store: Store;
   public constructor() {
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+    this.store = inject(Store);
+    this.searchQuery = this.store.selectSignal(selectQuery);
+    this.searchResults = this.store.selectSignal(selectSearchResults);
+    this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.trackData = this.createTrackData(trackData);
     this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
 
     setInterval(() => {
       if (this.isPlaying) {
-        const progress = this.progress >= this.trackData.songDuration
+        const progress = this.progress >= this.trackData.durationMs
           ? 0
           : this.progress + ONE_SECOND_IN_MS;
 
@@ -62,12 +73,27 @@ export class RoomPageComponent {
     this.isPlaying = true;
   }
 
+  protected clearSearch(): void {
+    this.store.dispatch(RoomPageActions.resetSearchField());
+  }
+
+  protected searchQueryChange(query: string): void {
+    this.store.dispatch(RoomPageActions.setSearchQuery({ query }));
+  }
+
+  protected addTrack(track: Track): void {
+    /* eslint-disable-next-line no-console */
+    console.log(track);
+  }
+
   private createTrackData(data: typeof trackData): Track {
     return {
       albumCoverUrl: data.album.images[0].url,
-      songName: data.name,
-      artistName: data.artists[0].name,
-      songDuration: data.duration_ms,
+      name: data.name,
+      artists: data.artists[0].name,
+      durationMs: data.duration_ms,
+      id: '',
+      uri: '',
     };
   }
 }

@@ -38,13 +38,13 @@ export class MediaPlayerComponent {
 
   private initializeProgressEffect(): void {
     effect(() => {
-      this.progressPercentage.set(this.getProgressPercentage(this.track().songDuration, this.progress()));
+      this.progressPercentage.set(this.getProgressPercentage(this.track().durationMs, this.progress()));
     });
   }
 
-  private getProgressPercentage(songDuration: number, progress: number): number {
+  private getProgressPercentage(trackDuration: number, progress: number): number {
     const oneHundredPercent = 100;
 
-    return (progress / songDuration) * oneHundredPercent;
+    return (progress / trackDuration) * oneHundredPercent;
   }
 }

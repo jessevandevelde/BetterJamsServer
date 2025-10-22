@@ -4,23 +4,30 @@
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--dark-gray);
+  padding-inline: 8px;
+
+  @media (width >= 768px) {
+    padding-inline: 32px;
+  }
 }
 
 .search-bar {
   flex-grow: 1;
   max-width: 768px;
-  padding-inline: 8px;
 }
 
 .roompage {
-  max-width: 768px;
-  width: 100%;
-  margin: 0 auto;
   padding-inline: 8px;
 
   @media (width >= 768px) {
-    padding-inline: 16px;
+    padding-inline: 32px;
   }
+}
+
+.room-page-container {
+  max-width: 768px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .media-player {

@@ -16,6 +16,18 @@
   }
 }
 
+.loading {
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  justify-content: center;
+
+  @media (width >= 768px) {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
 .search-bar input {
   background-color: var(--mid-blue);
   color: var(--light-gray);
@@ -39,6 +51,16 @@
     position: absolute;
     top: 39px;
     height: 100%;
+    width: 768px;
+    left: -1px;
+  }
+}
+
+.dropdown-content {
+  overflow-y: auto;
+
+  @media (width >= 768px) {
+    max-height: 500px;
   }
 }
 

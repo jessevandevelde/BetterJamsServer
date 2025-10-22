@@ -4,10 +4,10 @@
    
   <img alt="album-cover" class="album-cover" height="500" priority width="500" [ngSrc]="_track.albumCoverUrl" />
   <div class="right">
-    <div class="song-info">
-      <h3 class="song-name">{{_track.songName}}</h3>
+    <div class="track-info">
+      <h3 class="track-name">{{_track.name}}</h3>
 
-      <p class="artist-name">{{_track.artistName}}</p>
+      <p class="artist-name">{{_track.artists}}</p>
     </div>
     <fa-icon class="pause-icon" (click)="togglePause()" [icon]="isPlaying() ? faPause : faPlay"  />
     <div class="controls">
@@ -19,7 +19,7 @@
     <div class="playback-time">
       <p class="timestamp">{{progress() | date:'mm:ss'}}</p>
 
-      <p class="timestamp">{{_track.songDuration | date:'mm:ss'}}</p>
+      <p class="timestamp">{{_track.durationMs | date:'mm:ss'}}</p>
     </div>
   </div>
 </div>
