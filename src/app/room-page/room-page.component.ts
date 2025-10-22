@@ -7,9 +7,10 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectIsLoading, selectQuery } from './store/room-page.selectors';
+import { selectIsLoading, selectQuery, selectQueueTracks } from './store/room-page.selectors';
 import { selectTracks } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
+import { getQueueTracks } from './store/room-page.actions';
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -28,11 +29,11 @@ export class RoomPageComponent {
   public isLoading: Signal<boolean>;
   protected dummyData = trackData;
   protected trackData: Track;
-  protected tracks: Track[];
   protected progress = 0;
   protected progressPercentage = 0;
   protected searchValue: Signal<string>;
   protected searchResult: Signal<Track[]>;
+  protected queueTracks: Signal<Track[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
   private readonly roomPageService = inject(RoomPageService);
@@ -43,8 +44,10 @@ export class RoomPageComponent {
     this.searchValue = this.store.selectSignal(selectQuery);
     this.searchResult = this.store.selectSignal(selectTracks);
     this.isLoading = this.store.selectSignal(selectIsLoading);
+    this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.trackData = this.createTrackData(trackData);
-    this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
+
+    this.store.dispatch(getQueueTracks());
 
     setInterval(() => {
       if (this.isPlaying) {

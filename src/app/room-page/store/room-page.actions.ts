@@ -20,3 +20,17 @@ export const searchTracksFailure = createAction(
 export const resetSearchField = createAction(
   '[Search], reset',
 );
+
+export const getQueueTracks = createAction(
+  '[Queue] Get queue tracks',
+);
+
+export const getQueueTracksSuccess = createAction(
+  '[Queue] Get queue tracks success',
+  props<{ queueTracks: Track[] }>(),
+);
+
+export const getQueueTracksFailure = createAction(
+  '[Queue] Get queue tracks failure',
+  props<{ error: HttpErrorResponse }>(),
+);

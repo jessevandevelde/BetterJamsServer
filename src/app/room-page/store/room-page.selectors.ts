@@ -22,3 +22,8 @@ export const selectHasError = createSelector(
   selectSearchBarState,
   state => state.hasError,
 );
+
+export const selectQueueTracks = createSelector(
+  selectSearchBarState,
+  state => state.queueTracks,
+);

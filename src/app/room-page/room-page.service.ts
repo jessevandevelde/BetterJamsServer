@@ -4,6 +4,7 @@ import { map, type Observable } from 'rxjs';
 import { spotifyApiCallLink } from 'src/app/environment';
 import { Track } from '../types/track.interfaces';
 import type { SearchResultsRemote } from '../types/track.interfaces';
+import type { GetQueueDTO } from './room-page.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,12 @@ export class RoomPageService {
       params: {
         check: true,
       },
+    });
+  }
+
+  public getQueue(): Observable<GetQueueDTO> {
+    return this.httpClient.get<GetQueueDTO>(`${spotifyApiCallLink}/queue`, {
+      withCredentials: true,
     });
   }
 }

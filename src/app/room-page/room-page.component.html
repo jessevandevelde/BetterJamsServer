@@ -13,16 +13,14 @@
 
 <!-- @for loop function maken -->
   <div class="queue">
-    @for (item of tracks; track $index) {
+    @for (track of queueTracks(); track $index) {
     <app-queue-row
       (removeVote)="removeVote()"
       (upvote)="vote()"
-      [track]="trackData"
+      [track]="track"
       [upVoteCount]="upvoteCount"
       [upvoted]="upvoted" 
     />
-    }  @empty {
-      <p>search songs to queue</p>
     }
   </div>
 </div>

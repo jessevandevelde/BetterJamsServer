@@ -7,6 +7,9 @@ export interface State {
   isLoading: boolean
   query: string
   hasError: boolean
+  queueTracks: Track[]
+  queueIsLoading: boolean
+  queueHasError: boolean
 }
 
 export const initialState: State = {
@@ -14,6 +17,9 @@ export const initialState: State = {
   isLoading: false,
   query: '',
   hasError: false,
+  queueTracks: [],
+  queueIsLoading: false,
+  queueHasError: false,
 };
 
 export const reducer = createReducer(
@@ -46,4 +52,23 @@ export const reducer = createReducer(
     isLoading: false,
     query: '',
   })),
+
+  on(RoomPageActions.getQueueTracks, (state): State => ({
+    ...state,
+    queueHasError: false,
+    queueIsLoading: true,
+  })),
+
+  on(RoomPageActions.getQueueTracksSuccess, (state, { queueTracks }): State => ({
+    ...state,
+    queueIsLoading: false,
+    queueTracks,
+  })),
+
+  on(RoomPageActions.getQueueTracksFailure, (state): State => ({
+    ...state,
+    queueHasError: true,
+    queueIsLoading: false,
+  })),
+
 );

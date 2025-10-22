@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
 /* eslint-disable @typescript-eslint/parameter-properties */
 /* eslint-disable @angular-eslint/prefer-inject */
 import { catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Actions } from '@ngrx/effects';
 import { createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { RoomPageActions } from '.';
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { RoomPageService } from '../room-page.service';
+import type { HttpErrorResponse } from '@angular/common/http';
 
 const DEBOUNCE_TIME = 500;
 
@@ -23,9 +25,20 @@ export class RoomPageEffects {
         map((searchResults) => {
           return RoomPageActions.searchTracksSuccess({ searchResults });
         }),
+        catchError((error: HttpErrorResponse) => of(RoomPageActions.searchTracksFailure({ error }))),
       )),
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-      catchError(error => of(RoomPageActions.searchTracksFailure({ error }))),
+    );
+  });
+
+  public getQueue$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(RoomPageActions.getQueueTracks),
+      switchMap(() => this.searchBarService.getQueue().pipe(
+        map(({ queue }) => {
+          return RoomPageActions.getQueueTracksSuccess({ queueTracks: queue });
+        }),
+        catchError((error: HttpErrorResponse) => of(RoomPageActions.getQueueTracksFailure({ error }))),
+      )),
     );
   });
 

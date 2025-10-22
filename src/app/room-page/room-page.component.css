@@ -40,3 +40,7 @@
     gap: 16px;
   }
 }
+
+.empty-queue {
+  color: var(--light-gray);
+}
