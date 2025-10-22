@@ -77,13 +77,11 @@ export class RoomPageComponent {
     this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
-  protected searchTrack(query: string): void {
-    this.store.dispatch(RoomPageActions.searchTracks({ query }));
+  protected searchQueryChange(query: string): void {
+    this.store.dispatch(RoomPageActions.setSearchQuery({ query }));
   }
 
   protected addTrack(track: Track): void {
-    /* eslint-disable-next-line no-console */
-    console.log('test');
     /* eslint-disable-next-line no-console */
     console.log(track);
   }

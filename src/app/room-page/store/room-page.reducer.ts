@@ -19,11 +19,10 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
 
-  on(RoomPageActions.searchTracks, (state, { query }): State => ({
+  on(RoomPageActions.searchTracks, (state): State => ({
     ...state,
     searchIsLoading: true,
     searchHasError: false,
-    query,
     searchResults: [],
   })),
 
@@ -45,5 +44,10 @@ export const reducer = createReducer(
     ...state,
     searchIsLoading: false,
     query: '',
+  })),
+
+  on(RoomPageActions.setSearchQuery, (state, { query }): State => ({
+    ...state,
+    query,
   })),
 );

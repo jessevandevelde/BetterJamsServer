@@ -13,10 +13,17 @@ const DEBOUNCE_TIME = 500;
   providedIn: 'root',
 })
 export class RoomPageEffects {
+  public setSearchQuery$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(RoomPageActions.setSearchQuery),
+      debounceTime(DEBOUNCE_TIME),
+      map(({ query }) => RoomPageActions.searchTracks({ query })),
+    );
+  });
+
   public searchTrack$ = createEffect(() => {
     return this.actions.pipe(
       ofType(RoomPageActions.searchTracks),
-      debounceTime(DEBOUNCE_TIME),
       filter(({ query }) => !!query),
       switchMap(({ query }) => this.roomPageService.search(query).pipe(
         map((searchResults) => {
