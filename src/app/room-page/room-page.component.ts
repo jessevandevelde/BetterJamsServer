@@ -7,8 +7,8 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectIsLoading, selectQuery } from './store/room-page.selectors';
-import { selectTracks } from './store/room-page.selectors';
+import { selectSearchIsLoading, selectQuery } from './store/room-page.selectors';
+import { selectSearchResults } from './store/room-page.selectors';
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -30,16 +30,16 @@ export class RoomPageComponent {
   protected tracks: Track[];
   protected progress = 0;
   protected progressPercentage = 0;
-  protected searchValue: Signal<string>;
-  protected searchResult: Signal<Track[]>;
+  protected searchQuery: Signal<string>;
+  protected searchResults: Signal<Track[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
   public constructor() {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.store = inject(Store);
-    this.searchValue = this.store.selectSignal(selectQuery);
-    this.searchResult = this.store.selectSignal(selectTracks);
-    this.isLoading = this.store.selectSignal(selectIsLoading);
+    this.searchQuery = this.store.selectSignal(selectQuery);
+    this.searchResults = this.store.selectSignal(selectSearchResults);
+    this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.trackData = this.createTrackData(trackData);
     this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
 
@@ -77,11 +77,11 @@ export class RoomPageComponent {
     this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
-  protected searchSong(query: string): void {
+  protected searchTrack(query: string): void {
     this.store.dispatch(RoomPageActions.searchTracks({ query }));
   }
 
-  protected addSong(track: Track): void {
+  protected addTrack(track: Track): void {
     /* eslint-disable-next-line no-console */
     console.log('test');
     /* eslint-disable-next-line no-console */

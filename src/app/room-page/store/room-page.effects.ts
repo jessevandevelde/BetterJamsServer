@@ -18,7 +18,7 @@ export class RoomPageEffects {
       ofType(RoomPageActions.searchTracks),
       debounceTime(DEBOUNCE_TIME),
       filter(({ query }) => !!query),
-      switchMap(({ query }) => this.searchBarService.search(query).pipe(
+      switchMap(({ query }) => this.roomPageService.search(query).pipe(
         map((searchResults) => {
           return RoomPageActions.searchTracksSuccess({ searchResults });
         }),
@@ -30,7 +30,7 @@ export class RoomPageEffects {
 
   public constructor(
     private readonly actions: Actions,
-    private readonly searchBarService: RoomPageService,
+    private readonly roomPageService: RoomPageService,
   ) {
 
   }

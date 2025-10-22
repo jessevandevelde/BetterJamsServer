@@ -14,6 +14,6 @@ import type { Track } from 'src/app/types/track.interfaces';
 })
 export class SearchResultComponent {
   public track = input.required<Track>();
-  public addSong = output();
+  public addTrack = output();
   protected addToQueueButton = faPlus;
 }

@@ -8,15 +8,15 @@ export const searchTracks = createAction(
 );
 
 export const searchTracksSuccess = createAction(
-  '[Search] Search tracks successfully',
+  '[Search] Search tracks success',
   props<{ searchResults: Track[] }>(),
 );
 
 export const searchTracksFailure = createAction(
-  '[Search], Search error',
+  '[Search] Search tracks failure',
   props<{ error: HttpErrorResponse }>(),
 );
 
 export const resetSearchField = createAction(
-  '[Search], Search reset',
+  '[Search] Reset search field',
 );

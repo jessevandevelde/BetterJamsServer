@@ -15,11 +15,11 @@ import { LoadingStateComponent } from '../loading-state/loading-state.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
-  public tracks = input<Track[]>();
-  public addSong = output<Track>();
-  public value = input<string>('');
+  public searchResults = input<Track[]>();
+  public addTrack = output<Track>();
+  public query = input<string>('');
   public isLoading = input<boolean>();
-  protected searchValueChange = output<string>();
+  protected searchQueryChange = output<string>();
   protected clearSearch = output();
   protected magnifyingGlass = faMagnifyingGlass;
   protected closeIcon = faX;
@@ -31,7 +31,7 @@ export class SearchBarComponent {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
     const target = event.target as HTMLInputElement;
 
-    this.searchValueChange.emit(target.value);
+    this.searchQueryChange.emit(target.value);
   }
 
   protected clearInput(): void {

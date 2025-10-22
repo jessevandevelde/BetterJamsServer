@@ -4,9 +4,9 @@
   <div class="content-container">
     <img alt="Album cover" class="album-cover" height="48" width="48" [ngSrc]="_track.albumCoverUrl">
     <div class="text-container">
-      <p class="song-name">{{ _track.name }}</p>
+      <p class="track-name">{{ _track.name }}</p>
       <p class="artist-name">{{ _track.artists }}</p>
     </div>
   </div>
-  <button btjButton type="button" (click)="addSong.emit()"><fa-icon [icon]="addToQueueButton" /></button>
+  <button btjButton type="button" (click)="addTrack.emit()"><fa-icon [icon]="addToQueueButton" /></button>
 </div>
