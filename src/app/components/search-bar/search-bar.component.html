@@ -12,7 +12,7 @@
 
   <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
 
-  @if (showDropdown && query()) {
+  @if (showDropdown && query() && (searchResults()?.length || isLoading())) {
     <div class="search-dropdown">
       <btj-search-dropdown>
         <div class="dropdown-content">

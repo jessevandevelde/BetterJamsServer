@@ -43,6 +43,7 @@ export const reducer = createReducer(
   on(RoomPageActions.resetSearchField, (state): State => ({
     ...state,
     searchIsLoading: false,
+    searchResults: [],
     query: '',
   })),
 
