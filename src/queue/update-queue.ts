@@ -4,7 +4,7 @@ import type { Track } from './queue.interfaces';
 import { QueueTrack } from './queue.interfaces';
 import { HttpStatusCode } from '../helpers/response-status-codes.enums';
 
-const queue = new Queue();
+export const queue = new Queue();
 
 class HttpErrorCause {
   public code: number;
