@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import type { ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, viewChild } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faX } from '@fortawesome/free-solid-svg-icons';
 import { SearchDropdownComponent } from '../dropdown/dropdown.component';
@@ -14,22 +15,23 @@ import { LoadingStateComponent } from '../loading-state/loading-state.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
-  public tracks = input<Track[]>();
-  public addSong = output<Track>();
-  public value = input<string>('');
+  public searchResults = input<Track[]>();
+  public addTrack = output<Track>();
+  public query = input<string>('');
   public isLoading = input<boolean>();
-  protected searchValueChange = output<string>();
+  protected searchQueryChange = output<string>();
   protected clearSearch = output();
   protected magnifyingGlass = faMagnifyingGlass;
   protected closeIcon = faX;
   protected showDropdown = false;
-  private isFocused = false;
+
+  private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput');
 
   protected search(event: Event): void {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
     const target = event.target as HTMLInputElement;
 
-    this.searchValueChange.emit(target.value);
+    this.searchQueryChange.emit(target.value);
   }
 
   protected add(track: Track): void {
@@ -37,16 +39,19 @@ export class SearchBarComponent {
   }
 
   protected clearInput(): void {
-    this.clearSearch.emit();
+    const searchInput = this.searchInput();
+
+    if (searchInput) {
+      searchInput.nativeElement.focus();
+      this.clearSearch.emit();
+    }
   }
 
-  protected openDropdown(): void {
-    this.isFocused = true;
+  protected focus(): void {
     this.showDropdown = true;
   }
 
-  protected closeDropdown(): void {
-    this.isFocused = false;
+  protected blur(): void {
     this.showDropdown = false;
   }
 }

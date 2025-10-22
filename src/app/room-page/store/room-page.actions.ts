@@ -3,20 +3,25 @@ import type { Track } from '../../types/track.interfaces';
 import type { HttpErrorResponse } from '@angular/common/http';
 
 export const searchTracks = createAction(
-  '[Search] searching tracks',
+  '[Room page] Search tracks',
   props<{ query: string }>(),
 );
 
 export const searchTracksSuccess = createAction(
-  '[Search] searched tracks successfully',
+  '[Room page] Search tracks success',
   props<{ searchResults: Track[] }>(),
 );
 
 export const searchTracksFailure = createAction(
-  '[Search], searching error',
+  '[Room page] Search tracks failure',
   props<{ error: HttpErrorResponse }>(),
 );
 
 export const resetSearchField = createAction(
-  '[Search], reset',
+  '[Room page] Reset search field',
+);
+
+export const setSearchQuery = createAction(
+  '[Room page] Set search query',
+  props<{ query: string }>(),
 );

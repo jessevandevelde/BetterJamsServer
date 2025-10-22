@@ -4,46 +4,51 @@ import { RoomPageActions } from '.';
 
 export interface State {
   searchResults: Track[]
-  isLoading: boolean
+  searchIsLoading: boolean
   query: string
-  hasError: boolean
+  searchHasError: boolean
 }
 
 export const initialState: State = {
   searchResults: [],
-  isLoading: false,
+  searchIsLoading: false,
   query: '',
-  hasError: false,
+  searchHasError: false,
 };
 
 export const reducer = createReducer(
   initialState,
 
-  on(RoomPageActions.searchTracks, (state, { query }): State => ({
+  on(RoomPageActions.searchTracks, (state): State => ({
     ...state,
-    isLoading: true,
-    hasError: false,
-    query,
+    searchIsLoading: true,
+    searchHasError: false,
     searchResults: [],
   })),
 
   on(RoomPageActions.searchTracksSuccess, (state, { searchResults }): State => ({
     ...state,
-    isLoading: false,
+    searchIsLoading: false,
     searchResults,
-    hasError: false,
+    searchHasError: false,
   })),
 
   on(RoomPageActions.searchTracksFailure, (state): State => ({
     ...state,
-    isLoading: false,
-    hasError: true,
+    searchIsLoading: false,
+    searchHasError: true,
     searchResults: [],
   })),
 
   on(RoomPageActions.resetSearchField, (state): State => ({
     ...state,
-    isLoading: false,
+    searchIsLoading: false,
+    searchResults: [],
     query: '',
+  })),
+
+  on(RoomPageActions.setSearchQuery, (state, { query }): State => ({
+    ...state,
+    query,
   })),
 );

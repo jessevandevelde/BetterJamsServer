@@ -7,8 +7,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectIsLoading, selectQuery } from './store/room-page.selectors';
-import { selectTracks } from './store/room-page.selectors';
+import { selectQuery } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 
 const ONE_SECOND_IN_MS = 1000;
@@ -31,8 +30,8 @@ export class RoomPageComponent {
   protected tracks: Track[];
   protected progress = 0;
   protected progressPercentage = 0;
-  protected searchValue: Signal<string>;
-  protected searchResult: Signal<Track[]>;
+  protected searchQuery: Signal<string>;
+  protected searchResults: Signal<Track[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
   private readonly roomPageService = inject(RoomPageService);
@@ -40,9 +39,9 @@ export class RoomPageComponent {
   public constructor() {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.store = inject(Store);
-    this.searchValue = this.store.selectSignal(selectQuery);
-    this.searchResult = this.store.selectSignal(selectTracks);
-    this.isLoading = this.store.selectSignal(selectIsLoading);
+    this.searchQuery = this.store.selectSignal(selectQuery);
+    this.searchResults = this.store.selectSignal(selectSearchResults);
+    this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.trackData = this.createTrackData(trackData);
     this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
 
@@ -80,11 +79,11 @@ export class RoomPageComponent {
     this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
-  protected searchSong(query: string): void {
-    this.store.dispatch(RoomPageActions.searchTracks({ query }));
+  protected searchQueryChange(query: string): void {
+    this.store.dispatch(RoomPageActions.setSearchQuery({ query }));
   }
 
-  protected addSong(track: Track): void {
+  protected addTrack(track: Track): void {
     this.roomPageService.postSong(track).subscribe();
   }
 
