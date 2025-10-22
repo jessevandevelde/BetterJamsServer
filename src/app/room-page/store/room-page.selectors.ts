@@ -1,7 +1,7 @@
 import type { State } from './room-page.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const selectSearchBarState = createFeatureSelector<State>('search');
+export const selectSearchBarState = createFeatureSelector<State>('room-page');
 
 export const selectTracks = createSelector(
   selectSearchBarState,

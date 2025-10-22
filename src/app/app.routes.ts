@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: '',
     providers: [
-      provideState('search', reducer),
+      provideState('room-page', reducer),
       provideEffects(RoomPageEffects),
     ],
     children: [
