@@ -24,7 +24,6 @@ export class SearchBarComponent {
   protected magnifyingGlass = faMagnifyingGlass;
   protected closeIcon = faX;
   protected showDropdown = false;
-  private isFocused = false;
 
   private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput');
 
@@ -45,12 +44,10 @@ export class SearchBarComponent {
   }
 
   protected focus(): void {
-    this.isFocused = true;
     this.showDropdown = true;
   }
 
   protected blur(): void {
-    this.isFocused = false;
     this.showDropdown = false;
   }
 }

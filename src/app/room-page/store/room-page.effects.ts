@@ -5,6 +5,7 @@ import { createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { RoomPageActions } from '.';
 import { RoomPageService } from '../room-page.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const DEBOUNCE_TIME = 500;
 
@@ -22,8 +23,8 @@ export class RoomPageEffects {
           return RoomPageActions.searchTracksSuccess({ searchResults });
         }),
       )),
-      /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-      catchError(error => of(RoomPageActions.searchTracksFailure({ error }))),
+
+      catchError((error: HttpErrorResponse) => of(RoomPageActions.searchTracksFailure({ error }))),
     );
   });
 
