@@ -33,7 +33,6 @@ export class SearchBarComponent {
   }
 
   protected add(track: Track): void {
-    console.log(track);
     this.addSong.emit(track);
   }
 
