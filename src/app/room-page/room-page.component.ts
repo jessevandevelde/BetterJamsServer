@@ -7,7 +7,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 
 const ONE_SECOND_IN_MS = 1000;
@@ -44,7 +44,6 @@ export class RoomPageComponent {
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.trackData = this.createTrackData(trackData);
     this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
-
     setInterval(() => {
       if (this.isPlaying) {
         const progress = this.progress >= this.trackData.durationMs

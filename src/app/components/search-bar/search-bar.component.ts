@@ -35,7 +35,7 @@ export class SearchBarComponent {
   }
 
   protected add(track: Track): void {
-    this.addSong.emit(track);
+    this.add(track);
   }
 
   protected clearInput(): void {
