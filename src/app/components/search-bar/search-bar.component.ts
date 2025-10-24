@@ -34,10 +34,6 @@ export class SearchBarComponent {
     this.searchQueryChange.emit(target.value);
   }
 
-  protected add(track: Track): void {
-    this.add(track);
-  }
-
   protected clearInput(): void {
     const searchInput = this.searchInput();
 
