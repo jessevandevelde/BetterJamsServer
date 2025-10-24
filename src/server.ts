@@ -160,7 +160,7 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   try {
     const response = await fetch(
       `${spotifyApiUrl}/search?${querystring.stringify({
-        query,
+        q: query,
         type: 'track',
         limit: 20,
       })}`,

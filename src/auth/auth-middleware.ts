@@ -15,7 +15,7 @@ export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFu
     const { access_token } = req.cookies;
 
     if (!access_token) {
-      throw new Error();
+      throw new Error('Authorization failure, missing access_token');
     }
 
     next();
