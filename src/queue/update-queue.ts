@@ -1,11 +1,9 @@
 import type { Request, Response } from 'express';
-import { Queue } from './queue';
+import { getQueue } from './queue';
 import type { Track } from './queue.interfaces';
 import { QueueTrack } from './queue.interfaces';
 import { HttpStatusCode } from '../helpers/response-status-codes.enums';
 import { io } from '../websocket/websocket';
-
-export const queue = new Queue();
 
 class HttpErrorCause {
   public code: number;
@@ -22,6 +20,7 @@ export function updateQueue(req: Request<null, QueueTrack, Track | undefined>, r
     }
 
     const queueTrack = new QueueTrack(req.body);
+    const queue = getQueue();
 
     queue.addToQueue(queueTrack);
 

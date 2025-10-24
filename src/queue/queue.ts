@@ -1,6 +1,6 @@
-import type { QueueTrack } from './queue.interfaces';
+import type { QueueTrack, Track } from './queue.interfaces';
 
-export class Queue {
+class Queue {
   private readonly queue: QueueTrack[] = [];
 
   public addToQueue(track: QueueTrack): void {
@@ -8,4 +8,14 @@ export class Queue {
     /* eslint-disable-next-line no-console */
     console.log('Track added:', this.queue);
   }
+
+  public getFirstTrack(): Track | null {
+    return this.queue.length > 0 ? this.queue[0] : null;
+  }
+}
+
+const queue = new Queue();
+
+export function getQueue(): Queue {
+  return queue;
 }

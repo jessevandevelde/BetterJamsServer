@@ -1,5 +1,7 @@
 import { Server } from 'socket.io';
 import type http from 'http';
+import { playCurrentTrack } from '../current-track/play-current-track';
+import * as cookie from 'cookie';
 
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
 let _io: Server;
@@ -11,13 +13,18 @@ export function startWebsocket(server: http.Server): void {
       cors: {
         origin: process.env.CLIENT_URL,
         methods: ['GET', 'POST'],
+        credentials: true,
       },
     },
   );
 
-  _io.on('connection', (socket) => {
+  _io.on('connection', async (socket) => {
     /* eslint-disable-next-line no-console */
-    console.log('client connected:', socket.id);
+    console.log('Cookies:', socket.handshake.headers.cookie);
+
+    const cookies = cookie.parse(socket.handshake.headers.cookie ?? '');
+
+    await playCurrentTrack(cookies.access_token ?? '');
   });
 }
 

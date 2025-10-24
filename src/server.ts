@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
+import currentTrackRoutes from './current-track';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { HttpStatusCode } from './helpers/response-status-codes.enums';
 import http from 'http';
@@ -48,7 +49,7 @@ app.use(json());
 app.use(isAuthorizedMiddleware);
 
 app.use('/queue', queueRoutes);
-
+app.use('/current-track', currentTrackRoutes);
 app.get('/', (_req: Request, res: Response) => {
   res.send('test');
 });

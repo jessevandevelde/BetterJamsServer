@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express';
-import { queue } from './update-queue';
+import { getQueue as getCurrentQueue } from './queue';
 
 export function getQueue(_req: Request, res: Response): void {
+  const queue = getCurrentQueue();
+
   res.json(queue);
 }
