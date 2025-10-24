@@ -12,8 +12,8 @@ import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { HttpStatusCode } from './helpers/response-status-codes.enums';
-import { Server } from 'socket.io';
 import http from 'http';
+import { startWebsocket } from './websocket/websocket';
 
 const env = dotenv.config();
 
@@ -33,7 +33,8 @@ const app = express();
 /* eslint-enable @typescript-eslint/non-nullable-type-assertion-style */
 /* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
 const server = http.createServer(app);
-const io = new Server(server);
+
+startWebsocket(server);
 
 app.use(cookieParser());
 
@@ -149,10 +150,6 @@ app.get('/callback', async (req: Request, res: Response) => {
       res.redirect(`${clientUrl}/login?error=unauthorized`);
     }
   }
-});
-
-io.on('connection', () => {
-  console.log('connected');
 });
 
 app.get('/search', async (req: Request, res: Response): Promise<Response> => {
