@@ -11,6 +11,7 @@ import { selectIsLoading, selectQuery, selectQueueTracks } from './store/room-pa
 import { selectTracks } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
+import { WebsocketService } from '../services/websocket.service';
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -37,10 +38,12 @@ export class RoomPageComponent {
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
   private readonly roomPageService = inject(RoomPageService);
+  private readonly websocketService: WebsocketService;
 
   public constructor() {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.store = inject(Store);
+    this.websocketService = inject(WebsocketService);
     this.searchValue = this.store.selectSignal(selectQuery);
     this.searchResult = this.store.selectSignal(selectTracks);
     this.isLoading = this.store.selectSignal(selectIsLoading);
@@ -59,6 +62,10 @@ export class RoomPageComponent {
         this.cd.detectChanges();
       }
     }, ONE_SECOND_IN_MS);
+    console.log(this.websocketService.socket);
+    this.websocketService.socket.on('connect', () => {
+      console.log('queue updated');
+    });
   }
 
   protected vote(): void {

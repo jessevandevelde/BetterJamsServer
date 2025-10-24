@@ -19,7 +19,6 @@ export class SearchResultComponent {
   protected addToQueueButton = faPlus;
 
   protected add(track: Track): void {
-    console.log(track);
     this.addSong.emit(track);
   }
 }
