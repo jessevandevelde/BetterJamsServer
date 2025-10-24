@@ -62,9 +62,14 @@ export class RoomPageComponent {
         this.cd.detectChanges();
       }
     }, ONE_SECOND_IN_MS);
-    console.log(this.websocketService.socket);
-    this.websocketService.socket.on('connect', () => {
-      console.log('queue updated');
+
+    this.initializeQueueUpdatedWebsocket();
+  }
+
+  protected initializeQueueUpdatedWebsocket(): void {
+    this.websocketService.socket.on('queue-updated', () => {
+      this.store.dispatch(getQueueTracks(),
+      );
     });
   }
 

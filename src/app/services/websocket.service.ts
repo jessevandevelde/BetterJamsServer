@@ -9,7 +9,7 @@ export class WebsocketService {
   private readonly _socket: Socket;
 
   public constructor() {
-    this._socket = io();
+    this._socket = io('http://127.0.0.1:3000');
   }
 
   public get socket(): Socket {
