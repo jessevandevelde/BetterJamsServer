@@ -49,7 +49,8 @@ export class RoomPageComponent {
     this.isLoading = this.store.selectSignal(selectIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.trackData = this.createTrackData(trackData);
-
+    this.initializeQueueUpdatedWebsocket();
+    this.getCurrentTrack();
     this.store.dispatch(getQueueTracks());
 
     setInterval(() => {
@@ -62,8 +63,6 @@ export class RoomPageComponent {
         this.cd.detectChanges();
       }
     }, ONE_SECOND_IN_MS);
-
-    this.initializeQueueUpdatedWebsocket();
   }
 
   protected initializeQueueUpdatedWebsocket(): void {
@@ -101,6 +100,15 @@ export class RoomPageComponent {
 
   protected addSong(track: Track): void {
     this.roomPageService.postSong(track).subscribe();
+  }
+
+  protected getCurrentTrack(): void {
+    this.websocketService.socket.on('current-track', (track: Track) => {
+      console.log('Ontvangen huidige track:', track);
+      this.trackData = track;
+      this.progress = 0;
+      this.cd.detectChanges();
+    });
   }
 
   private createTrackData(data: typeof trackData): Track {
