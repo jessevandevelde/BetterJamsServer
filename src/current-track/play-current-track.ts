@@ -1,9 +1,10 @@
-import { response, type Request, type Response } from 'express';
+import type { Request, Response } from 'express';
 import { getQueue } from '../queue/queue';
 
+const queue = getQueue();
+
 export async function playCurrentTrack(token: string): Promise<void> {
-  const queue = getQueue();
-  const currentTrack = queue.getFirstTrack();
+  const currentTrack = queue.getCurrentTrack();
 
   if (!currentTrack) {
     return;
@@ -19,7 +20,6 @@ export async function playCurrentTrack(token: string): Promise<void> {
     },
     body: JSON.stringify({ uris: [currentTrack.uri] }),
   });
-  console.log(response);
 }
 
 export async function playTrack(req: Request, _res: Response): Promise<void> {
