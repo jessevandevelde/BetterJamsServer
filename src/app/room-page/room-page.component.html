@@ -3,13 +3,14 @@
 </div>
 
 <div class="roompage">
-  <app-media-player class="media-player" 
+  <app-media-player class="media-player"
     (pauseTrack)="pauseTrack()"
     (playTrack)="playTrack()"
     [isPlaying]="isPlaying"
     [progress]="progress"
-    [track]="trackData"
+    [track]="trackData!" 
   />
+
 
 <!-- @for loop function maken -->
   <div class="queue">
