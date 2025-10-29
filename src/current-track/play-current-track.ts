@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { getQueue } from '../queue/queue';
+import { getCurrentPositionMs } from './current-track';
 
 const queue = getQueue();
 
@@ -18,7 +19,8 @@ export async function playCurrentTrack(token: string): Promise<void> {
       'Content-Type': 'application/json',
       /* eslint-enable @typescript-eslint/naming-convention */
     },
-    body: JSON.stringify({ uris: [currentTrack.uri] }),
+    /* eslint-disable-next-line @typescript-eslint/naming-convention */
+    body: JSON.stringify({ uris: [currentTrack.uri], position_ms: getCurrentPositionMs() }),
   });
 }
 

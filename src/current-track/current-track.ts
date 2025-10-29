@@ -1,6 +1,5 @@
-import { io } from '../websocket/websocket';
+import { emitCurrentTrackInformation } from '../helpers/track.helpers';
 import { getQueue } from '../queue/queue';
-import { playTrack } from './play-current-track';
 
 let currentPositionMs = 0;
 const ONE_SECOND_IN_MS = 1000;
@@ -17,7 +16,9 @@ export function startTrackInterval(): NodeJS.Timeout {
     }
 
     if (currentPositionMs >= currentTrack.durationMs) {
-      io().emit('current-track', playTrack);
+      currentPositionMs = 0;
+      queue.setNextTrack();
+      emitCurrentTrackInformation();
     }
   }, ONE_SECOND_IN_MS);
 }

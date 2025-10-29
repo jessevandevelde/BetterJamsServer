@@ -3,6 +3,8 @@ import type http from 'http';
 import { playCurrentTrack } from '../current-track/play-current-track';
 import * as cookie from 'cookie';
 import { getQueue } from '../queue/queue';
+import { startTrackInterval } from '../current-track/current-track';
+import { emitCurrentTrackInformation } from '../helpers/track.helpers';
 
 const queue = getQueue();
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
@@ -28,6 +30,10 @@ export function startWebsocket(server: http.Server): void {
 
     if (queue.queue.length && !queue.getCurrentTrack()) {
       queue.setNextTrack();
+      startTrackInterval();
+    }
+    else {
+      emitCurrentTrackInformation();
     }
 
     await playCurrentTrack(cookies.access_token ?? '');
