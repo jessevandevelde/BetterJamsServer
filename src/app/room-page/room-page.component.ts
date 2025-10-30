@@ -97,7 +97,6 @@ export class RoomPageComponent {
 
   protected getCurrentTrack(): void {
     this.websocketService.socket.on('current-track', (data: { track: Track, progressMs: number }) => {
-      console.log('Received current track:', data);
       this.trackData = data.track;
       this.progress = data.progressMs;
       this.cd.detectChanges();
