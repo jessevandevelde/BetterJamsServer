@@ -83,7 +83,7 @@ export class RoomPageComponent {
   }
 
   protected addTrack(track: Track): void {
-    this.roomPageService.addTracksToQueue(track).subscribe();
+    this.roomPageService.addTrackToQueue(track).subscribe();
   }
 
   private createTrackData(data: typeof trackData): Track {

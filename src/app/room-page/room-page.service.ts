@@ -29,7 +29,7 @@ export class RoomPageService {
     );
   }
 
-  public addTracksToQueue(track: Track): Observable<Track> {
+  public addTrackToQueue(track: Track): Observable<Track> {
     return this.httpClient.post<Track>(`${spotifyApiCallLink}/queue`, track, {
       withCredentials: true,
     });
