@@ -27,6 +27,10 @@ class Queue {
     this.currentTrack = firstItemInArray;
     console.log('nextTrack:', this.currentTrack);
   }
+
+  public hasNextTrack(): boolean {
+    return this.queue.length > 0;
+  }
 }
 
 const queue = new Queue();
