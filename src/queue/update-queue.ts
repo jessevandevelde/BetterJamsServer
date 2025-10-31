@@ -1,10 +1,10 @@
 import type { Request, Response } from 'express';
-import { Queue } from './queue';
+import { getQueue } from './queue';
 import type { Track } from './queue.interfaces';
 import { QueueTrack } from './queue.interfaces';
 import { StatusCodes } from 'http-status-codes';
 
-export const queue = new Queue();
+const queue = getQueue();
 
 class HttpErrorCause {
   public code: number;

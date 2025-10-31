@@ -1,6 +1,6 @@
 import type { QueueTrack } from './queue.interfaces';
 
-export class Queue {
+class Queue {
   private readonly queue: QueueTrack[] = [];
 
   public addToQueue(track: QueueTrack): void {
@@ -8,4 +8,10 @@ export class Queue {
     /* eslint-disable-next-line no-console */
     console.log('Track added:', this.queue);
   }
+}
+
+const queue = new Queue();
+
+export function getQueue(): Queue {
+  return queue;
 }
