@@ -20,7 +20,7 @@ export class RoomPageService {
   public search(query: string): Observable<Track[]> {
     return this.httpClient.get<SearchResultsRemote>(spotifySearchLink, {
       params: {
-        q: query,
+        query,
       },
       withCredentials: true,
     }).pipe(
