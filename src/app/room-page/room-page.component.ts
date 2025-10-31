@@ -34,7 +34,6 @@ export class RoomPageComponent implements OnDestroy {
   private readonly websocketService: WebsocketService = inject(WebsocketService);
 
   public constructor() {
-    this.store = inject(Store);
     this.searchQuery = this.store.selectSignal(selectQuery);
     this.searchResults = this.store.selectSignal(selectSearchResults);
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
