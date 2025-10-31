@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, type Observable } from 'rxjs';
-import { spotifyApiCallLink } from 'src/app/environment';
+import { spotifyApiCallLink, spotifySearchLink } from 'src/app/environment';
 import { Track } from '../types/track.interfaces';
 import type { SearchResultsRemote } from '../types/track.interfaces';
 
@@ -17,9 +17,9 @@ export class RoomPageService {
   }
 
   public search(query: string): Observable<Track[]> {
-    return this.httpClient.get<SearchResultsRemote>(`${spotifyApiCallLink}/search`, {
+    return this.httpClient.get<SearchResultsRemote>(spotifySearchLink, {
       params: {
-        query: query,
+        q: query,
       },
       withCredentials: true,
     }).pipe(
@@ -27,5 +27,11 @@ export class RoomPageService {
         return searchResultsRemote.tracks.items.map(trackRemote => new Track(trackRemote));
       }),
     );
+  }
+
+  public addTrackToQueue(track: Track): Observable<Track> {
+    return this.httpClient.post<Track>(`${spotifyApiCallLink}/queue`, track, {
+      withCredentials: true,
+    });
   }
 }
