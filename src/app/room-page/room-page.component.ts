@@ -47,6 +47,7 @@ export class RoomPageComponent {
     this.trackData = this.createTrackData(trackData);
 
     this.store.dispatch(getQueueTracks());
+
     setInterval(() => {
       if (this.isPlaying) {
         const progress = this.progress >= this.trackData.durationMs
