@@ -100,6 +100,8 @@ export class RoomPageComponent {
       this.trackData = data.track;
       this.progress = data.progressMs;
       this.cd.detectChanges();
+      console.log(data);
+      this.roomPageService.playTrack().subscribe();
     });
   }
 }
