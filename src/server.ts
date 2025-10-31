@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import express from 'express';
+import express, { json } from 'express';
 import { randomBytes } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 import querystring from 'node:querystring';
@@ -9,6 +9,9 @@ import dotenvExpand from 'dotenv-expand';
 import dotenv from 'dotenv';
 import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
+import queueRoutes from './queue';
+import { isAuthorizedMiddleware } from './auth/auth-middleware';
+import { StatusCodes } from 'http-status-codes';
 
 const env = dotenv.config();
 
@@ -34,6 +37,12 @@ app.use(cors ({
   origin: clientUrl,
   credentials: true,
 }));
+
+app.use(json());
+
+app.use(isAuthorizedMiddleware);
+
+app.use('/queue', queueRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('test');
@@ -140,20 +149,13 @@ app.get('/callback', async (req: Request, res: Response) => {
 
 app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   const query = req.query.query as string | undefined;
-  const missingSearchQuery = 400;
-  const badCookie = 401;
-  const spotifyApiError = 500;
 
   if (!query) {
-    return res.status(missingSearchQuery).json({ error: 'Missing search query' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Missing search query' });
   }
 
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
   const { access_token } = req.cookies;
-
-  if (!access_token) {
-    return res.status(badCookie).json({ error: 'Unauthorized: no access token' });
-  }
 
   try {
     const response = await fetch(
@@ -180,10 +182,9 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
     return res.json(data);
   }
   catch (err) {
-    /* eslint-disable-next-line no-console */
     console.error(err);
 
-    return res.status(spotifyApiError).json({ error: 'Failed to search Spotify API' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to search Spotify API' });
   }
 });
 
@@ -194,7 +195,6 @@ if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
   });
 }
 else {
-  /* eslint-disable-next-line no-console */
   console.warn(`missing parameters 
     clientId: ${clientId},
     serverPort: ${serverPort},
