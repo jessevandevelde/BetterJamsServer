@@ -1,12 +1,12 @@
 import type { Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
-import type { Track } from '../types/track.interfaces';
+import type { QueueTrack, Track } from '../types/track.interfaces';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectIsLoading, selectQuery, selectQueueTracks, selectTracks } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
@@ -29,18 +29,20 @@ export class RoomPageComponent {
   protected trackData: Track | null = null;
   protected progress = 0;
   protected progressPercentage = 0;
-  protected searchValue: Signal<string>;
-  protected searchResult: Signal<Track[]>;
-  protected queueTracks: Signal<Track[]>;
+  protected searchQuery: Signal<string>;
+  protected searchResults: Signal<Track[]>;
+  protected queueTracks: Signal<QueueTrack[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store = inject<Store>(Store);
   private readonly roomPageService = inject(RoomPageService);
   private readonly websocketService: WebsocketService = inject(WebsocketService);
 
   public constructor() {
-    this.searchValue = this.store.selectSignal(selectQuery);
-    this.searchResult = this.store.selectSignal(selectTracks);
-    this.isLoading = this.store.selectSignal(selectIsLoading);
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+    this.store = inject(Store);
+    this.searchQuery = this.store.selectSignal(selectQuery);
+    this.searchResults = this.store.selectSignal(selectSearchResults);
+    this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
 
     this.initializeQueueUpdatedWebsocket();
@@ -87,12 +89,12 @@ export class RoomPageComponent {
     this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
-  protected searchSong(query: string): void {
-    this.store.dispatch(RoomPageActions.searchTracks({ query }));
+  protected searchQueryChange(query: string): void {
+    this.store.dispatch(RoomPageActions.setSearchQuery({ query }));
   }
 
-  protected addSong(track: Track): void {
-    this.roomPageService.postSong(track).subscribe();
+  protected addTrack(track: Track): void {
+    this.roomPageService.addTrackToQueue(track).subscribe();
   }
 
   protected getCurrentTrack(): void {

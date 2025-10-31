@@ -28,14 +28,14 @@
   }
 }
 
-.song-info {
+.track-info {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.song-name {
+.track-name {
   font-weight: normal;
   font-size: 28px;
   margin: 0;

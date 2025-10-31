@@ -16,6 +16,18 @@
   }
 }
 
+.loading {
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  justify-content: center;
+
+  @media (width >= 768px) {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
 .search-bar input {
   background-color: var(--mid-blue);
   color: var(--light-gray);
@@ -29,14 +41,18 @@
 }
 
 .search-dropdown {
-  position: absolute;
+  position: fixed;
   left: 0;
-  top: 42px;
+  top: 56px;
   width: 100%;
   height: calc(100dvh - 57px);
 
   @media (width >= 768px) {
-    top: 37px;
+    position: absolute;
+    top: 39px;
+    height: 100%;
+    width: 768px;
+    left: -1px;
   }
 }
 

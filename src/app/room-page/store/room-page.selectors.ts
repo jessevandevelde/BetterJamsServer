@@ -1,29 +1,29 @@
 import type { State } from './room-page.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const selectSearchBarState = createFeatureSelector<State>('search');
+export const selectRoomPageState = createFeatureSelector<State>('room-page');
 
-export const selectTracks = createSelector(
-  selectSearchBarState,
+export const selectSearchResults = createSelector(
+  selectRoomPageState,
   state => state.searchResults,
 );
 
 export const selectQuery = createSelector(
-  selectSearchBarState,
+  selectRoomPageState,
   state => state.query,
 );
 
-export const selectIsLoading = createSelector(
-  selectSearchBarState,
-  state => state.isLoading,
+export const selectSearchIsLoading = createSelector(
+  selectRoomPageState,
+  state => state.searchIsLoading,
 );
 
-export const selectHasError = createSelector(
-  selectSearchBarState,
-  state => state.hasError,
+export const selectSearchHasError = createSelector(
+  selectRoomPageState,
+  state => state.searchHasError,
 );
 
 export const selectQueueTracks = createSelector(
-  selectSearchBarState,
+  selectRoomPageState,
   state => state.queueTracks,
 );
