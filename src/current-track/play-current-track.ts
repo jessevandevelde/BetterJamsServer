@@ -1,36 +1,10 @@
-import type { Request, Response } from 'express';
+import { getCookieFromCookies } from '../helpers/cookies.helpers';
 import { getQueue } from '../queue/queue';
+import type { QueueTrack } from '../queue/queue.interfaces';
 import { getCurrentPositionMs } from './current-track';
+import type { Request, Response } from 'express';
 
-const queue = getQueue();
-const FALLBACK_TRACK_URI = 'spotify:track:76ZOzwf0oSiS69NOw8r8Nx';
-
-async function playFallback(token: string): Promise<void> {
-  await fetch('https://api.spotify.com/v1/me/player/play', {
-    method: 'PUT',
-    headers: {
-      /* eslint-disable @typescript-eslint/naming-convention */
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      /* eslint-enable @typescript-eslint/naming-convention */
-    },
-    body: JSON.stringify({
-      uris: [FALLBACK_TRACK_URI],
-      /* eslint-disable-next-line @typescript-eslint/naming-convention */
-      position_ms: 0,
-    }),
-  });
-}
-
-export async function playCurrentTrack(token: string): Promise<void> {
-  const currentTrack = queue.getCurrentTrack();
-
-  if (!currentTrack || !queue.hasNextTrack()) {
-    await playFallback(token);
-
-    return;
-  }
-
+async function playCurrentTrack(token: string, track: QueueTrack): Promise<void> {
   await fetch('https://api.spotify.com/v1/me/player/play', {
     method: 'PUT',
     headers: {
@@ -41,18 +15,23 @@ export async function playCurrentTrack(token: string): Promise<void> {
     },
 
     body: JSON.stringify({
-      uris: [currentTrack.uri],
+      uris: [track.uri],
       /* eslint-disable-next-line @typescript-eslint/naming-convention */
       position_ms: getCurrentPositionMs(),
     }),
   });
 }
 
-export async function playTrack(req: Request, _res: Response): Promise<void> {
-  /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
-  const token = req.cookies.access_token as string;
+export async function playTrack(req: Request, res: Response): Promise<void> {
+  const accessToken = getCookieFromCookies('access_token', req.cookies);
+  const queue = getQueue();
+  const { currentTrack } = queue;
 
-  if (!token) return;
+  if (!currentTrack) {
+    return;
+  }
 
-  await playCurrentTrack(token);
+  await playCurrentTrack(accessToken, currentTrack);
+
+  res.send({ status: 'OK' });
 }

@@ -33,9 +33,6 @@ const spotifyApiUrl = process.env.SPOTIFY_API_URL as string;
 const app = express();
 /* eslint-enable @typescript-eslint/non-nullable-type-assertion-style */
 /* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
-const server = http.createServer(app);
-
-startWebsocket(server);
 
 app.use(cookieParser());
 
@@ -194,9 +191,12 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   }
 });
 
+const server = http.createServer(app);
+
 if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
   server.listen(serverPort, () => {
-  // eslint-disable-next-line no-console
+    startWebsocket(server);
+    // eslint-disable-next-line no-console
     console.log(`Server draait op ${serverUrl}`);
   });
 }

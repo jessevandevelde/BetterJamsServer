@@ -3,7 +3,6 @@ import { getQueue } from './queue';
 import type { Track } from './queue.interfaces';
 import { QueueTrack } from './queue.interfaces';
 import { HttpStatusCode } from '../helpers/response-status-codes.enums';
-import { io } from '../websocket/websocket';
 
 class HttpErrorCause {
   public code: number;
@@ -23,8 +22,6 @@ export function updateQueue(req: Request<null, QueueTrack, Track | undefined>, r
     const queue = getQueue();
 
     queue.addToQueue(queueTrack);
-
-    io().emit('queue-updated');
 
     res.json(queueTrack);
   }

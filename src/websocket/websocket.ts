@@ -1,12 +1,9 @@
 import { Server } from 'socket.io';
 import type http from 'http';
-import { playCurrentTrack } from '../current-track/play-current-track';
-import * as cookie from 'cookie';
-import { getQueue } from '../queue/queue';
-import { startTrackInterval } from '../current-track/current-track';
+import { intervalStarted, startTrackInterval } from '../current-track/current-track';
+import { WebsocketEvent } from './websocket.enums';
 import { emitCurrentTrackInformation } from '../helpers/track.helpers';
 
-const queue = getQueue();
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
 let _io: Server;
 
@@ -22,21 +19,12 @@ export function startWebsocket(server: http.Server): void {
     },
   );
 
-  _io.on('connection', async (socket) => {
-    /* eslint-disable-next-line no-console */
-    console.log('Cookies:', socket.handshake.headers.cookie);
-
-    const cookies = cookie.parse(socket.handshake.headers.cookie ?? '');
-
-    if (queue.queue.length && !queue.getCurrentTrack()) {
-      queue.setNextTrack();
+  _io.on(WebsocketEvent.connection, () => {
+    if (!intervalStarted) {
       startTrackInterval();
     }
-    else {
-      emitCurrentTrackInformation();
-    }
 
-    await playCurrentTrack(cookies.access_token ?? '');
+    emitCurrentTrackInformation();
   });
 }
 
