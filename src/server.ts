@@ -11,7 +11,7 @@ import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
-import { HttpStatusCode } from './helpers/response-status-codes.enums';
+import { StatusCodes } from 'http-status-codes';
 
 const env = dotenv.config();
 
@@ -151,7 +151,7 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   const query = req.query.query as string | undefined;
 
   if (!query) {
-    return res.status(HttpStatusCode.badRequest).json({ error: 'Missing search query' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Missing search query' });
   }
 
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
@@ -160,7 +160,7 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   try {
     const response = await fetch(
       `${spotifyApiUrl}/search?${querystring.stringify({
-        query,
+        q: query,
         type: 'track',
         limit: 20,
       })}`,
@@ -184,7 +184,7 @@ app.get('/search', async (req: Request, res: Response): Promise<Response> => {
   catch (err) {
     console.error(err);
 
-    return res.status(HttpStatusCode.serverError).json({ error: 'Failed to search Spotify API' });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to search Spotify API' });
   }
 });
 
