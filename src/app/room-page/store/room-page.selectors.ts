@@ -24,6 +24,6 @@ export const selectSearchHasError = createSelector(
 );
 
 export const selectQueueTracks = createSelector(
-  selectSearchBarState,
+  selectRoomPageState,
   state => state.queueTracks,
 );
