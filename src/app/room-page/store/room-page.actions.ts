@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import type { Track } from '../../types/track.interfaces';
+import type { QueueTrack, Track } from '../../types/track.interfaces';
 import type { HttpErrorResponse } from '@angular/common/http';
 
 export const searchTracks = createAction(
@@ -32,7 +32,7 @@ export const getQueueTracks = createAction(
 
 export const getQueueTracksSuccess = createAction(
   '[Queue] Get queue tracks success',
-  props<{ queueTracks: Track[] }>(),
+  props<{ queueTracks: QueueTrack[] }>(),
 );
 
 export const getQueueTracksFailure = createAction(
