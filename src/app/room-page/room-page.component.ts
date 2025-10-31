@@ -1,14 +1,15 @@
 import type { Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
-import type { Track } from '../types/track.interfaces';
+import type { QueueTrack, Track } from '../types/track.interfaces';
 import trackData from '../dummy-data/track-data.json';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery, selectSearchIsLoading, selectSearchResults } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
+import { getQueueTracks } from './store/room-page.actions';
 
 const ONE_SECOND_IN_MS = 1000;
 
@@ -27,11 +28,11 @@ export class RoomPageComponent {
   public isLoading: Signal<boolean>;
   protected dummyData = trackData;
   protected trackData: Track;
-  protected tracks: Track[];
   protected progress = 0;
   protected progressPercentage = 0;
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
+  protected queueTracks: Signal<QueueTrack[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
   private readonly roomPageService = inject(RoomPageService);
@@ -42,8 +43,11 @@ export class RoomPageComponent {
     this.searchQuery = this.store.selectSignal(selectQuery);
     this.searchResults = this.store.selectSignal(selectSearchResults);
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
+    this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.trackData = this.createTrackData(trackData);
-    this.tracks = [this.createTrackData(trackData), this.createTrackData(trackData)];
+
+    this.store.dispatch(getQueueTracks());
+
     setInterval(() => {
       if (this.isPlaying) {
         const progress = this.progress >= this.trackData.durationMs

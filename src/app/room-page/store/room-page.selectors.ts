@@ -22,3 +22,8 @@ export const selectSearchHasError = createSelector(
   selectRoomPageState,
   state => state.searchHasError,
 );
+
+export const selectQueueTracks = createSelector(
+  selectRoomPageState,
+  state => state.queueTracks,
+);

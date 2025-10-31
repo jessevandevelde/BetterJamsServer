@@ -4,6 +4,7 @@ import { map, type Observable } from 'rxjs';
 import { spotifyApiCallLink, spotifySearchLink } from 'src/app/environment';
 import { Track } from '../types/track.interfaces';
 import type { SearchResultsRemote } from '../types/track.interfaces';
+import type { GetQueueDTO } from './room-page.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class RoomPageService {
   public search(query: string): Observable<Track[]> {
     return this.httpClient.get<SearchResultsRemote>(spotifySearchLink, {
       params: {
-        q: query,
+        query,
       },
       withCredentials: true,
     }).pipe(
@@ -31,6 +32,12 @@ export class RoomPageService {
 
   public addTrackToQueue(track: Track): Observable<Track> {
     return this.httpClient.post<Track>(`${spotifyApiCallLink}/queue`, track, {
+      withCredentials: true,
+    });
+  }
+
+  public getQueue(): Observable<GetQueueDTO> {
+    return this.httpClient.get<GetQueueDTO>(`${spotifyApiCallLink}/queue`, {
       withCredentials: true,
     });
   }

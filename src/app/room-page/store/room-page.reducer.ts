@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import type { Track } from '../../types/track.interfaces';
+import type { QueueTrack, Track } from '../../types/track.interfaces';
 import { RoomPageActions } from '.';
 
 export interface State {
@@ -7,6 +7,9 @@ export interface State {
   searchIsLoading: boolean
   query: string
   searchHasError: boolean
+  queueTracks: QueueTrack[]
+  queueIsLoading: boolean
+  queueHasError: boolean
 }
 
 export const initialState: State = {
@@ -14,6 +17,9 @@ export const initialState: State = {
   searchIsLoading: false,
   query: '',
   searchHasError: false,
+  queueTracks: [],
+  queueIsLoading: false,
+  queueHasError: false,
 };
 
 export const reducer = createReducer(
@@ -51,4 +57,23 @@ export const reducer = createReducer(
     ...state,
     query,
   })),
+
+  on(RoomPageActions.getQueueTracks, (state): State => ({
+    ...state,
+    queueHasError: false,
+    queueIsLoading: true,
+  })),
+
+  on(RoomPageActions.getQueueTracksSuccess, (state, { queueTracks }): State => ({
+    ...state,
+    queueIsLoading: false,
+    queueTracks,
+  })),
+
+  on(RoomPageActions.getQueueTracksFailure, (state): State => ({
+    ...state,
+    queueHasError: true,
+    queueIsLoading: false,
+  })),
+
 );

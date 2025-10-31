@@ -33,6 +33,7 @@ export interface AlbumCoverRemote {
 export interface SearchResultsRemote {
   tracks: { items: TrackRemote[] }
 }
+
 export class Track {
   public albumCoverUrl: string;
   public artists: string;
@@ -53,4 +54,7 @@ export class Track {
     this.name = name;
     this.uri = uri;
   }
+}
+export interface QueueTrack extends Track {
+  upvoteIds: []
 }

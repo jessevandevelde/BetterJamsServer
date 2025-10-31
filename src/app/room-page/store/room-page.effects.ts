@@ -1,9 +1,11 @@
 /* eslint-disable @angular-eslint/prefer-inject,  @typescript-eslint/consistent-type-imports, @typescript-eslint/parameter-properties */
 import { catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
+
 import { Actions } from '@ngrx/effects';
 import { createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { RoomPageActions } from '.';
+
 import { RoomPageService } from '../room-page.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -29,9 +31,20 @@ export class RoomPageEffects {
         map((searchResults) => {
           return RoomPageActions.searchTracksSuccess({ searchResults });
         }),
+        catchError((error: HttpErrorResponse) => of(RoomPageActions.searchTracksFailure({ error }))),
       )),
+    );
+  });
 
-      catchError((error: HttpErrorResponse) => of(RoomPageActions.searchTracksFailure({ error }))),
+  public getQueue$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(RoomPageActions.getQueueTracks),
+      switchMap(() => this.roomPageService.getQueue().pipe(
+        map(({ queue }) => {
+          return RoomPageActions.getQueueTracksSuccess({ queueTracks: queue });
+        }),
+        catchError((error: HttpErrorResponse) => of(RoomPageActions.getQueueTracksFailure({ error }))),
+      )),
     );
   });
 
