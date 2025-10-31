@@ -1,7 +1,7 @@
 import type { Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
-import type { Track } from '../types/track.interfaces';
+import type { QueueTrack, Track } from '../types/track.interfaces';
 import trackData from '../dummy-data/track-data.json';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
@@ -32,7 +32,7 @@ export class RoomPageComponent {
   protected progressPercentage = 0;
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
-  protected queueTracks: Signal<Track[]>;
+  protected queueTracks: Signal<QueueTrack[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
   private readonly roomPageService = inject(RoomPageService);
