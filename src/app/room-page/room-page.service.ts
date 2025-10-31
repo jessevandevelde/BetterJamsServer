@@ -41,4 +41,10 @@ export class RoomPageService {
       withCredentials: true,
     });
   }
+
+  public playTrack(): Observable<object> {
+    return this.httpClient.post(`${spotifyApiCallLink}/current-track/play`, null, {
+      withCredentials: true,
+    });
+  }
 }

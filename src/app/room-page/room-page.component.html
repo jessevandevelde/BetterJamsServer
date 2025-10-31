@@ -11,23 +11,27 @@
 
 <div class="roompage">
   <div class="room-page-container">
-    <app-media-player class="media-player" 
-      (pauseTrack)="pauseTrack()"
-      (playTrack)="playTrack()"
-      [isPlaying]="isPlaying"
-      [progress]="progress"
-      [track]="trackData"
-    />
-    
+    @let _currentTrack = currentTrack();
+
+    @if (_currentTrack) {
+      <app-media-player class="media-player" 
+        (pauseTrack)="pauseTrack()"
+        (playTrack)="playTrack()"
+        [isPlaying]="isPlaying"
+        [progress]="currentTrackProgress()"
+        [track]="_currentTrack!"
+      />
+    }
+
     <div class="queue">
       @for (track of queueTracks(); track $index) {
-      <app-queue-row
-        (removeVote)="removeVote()"
-        (upvote)="vote()"
-        [track]="track"
-        [upVoteCount]="upvoteCount"
-        [upvoted]="upvoted" 
-      />
+        <app-queue-row
+          (removeVote)="removeVote()"
+          (upvote)="vote()"
+          [track]="track"
+          [upVoteCount]="upvoteCount"
+          [upvoted]="upvoted" 
+        />
       }  @empty {
         <p class="empty-queue">search tracks to queue</p>
       }
