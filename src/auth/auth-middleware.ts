@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { HttpStatusCode } from '../helpers/response-status-codes.enums';
+import { StatusCodes } from 'http-status-codes';
 
 export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFunction): void {
   const excludedPaths = ['/login', '/callback'];
@@ -15,12 +15,12 @@ export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFu
     const { access_token } = req.cookies;
 
     if (!access_token) {
-      throw new Error();
+      throw new Error('Authorization failure, missing access_token');
     }
 
     next();
   }
   catch (_error) {
-    res.status(HttpStatusCode.unauthorized).json({ error: 'Unauthorized: no access token' });
+    res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Unauthorized: no access token' });
   }
 }
