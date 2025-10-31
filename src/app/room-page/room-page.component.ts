@@ -1,5 +1,5 @@
-import type { Signal } from '@angular/core';
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef, inject } from '@angular/core';
+import type { OnDestroy, Signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import type { QueueTrack, Track } from '../types/track.interfaces';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
@@ -11,8 +11,6 @@ import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 
-const ONE_SECOND_IN_MS = 1000;
-
 @Component({
   selector: 'app-room-page',
   standalone: true,
@@ -21,24 +19,21 @@ const ONE_SECOND_IN_MS = 1000;
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoomPageComponent {
+export class RoomPageComponent implements OnDestroy {
   public upvoteCount = 0;
   public upvoted = false;
   public isPlaying = true;
   public isLoading: Signal<boolean>;
-  protected trackData: Track | null = null;
-  protected progress = 0;
-  protected progressPercentage = 0;
+  protected currentTrack: WritableSignal<Track | null> = signal(null);
+  protected currentTrackProgress = signal(0);
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<QueueTrack[]>;
-  private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
-  private readonly store = inject<Store>(Store);
+  private readonly store = inject(Store);
   private readonly roomPageService = inject(RoomPageService);
   private readonly websocketService: WebsocketService = inject(WebsocketService);
 
   public constructor() {
-    /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.store = inject(Store);
     this.searchQuery = this.store.selectSignal(selectQuery);
     this.searchResults = this.store.selectSignal(selectSearchResults);
@@ -46,19 +41,12 @@ export class RoomPageComponent {
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
 
     this.initializeQueueUpdatedWebsocket();
-    this.getCurrentTrack();
+    this.initializeCurrentTrackWebsocket();
     this.store.dispatch(getQueueTracks());
+  }
 
-    setInterval(() => {
-      if (this.isPlaying && this.trackData) {
-        const progress = this.progress >= this.trackData.durationMs
-          ? 0
-          : this.progress + ONE_SECOND_IN_MS;
-
-        this.progress = progress;
-        this.cd.detectChanges();
-      }
-    }, ONE_SECOND_IN_MS);
+  public ngOnDestroy(): void {
+    this.websocketService.disconnect();
   }
 
   protected initializeQueueUpdatedWebsocket(): void {
@@ -97,12 +85,10 @@ export class RoomPageComponent {
     this.roomPageService.addTrackToQueue(track).subscribe();
   }
 
-  protected getCurrentTrack(): void {
+  protected initializeCurrentTrackWebsocket(): void {
     this.websocketService.socket.on('current-track', (data: { track: Track, progressMs: number }) => {
-      this.trackData = data.track;
-      this.progress = data.progressMs;
-      this.cd.detectChanges();
-      console.log(data);
+      this.currentTrack.set(data.track);
+      this.currentTrackProgress.set(data.progressMs);
       this.roomPageService.playTrack().subscribe();
     });
   }
