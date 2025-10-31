@@ -7,8 +7,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectIsLoading, selectQuery, selectQueueTracks } from './store/room-page.selectors';
-import { selectTracks } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 
@@ -31,8 +30,8 @@ export class RoomPageComponent {
   protected trackData: Track;
   protected progress = 0;
   protected progressPercentage = 0;
-  protected searchValue: Signal<string>;
-  protected searchResult: Signal<Track[]>;
+  protected searchQuery: Signal<string>;
+  protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<Track[]>;
   private readonly cd: ChangeDetectorRef = inject(ChangeDetectorRef);
   private readonly store: Store;
@@ -41,14 +40,13 @@ export class RoomPageComponent {
   public constructor() {
     /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
     this.store = inject(Store);
-    this.searchValue = this.store.selectSignal(selectQuery);
-    this.searchResult = this.store.selectSignal(selectTracks);
-    this.isLoading = this.store.selectSignal(selectIsLoading);
+    this.searchQuery = this.store.selectSignal(selectQuery);
+    this.searchResults = this.store.selectSignal(selectSearchResults);
+    this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.trackData = this.createTrackData(trackData);
 
     this.store.dispatch(getQueueTracks());
-
     setInterval(() => {
       if (this.isPlaying) {
         const progress = this.progress >= this.trackData.durationMs
@@ -83,12 +81,12 @@ export class RoomPageComponent {
     this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
-  protected searchSong(query: string): void {
-    this.store.dispatch(RoomPageActions.searchTracks({ query }));
+  protected searchQueryChange(query: string): void {
+    this.store.dispatch(RoomPageActions.setSearchQuery({ query }));
   }
 
-  protected addSong(track: Track): void {
-    this.roomPageService.postSong(track).subscribe();
+  protected addTrack(track: Track): void {
+    this.roomPageService.addTrackToQueue(track).subscribe();
   }
 
   private createTrackData(data: typeof trackData): Track {

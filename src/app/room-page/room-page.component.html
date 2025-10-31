@@ -1,27 +1,37 @@
 <div class="header">
-  <btj-search-bar class="search-bar" (addSong)="addSong($event);" (clearSearch)="clearSearch();" (searchValueChange)="searchSong($event)" [isLoading]="isLoading()" [tracks]="searchResult()" [value]="searchValue()" />
+  <btj-search-bar class="search-bar" 
+    (addTrack)="addTrack($event);" 
+    (clearSearch)="clearSearch();" 
+    (searchQueryChange)="searchQueryChange($event)" 
+    [isLoading]="isLoading()" 
+    [query]="searchQuery()" 
+    [searchResults]="searchResults()" 
+  />
 </div>
 
 <div class="roompage">
-  <app-media-player class="media-player" 
-    (pauseTrack)="pauseTrack()"
-    (playTrack)="playTrack()"
-    [isPlaying]="isPlaying"
-    [progress]="progress"
-    [track]="trackData"
-  />
-
-<!-- @for loop function maken -->
-  <div class="queue">
-    @for (track of queueTracks(); track $index) {
-    <app-queue-row
-      (removeVote)="removeVote()"
-      (upvote)="vote()"
-      [track]="track"
-      [upVoteCount]="upvoteCount"
-      [upvoted]="upvoted" 
+  <div class="room-page-container">
+    <app-media-player class="media-player" 
+      (pauseTrack)="pauseTrack()"
+      (playTrack)="playTrack()"
+      [isPlaying]="isPlaying"
+      [progress]="progress"
+      [track]="trackData"
     />
-    }
+    
+    <div class="queue">
+      @for (track of queueTracks(); track $index) {
+      <app-queue-row
+        (removeVote)="removeVote()"
+        (upvote)="vote()"
+        [track]="track"
+        [upVoteCount]="upvoteCount"
+        [upvoted]="upvoted" 
+      />
+      }  @empty {
+        <p>search tracks to queue</p>
+      }
+    </div>
   </div>
 </div>
 
