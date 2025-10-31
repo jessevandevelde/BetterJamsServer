@@ -13,6 +13,8 @@ import queueRoutes from './queue';
 import currentTrackRoutes from './current-track';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { StatusCodes } from 'http-status-codes';
+import { startWebsocket } from './websocket/websocket';
+import http from 'http';
 
 const env = dotenv.config();
 
