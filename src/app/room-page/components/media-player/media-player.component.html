@@ -25,7 +25,7 @@
     <div class="controls">
       <div class="bar">
         <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
-        <div class="progressbar" [style.width.%]="progressPercentage()"></div>
+        <div class="progressbar" [class.no-transition]="skipAnimation" [style.width.%]="progressPercentage()"></div>
       </div>
     </div>
   

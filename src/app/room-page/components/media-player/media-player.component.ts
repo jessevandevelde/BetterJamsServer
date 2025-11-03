@@ -15,19 +15,26 @@ import { DatePipe, NgOptimizedImage } from '@angular/common';
 
 export class MediaPlayerComponent {
   public progress = input.required<number>();
-
   public isPlaying = input.required<boolean>();
   public track = input.required<Track>();
   protected pauseTrack = output();
   protected playTrack = output();
-
   protected faPause = faPause;
   protected faPlay = faPlay;
+  protected skipAnimation = false;
 
   protected readonly progressPercentage = signal(0);
 
   public constructor() {
     this.initializeProgressEffect();
+  }
+
+  protected resetProgressBar(): void {
+    this.skipAnimation = true;
+    this.progressPercentage.set(0);
+    requestAnimationFrame(() => {
+      this.skipAnimation = false;
+    });
   }
 
   protected togglePause(): void {

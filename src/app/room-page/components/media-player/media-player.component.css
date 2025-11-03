@@ -93,6 +93,10 @@
   transition: width 1s linear;
 }
 
+.progress-bar.no-transition {
+  transition: none;
+}
+
 .right {
   display: flex;
   flex-direction: column;
