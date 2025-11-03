@@ -33,9 +33,9 @@ class Queue {
   }
 
   public emitCurrentTrack(): void {
-    io().emit(WebsocketEvent.currentTrack, {
-      track: this._currentTrack,
-    });
+    io().emit(WebsocketEvent.currentTrack,
+      this._currentTrack,
+    );
   }
 
   public addToQueue(track: QueueTrack): void {

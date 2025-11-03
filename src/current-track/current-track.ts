@@ -1,4 +1,5 @@
 import { getQueue } from '../queue/queue';
+import { io } from '../websocket/websocket';
 
 let currentPositionMs = 0;
 const ONE_SECOND_IN_MS = 1000;
@@ -18,6 +19,8 @@ export function startTrackInterval(): void {
     }
 
     currentPositionMs = currentPositionMs + ONE_SECOND_IN_MS;
+
+    io().emit('current-track-progress', currentPositionMs);
 
     if (currentPositionMs >= currentTrack.durationMs) {
       currentPositionMs = 0;

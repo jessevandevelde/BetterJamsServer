@@ -8,8 +8,6 @@ import { getQueue } from '../queue/queue';
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
 let _io: Server;
 
-const queue = getQueue();
-
 export function startWebsocket(server: http.Server): void {
   _io = new Server<ClientToServerEvents, ServerToClientEvents>(
     server,
@@ -26,6 +24,8 @@ export function startWebsocket(server: http.Server): void {
     if (!intervalStarted) {
       startTrackInterval();
     }
+
+    const queue = getQueue();
 
     queue.emitCurrentTrack();
   });
