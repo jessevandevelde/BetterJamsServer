@@ -6,6 +6,10 @@ const ONE_SECOND_IN_MS = 1000;
 
 export let intervalStarted = false;
 
+export function emitCurrentTrackProgress(): void {
+  io().emit('current-track-progress', currentPositionMs);
+}
+
 export function startTrackInterval(): void {
   intervalStarted = true;
 
@@ -20,7 +24,7 @@ export function startTrackInterval(): void {
 
     currentPositionMs = currentPositionMs + ONE_SECOND_IN_MS;
 
-    io().emit('current-track-progress', currentPositionMs);
+    emitCurrentTrackProgress();
 
     if (currentPositionMs >= currentTrack.durationMs) {
       currentPositionMs = 0;

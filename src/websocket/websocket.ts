@@ -1,6 +1,6 @@
 import { Server } from 'socket.io';
 import type http from 'http';
-import { intervalStarted, startTrackInterval } from '../current-track/current-track';
+import { emitCurrentTrackProgress, intervalStarted, startTrackInterval } from '../current-track/current-track';
 import { WebsocketEvent } from './websocket.enums';
 import type { ClientToServerEvents, ServerToClientEvents } from './websocket.interfaces';
 import { getQueue } from '../queue/queue';
@@ -27,6 +27,7 @@ export function startWebsocket(server: http.Server): void {
 
     const queue = getQueue();
 
+    emitCurrentTrackProgress();
     queue.emitCurrentTrack();
   });
 }
