@@ -1,4 +1,3 @@
-import { getCurrentPositionMs } from '../current-track/current-track';
 import { io } from '../websocket/websocket';
 import { WebsocketEvent } from '../websocket/websocket.enums';
 import type { QueueTrack } from './queue.interfaces';
@@ -29,30 +28,40 @@ class Queue {
     this._currentTrack = track;
   }
 
+  public static emitUpdateQueue(): void {
+    io().emit(WebsocketEvent.queueUpdated);
+  }
+
+  public emitCurrentTrack(): void {
+    io().emit(WebsocketEvent.currentTrack, {
+      track: this._currentTrack,
+    });
+  }
+
   public addToQueue(track: QueueTrack): void {
     if (this.isQueueEmpty() && !this._currentTrack) {
       this.currentTrack = track;
-      io().emit(WebsocketEvent.currentTrack, { track: this.currentTrack, progressMs: getCurrentPositionMs() });
+      this.emitCurrentTrack();
     }
     else {
       this.queue.push(track);
-      io().emit(WebsocketEvent.queueUpdated);
+      Queue.emitUpdateQueue();
     }
   }
 
   public setNextTrack(): void {
     if (this.isQueueEmpty()) {
       this.currentTrack = FALLBACK_TRACK;
-      io().emit(WebsocketEvent.currentTrack, { track: this.currentTrack, progressMs: getCurrentPositionMs() });
+      this.emitCurrentTrack();
     }
     else {
       /* eslint-disable-next-line @typescript-eslint/prefer-destructuring */
-      const firstItemInArray = this.queue[0];
+      const nextTrack = this.queue[0];
 
       this.queue.shift();
-      this.currentTrack = firstItemInArray;
-      io().emit(WebsocketEvent.queueUpdated);
-      io().emit(WebsocketEvent.currentTrack, { track: this.currentTrack, progressMs: getCurrentPositionMs() });
+      this.currentTrack = nextTrack;
+      Queue.emitUpdateQueue();
+      this.emitCurrentTrack();
     }
   }
 

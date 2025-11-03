@@ -28,6 +28,8 @@ export async function playTrack(req: Request, res: Response): Promise<void> {
   const { currentTrack } = queue;
 
   if (!currentTrack) {
+    res.send('no current track defined');
+
     return;
   }
 
