@@ -2,11 +2,13 @@ import { Server } from 'socket.io';
 import type http from 'http';
 import { intervalStarted, startTrackInterval } from '../current-track/current-track';
 import { WebsocketEvent } from './websocket.enums';
-import { emitCurrentTrackInformation } from '../helpers/track.helpers';
 import type { ClientToServerEvents, ServerToClientEvents } from './websocket.interfaces';
+import { getQueue } from '../queue/queue';
 
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
 let _io: Server;
+
+const queue = getQueue();
 
 export function startWebsocket(server: http.Server): void {
   _io = new Server<ClientToServerEvents, ServerToClientEvents>(
@@ -25,7 +27,7 @@ export function startWebsocket(server: http.Server): void {
       startTrackInterval();
     }
 
-    emitCurrentTrackInformation();
+    queue.emitCurrentTrack();
   });
 }
 
