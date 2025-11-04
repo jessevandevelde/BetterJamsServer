@@ -29,14 +29,6 @@ export class MediaPlayerComponent {
     this.initializeProgressEffect();
   }
 
-  protected resetProgressBar(): void {
-    this.skipAnimation = true;
-    this.progressPercentage.set(0);
-    requestAnimationFrame(() => {
-      this.skipAnimation = false;
-    });
-  }
-
   protected togglePause(): void {
     this.isPlaying()
       ? this.pauseTrack.emit()
