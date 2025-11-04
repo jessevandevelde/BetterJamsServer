@@ -21,7 +21,6 @@ export class MediaPlayerComponent {
   protected playTrack = output();
   protected faPause = faPause;
   protected faPlay = faPlay;
-  protected skipAnimation = false;
 
   protected readonly progressPercentage = signal(0);
 
