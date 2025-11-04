@@ -1,5 +1,6 @@
 import { getQueue } from '../queue/queue';
 import { io } from '../websocket/websocket';
+import { WebsocketEvent } from '../websocket/websocket.enums';
 
 let currentPositionMs = 0;
 const ONE_SECOND_IN_MS = 1000;
@@ -7,7 +8,7 @@ const ONE_SECOND_IN_MS = 1000;
 export let intervalStarted = false;
 
 export function emitCurrentTrackProgress(): void {
-  io().emit('current-track-progress', currentPositionMs);
+  io().emit(WebsocketEvent.currentTrackProgress, currentPositionMs);
 }
 
 export function startTrackInterval(): void {

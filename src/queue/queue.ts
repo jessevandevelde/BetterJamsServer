@@ -33,6 +33,10 @@ class Queue {
   }
 
   public emitCurrentTrack(): void {
+    if (!this._currentTrack) {
+      return;
+    }
+
     io().emit(WebsocketEvent.currentTrack,
       this._currentTrack,
     );
@@ -65,7 +69,7 @@ class Queue {
     }
   }
 
-  public isQueueEmpty(): boolean {
+  private isQueueEmpty(): boolean {
     return !this.queue.length;
   }
 }

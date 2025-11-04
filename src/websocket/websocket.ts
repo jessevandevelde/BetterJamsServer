@@ -6,7 +6,7 @@ import type { ClientToServerEvents, ServerToClientEvents } from './websocket.int
 import { getQueue } from '../queue/queue';
 
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
-let _io: Server;
+let _io: Server<ClientToServerEvents, ServerToClientEvents>;
 
 export function startWebsocket(server: http.Server): void {
   _io = new Server<ClientToServerEvents, ServerToClientEvents>(
@@ -32,6 +32,6 @@ export function startWebsocket(server: http.Server): void {
   });
 }
 
-export function io(): Server {
+export function io(): Server<ClientToServerEvents, ServerToClientEvents> {
   return _io;
 }
