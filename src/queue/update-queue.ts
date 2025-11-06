@@ -4,7 +4,7 @@ import type { Track } from './queue.interfaces';
 import { QueueTrack } from './queue.interfaces';
 import { StatusCodes } from 'http-status-codes';
 
-class HttpErrorCause {
+export class HttpErrorCause {
   public code: number;
 
   public constructor(code: number) {
