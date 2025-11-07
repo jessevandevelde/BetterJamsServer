@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 
 const queue = new Queue();
 
-class HttpErrorCause {
+export class HttpErrorCause {
   public code: number;
 
   public constructor(code: number) {
