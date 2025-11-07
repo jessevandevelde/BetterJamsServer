@@ -110,7 +110,7 @@ app.get('/callback', async (req: Request, res: Response) => {
     params.append('grant_type', 'authorization_code');
 
     try {
-      const response = await spotifyFetch<AuthTokensResponse>('/api/token', {
+      const response = await spotifyFetch<AuthTokensResponse>(`${spotifyUrl}/api/token`, {
         method: 'POST',
         headers: {
           /* eslint-disable @typescript-eslint/naming-convention */
@@ -157,7 +157,7 @@ app.get('/search', async (req: Request, res: Response): Promise<void> => {
       throw new Error('Missing search query', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
     }
 
-    const url = `/search?${querystring.stringify({
+    const url = `${spotifyApiUrl}/search?${querystring.stringify({
       q: query,
       type: 'track',
       limit: 20,
