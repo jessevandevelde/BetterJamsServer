@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import type { QueueTrack, Track } from '../../types/track.interfaces';
 import type { HttpErrorResponse } from '@angular/common/http';
+import type { User } from 'src/app/types/user.interfaces';
 
 export const searchTracks = createAction(
   '[Room page] Search tracks',
@@ -38,4 +39,18 @@ export const getQueueTracksSuccess = createAction(
 export const getQueueTracksFailure = createAction(
   '[Queue] Get queue tracks failure',
   props<{ error: HttpErrorResponse }>(),
+);
+
+export const getUserProfile = createAction(
+  '[User] get user profile',
+);
+
+export const getUserProfileFailure = createAction(
+  '[User] get user profile failure',
+  props<{ error: HttpErrorResponse }>(),
+);
+
+export const getUserProfileSuccess = createAction(
+  '[User] get user profile success',
+  props<{ user: User }>(),
 );

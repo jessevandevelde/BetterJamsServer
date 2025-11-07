@@ -7,4 +7,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './dropdown.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchDropdownComponent { }
+export class DropdownComponent { }

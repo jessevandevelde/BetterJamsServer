@@ -1,8 +1,8 @@
 .header {
   display: flex;
+  position: relative;
   height: 56px;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-bottom: 1px solid var(--dark-gray);
   padding-inline: 8px;
 
@@ -11,12 +11,46 @@
   }
 }
 
+.logo .long {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .logo .short {
+    display: none;
+  }
+  .logo .long {
+    display: inline;
+  }
+}
+
+.logo {
+  color: var(--light-gray);
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  align-self: center;
+}
+
 .search-bar {
   flex-grow: 1;
   max-width: 768px;
+  align-self: center;
+  width: 100%;
+  padding: 8px;
+
+  @media (width >= 768px) {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+  }
 }
 
-.roompage {
+.user-profile {
+  align-self: center;
+
+}
+
+.room-page {
   padding-inline: 8px;
 
   @media (width >= 768px) {

@@ -1,0 +1,20 @@
+.profile{
+  position: relative;
+}
+
+.profile-picture {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+}
+
+.dropdown-content {
+  padding: 8px;
+}

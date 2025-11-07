@@ -27,3 +27,18 @@ export const selectQueueTracks = createSelector(
   selectRoomPageState,
   state => state.queueTracks,
 );
+
+export const selectUserIsLoading = createSelector(
+  selectRoomPageState,
+  state => state.userIsLoading,
+);
+
+export const selectUserHasError = createSelector(
+  selectRoomPageState,
+  state => state.userHasError,
+);
+
+export const selectUserHasData = createSelector(
+  selectRoomPageState,
+  state => state.userHasData,
+);

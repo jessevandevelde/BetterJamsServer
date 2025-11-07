@@ -48,6 +48,20 @@ export class RoomPageEffects {
     );
   });
 
+  public getUserProfile$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(RoomPageActions.getUserProfile),
+      switchMap(() =>
+        this.roomPageService.getUserProfile().pipe(
+          map(user => RoomPageActions.getUserProfileSuccess({ user })),
+          catchError((error: HttpErrorResponse) =>
+            of(RoomPageActions.getUserProfileFailure({ error })),
+          ),
+        ),
+      ),
+    );
+  });
+
   public constructor(
     private readonly actions: Actions,
     private readonly roomPageService: RoomPageService,
