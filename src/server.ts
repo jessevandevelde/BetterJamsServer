@@ -12,6 +12,7 @@ import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { StatusCodes } from 'http-status-codes';
+import getUserRoutes from './user';
 
 const env = dotenv.config();
 
@@ -43,6 +44,8 @@ app.use(json());
 app.use(isAuthorizedMiddleware);
 
 app.use('/queue', queueRoutes);
+
+app.use('/user', getUserRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('test');
