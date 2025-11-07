@@ -10,6 +10,7 @@ import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTra
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
+import { WebsocketEvent } from '../services/websocket.enums';
 
 @Component({
   selector: 'app-room-page',
@@ -41,17 +42,12 @@ export class RoomPageComponent implements OnDestroy {
 
     this.initializeQueueUpdatedWebsocket();
     this.initializeCurrentTrackWebsocket();
+    this.initializeCurrentTrackProgressWebsocket();
     this.store.dispatch(getQueueTracks());
   }
 
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
-  }
-
-  protected initializeQueueUpdatedWebsocket(): void {
-    this.websocketService.socket.on('queue-updated', () => {
-      this.store.dispatch(getQueueTracks());
-    });
   }
 
   protected vote(): void {
@@ -84,11 +80,22 @@ export class RoomPageComponent implements OnDestroy {
     this.roomPageService.addTrackToQueue(track).subscribe();
   }
 
-  protected initializeCurrentTrackWebsocket(): void {
-    this.websocketService.socket.on('current-track', (data: { track: Track, progressMs: number }) => {
-      this.currentTrack.set(data.track);
-      this.currentTrackProgress.set(data.progressMs);
+  private initializeQueueUpdatedWebsocket(): void {
+    this.websocketService.socket.on(WebsocketEvent.queueUpdated, () => {
+      this.store.dispatch(getQueueTracks());
+    });
+  }
+
+  private initializeCurrentTrackWebsocket(): void {
+    this.websocketService.socket.on(WebsocketEvent.currentTrack, (track: Track) => {
+      this.currentTrack.set(track);
       this.roomPageService.playTrack().subscribe();
+    });
+  }
+
+  private initializeCurrentTrackProgressWebsocket(): void {
+    this.websocketService.socket.on(WebsocketEvent.currentTrackProgress, (progressMs: number) => {
+      this.currentTrackProgress.set(progressMs);
     });
   }
 }
