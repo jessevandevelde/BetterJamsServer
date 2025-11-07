@@ -12,3 +12,12 @@ export function createCookie(res: Response, key: string, data: unknown, maxAge?:
     },
   );
 }
+
+export function getCookieFromCookies(key: string, object: Record<string, string>): string {
+  try {
+    return object[key];
+  }
+  catch {
+    throw new Error('Cookie does not exist');
+  }
+}

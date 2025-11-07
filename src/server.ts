@@ -10,8 +10,11 @@ import dotenv from 'dotenv';
 import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
+import currentTrackRoutes from './current-track';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { StatusCodes } from 'http-status-codes';
+import { startWebsocket } from './websocket/websocket';
+import http from 'http';
 import getUserRoutes from './user';
 import { handleApiError, HttpErrorCause } from './helpers/errors.helpers';
 import { spotifyFetch } from './helpers/spotify-fetch';
@@ -46,7 +49,7 @@ app.use(json());
 app.use(isAuthorizedMiddleware);
 
 app.use('/queue', queueRoutes);
-
+app.use('/current-track', currentTrackRoutes);
 app.use('/user', getUserRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
@@ -56,7 +59,7 @@ app.get('/', (_req: Request, res: Response) => {
 app.get('/login', (_req: Request, res: Response) => {
   const stringLength = 16;
   const state = randomBytes(stringLength).toString('hex');
-  const scope = 'user-read-private user-read-email';
+  const scope = 'user-read-private user-read-email user-modify-playback-state';
   const oneMinuteInSeconds = 60;
   const oneSecondInMs = 1000;
   const maxAge = oneMinuteInSeconds * oneSecondInMs;
@@ -174,14 +177,18 @@ app.get('/search', async (req: Request, res: Response): Promise<void> => {
 
     res.json(response);
   }
+
   catch (error) {
     handleApiError(error, res);
   }
 });
 
+const server = http.createServer(app);
+
 if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
-  app.listen(serverPort, () => {
-  // eslint-disable-next-line no-console
+  server.listen(serverPort, () => {
+    startWebsocket(server);
+    // eslint-disable-next-line no-console
     console.log(`Server draait op ${serverUrl}`);
   });
 }
