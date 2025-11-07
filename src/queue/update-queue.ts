@@ -4,9 +4,7 @@ import type { Track } from './queue.interfaces';
 import { QueueTrack } from './queue.interfaces';
 import { StatusCodes } from 'http-status-codes';
 
-const queue = getQueue();
-
-class HttpErrorCause {
+export class HttpErrorCause {
   public code: number;
 
   public constructor(code: number) {
@@ -21,6 +19,7 @@ export function updateQueue(req: Request<null, QueueTrack, Track | undefined>, r
     }
 
     const queueTrack = new QueueTrack(req.body);
+    const queue = getQueue();
 
     queue.addToQueue(queueTrack);
 
