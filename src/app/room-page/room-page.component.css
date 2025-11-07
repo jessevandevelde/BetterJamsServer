@@ -15,7 +15,7 @@
   display: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1043px) {
   .logo .short {
     display: none;
   }
@@ -38,7 +38,7 @@
   width: 100%;
   padding: 8px;
 
-  @media (width >= 768px) {
+  @media (width >= 883px) {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
