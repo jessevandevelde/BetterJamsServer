@@ -29,6 +29,7 @@
   font-size: var(--font-size-md);
   font-weight: bold;
   align-self: center;
+  margin-right: 8px;
 }
 
 .search-bar {
@@ -36,7 +37,6 @@
   max-width: 768px;
   align-self: center;
   width: 100%;
-  padding: 8px;
 
   @media (width >= 883px) {
     position: absolute;
@@ -47,7 +47,7 @@
 
 .user-profile {
   align-self: center;
-
+  margin-left: 8px;
 }
 
 .room-page {
