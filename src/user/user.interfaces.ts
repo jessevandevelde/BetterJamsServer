@@ -1,3 +1,19 @@
+export interface ProfileImageRemote {
+  url: string
+  images: [
+    {
+      height: number
+      url: string
+      width: number
+    },
+    {
+      height: number
+      url: string
+      width: number
+    },
+  ]
+}
+
 export interface UserRemote {
   /* eslint-disable @typescript-eslint/naming-convention */
   country: string
@@ -13,19 +29,7 @@ export interface UserRemote {
   }
   href: string
   id: string
-  images: [
-    {
-      height: number
-      url: string
-      width: number
-    },
-    {
-      height: number
-      url: string
-      width: number
-    },
-  ]
-
+  images: ProfileImageRemote[]
   external_urls: {
     spotify: string
   }

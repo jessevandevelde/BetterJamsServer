@@ -19,6 +19,11 @@ export async function spotifyFetch<T>(url: string, options: FetchOptions): Promi
     throw new Error(`Spotify Api Error: ${response.statusText}`, { cause: new HttpErrorCause(response.status) });
   }
 
+  if (options.method === 'PUT') {
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
+    return 'Ok' as unknown as T;
+  }
+
   /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
   return response.json() as Promise<T>;
 }
