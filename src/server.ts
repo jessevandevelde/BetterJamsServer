@@ -126,6 +126,10 @@ app.get('/callback', async (req: Request, res: Response) => {
 
       const data = response;
 
+      if (!data) {
+        return;
+      }
+
       if (data.access_token && data.refresh_token) {
         const oneSecondInMs = 1000;
         const oneMinuteInSeconds = 60;

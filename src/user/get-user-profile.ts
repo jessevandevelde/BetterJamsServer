@@ -14,6 +14,10 @@ export async function getUserProfile(req: Request, res: Response): Promise<void>
     /* eslint-disable-next-line @typescript-eslint/naming-convention */
     const response = await spotifyFetch<UserRemote>(`${spotifyApiUrl}/me`, { method: 'GET', headers: { Authorization: `Bearer ${access_token}` } });
 
+    if (!response) {
+      return;
+    }
+
     const user: User = new User(response);
 
     res.send(user);
