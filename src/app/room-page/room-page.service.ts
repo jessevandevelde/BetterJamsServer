@@ -54,4 +54,17 @@ export class RoomPageService {
       withCredentials: true,
     });
   }
+
+  public upvoteTrack(trackUuid: string, userId: string): Observable<object> {
+    console.log('service functie');
+
+    return this.httpClient.post(`${spotifyApiCallLink}/queue/upvote`, {
+      userId,
+      trackUuid,
+    },
+    {
+      withCredentials: true,
+    },
+    );
+  }
 }

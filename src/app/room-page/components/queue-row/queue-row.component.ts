@@ -23,8 +23,6 @@ export class QueueRowComponent {
   protected removeVote = output();
 
   protected toggleVote(): void {
-    this.upvoted()
-      ? this.removeVote.emit()
-      : this.upvote.emit();
+    this.upvote.emit();
   }
 }

@@ -15,10 +15,11 @@
   display: none;
 }
 
-@media (min-width: 1043px) {
+@media (width >= 1043px) {
   .logo .short {
     display: none;
   }
+
   .logo .long {
     display: inline;
   }

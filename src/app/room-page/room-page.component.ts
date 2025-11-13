@@ -6,7 +6,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectUserHasData } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectUserHasData, selectUserIsLoading } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
@@ -33,6 +33,7 @@ export class RoomPageComponent implements OnDestroy {
   protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<QueueTrack[]>;
   protected userProfile: Signal<User | null>;
+  protected userIsLoading: Signal<boolean>;
   private readonly store = inject(Store);
   private readonly roomPageService = inject(RoomPageService);
   private readonly websocketService: WebsocketService = inject(WebsocketService);
@@ -43,7 +44,8 @@ export class RoomPageComponent implements OnDestroy {
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.userProfile = this.store.selectSignal(selectUserHasData);
-
+    this.userIsLoading = this.store.selectSignal(selectUserIsLoading)
+    ;
     this.initializeQueueUpdatedWebsocket();
     this.initializeCurrentTrackWebsocket();
     this.initializeCurrentTrackProgressWebsocket();
@@ -53,16 +55,6 @@ export class RoomPageComponent implements OnDestroy {
 
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
-  }
-
-  protected vote(): void {
-    this.upvoted = true;
-    this.upvoteCount++;
-  }
-
-  protected removeVote(): void {
-    this.upvoted = false;
-    this.upvoteCount--;
   }
 
   protected pauseTrack(): void {
@@ -83,6 +75,17 @@ export class RoomPageComponent implements OnDestroy {
 
   protected addTrack(track: Track): void {
     this.roomPageService.addTrackToQueue(track).subscribe();
+  }
+
+  protected upvoteTrack(track: QueueTrack): void {
+    console.log('upvote in roompage');
+
+    if (!this.userProfile()) {
+      return;
+    }
+
+    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+    this.roomPageService.upvoteTrack(track.uuid, this.userProfile()!.userId).subscribe();
   }
 
   protected initializeGetUserProfile(): void {

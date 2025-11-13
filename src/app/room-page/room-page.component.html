@@ -22,33 +22,33 @@
 
 </div>
 
-<div class="room-page">
-  <div class="room-page-container">
-    @let _currentTrack = currentTrack();
+@if (!userIsLoading()) {
+  <div class="room-page">
+    <div class="room-page-container">
+      @let _currentTrack = currentTrack();
 
-    @if (_currentTrack) {
-      <app-media-player class="media-player" 
-        (pauseTrack)="pauseTrack()"
-        (playTrack)="playTrack()"
-        [isPlaying]="isPlaying"
-        [progress]="currentTrackProgress()"
-        [track]="_currentTrack!"
-      />
-    }
-
-    <div class="queue">
-      @for (track of queueTracks(); track $index) {
-        <app-queue-row
-          (removeVote)="removeVote()"
-          (upvote)="vote()"
-          [track]="track"
-          [upVoteCount]="upvoteCount"
-          [upvoted]="upvoted" 
+      @if (_currentTrack) {
+        <app-media-player class="media-player" 
+          (pauseTrack)="pauseTrack()"
+          (playTrack)="playTrack()"
+          [isPlaying]="isPlaying"
+          [progress]="currentTrackProgress()"
+          [track]="_currentTrack!"
         />
-      }  @empty {
-        <p class="empty-queue">search tracks to queue</p>
       }
+
+      <div class="queue">
+        @for (track of queueTracks(); track track.uuid) {
+          <app-queue-row
+            (upvote)="upvoteTrack(track)"
+            [track]="track"
+            [upVoteCount]="upvoteCount" 
+            [upvoted]="track.upvoteIds.includes(userProfile()!.userId)"
+          />
+        }  @empty {
+          <p class="empty-queue">search tracks to queue</p>
+        }
+      </div>
     </div>
   </div>
-</div>
-
+}
