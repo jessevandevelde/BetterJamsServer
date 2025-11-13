@@ -10,6 +10,8 @@ const FALLBACK_TRACK: QueueTrack = {
   id: '76ZOzwf0oSiS69NOw8r8Nx',
   name: 'Interlude',
   uri: 'spotify:track:76ZOzwf0oSiS69NOw8r8Nx',
+  dateAdded: '',
+  uuid: crypto.randomUUID(),
 };
 
 class Queue {
@@ -32,6 +34,10 @@ class Queue {
     io().emit(WebsocketEvent.queueUpdated);
   }
 
+  private static sortQueue(queue: QueueTrack[]): QueueTrack[] {
+    return queue.sort((a, b) => b.upvoteIds.length - a.upvoteIds.length);
+  }
+
   public emitCurrentTrack(): void {
     if (!this._currentTrack) {
       return;
@@ -40,6 +46,31 @@ class Queue {
     io().emit(WebsocketEvent.currentTrack,
       this._currentTrack,
     );
+  }
+
+  public getTrack(trackUUID: string): QueueTrack | undefined {
+    return this.queue.find(track => track.uuid === trackUUID);
+  }
+
+  public upvoteTrack(userId: string, trackUUID: string): void {
+    const trackToUpvote = this.getTrack(trackUUID);
+
+    if (!trackToUpvote) {
+      return;
+    }
+
+    /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
+    trackToUpvote.upvoteIds.includes(userId)
+      ? trackToUpvote.upvoteIds.splice(trackToUpvote.upvoteIds.indexOf(userId), 1)
+      : trackToUpvote.upvoteIds.push(userId);
+    console.log(trackToUpvote.upvoteIds.includes(userId));
+
+    const trackToUpvoteIndex = this.queue.findIndex(track => track.uuid === trackUUID);
+
+    this.queue[trackToUpvoteIndex] = trackToUpvote;
+
+    Queue.sortQueue(this.queue);
+    Queue.emitUpdateQueue();
   }
 
   public addToQueue(track: QueueTrack): void {
