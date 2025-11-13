@@ -22,8 +22,10 @@
 
 </div>
 
-@if (!userIsLoading()) {
-  <div class="room-page">
+<div class="room-page">
+  @if (userIsLoading()) {
+    <btj-loading-state />
+  } @else {
     <div class="room-page-container">
       @let _currentTrack = currentTrack();
 
@@ -50,5 +52,5 @@
         }
       </div>
     </div>
-  </div>
-}
+  }
+</div>

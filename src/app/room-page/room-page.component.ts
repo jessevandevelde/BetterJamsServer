@@ -13,11 +13,12 @@ import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import type { User } from '../types/user.interfaces';
+import { LoadingStateComponent } from '../components/loading-state/loading-state.component';
 
 @Component({
   selector: 'app-room-page',
   standalone: true,
-  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent],
+  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent, LoadingStateComponent],
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,8 +45,8 @@ export class RoomPageComponent implements OnDestroy {
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.userProfile = this.store.selectSignal(selectUserHasData);
-    this.userIsLoading = this.store.selectSignal(selectUserIsLoading)
-    ;
+    this.userIsLoading = this.store.selectSignal(selectUserIsLoading);
+
     this.initializeQueueUpdatedWebsocket();
     this.initializeCurrentTrackWebsocket();
     this.initializeCurrentTrackProgressWebsocket();
@@ -101,7 +102,10 @@ export class RoomPageComponent implements OnDestroy {
   private initializeCurrentTrackWebsocket(): void {
     this.websocketService.socket.on(WebsocketEvent.currentTrack, (track: Track) => {
       this.currentTrack.set(track);
-      this.roomPageService.playTrack().subscribe();
+
+      if (this.isPlaying) {
+        this.roomPageService.playTrack().subscribe();
+      }
     });
   }
 
