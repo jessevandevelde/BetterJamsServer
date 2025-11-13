@@ -5,6 +5,8 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--dark-gray);
   padding-inline: 8px;
+  z-index: 2;
+  align-items: center;
 
   @media (width >= 768px) {
     padding-inline: 32px;
@@ -15,10 +17,11 @@
   display: none;
 }
 
-@media (min-width: 1043px) {
+@media (width >= 1080px) {
   .logo .short {
     display: none;
   }
+
   .logo .long {
     display: inline;
   }
@@ -28,17 +31,15 @@
   color: var(--light-gray);
   font-size: var(--font-size-md);
   font-weight: bold;
-  align-self: center;
   margin-right: 8px;
 }
 
 .search-bar {
   flex-grow: 1;
   max-width: 768px;
-  align-self: center;
   width: 100%;
 
-  @media (width >= 883px) {
+  @media (width >= 910px) {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
@@ -46,11 +47,12 @@
 }
 
 .user-profile {
-  align-self: center;
+  height: 32px;
   margin-left: 8px;
 }
 
 .room-page {
+  align-self: center;
   padding-inline: 8px;
 
   @media (width >= 768px) {

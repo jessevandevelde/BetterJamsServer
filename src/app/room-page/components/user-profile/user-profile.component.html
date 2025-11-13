@@ -1,23 +1,21 @@
-<div class="profile">
+<div class="profile" #profile>
   <img
     alt="profile-picture"
     class="profile-picture"
     height="32"
     tabindex="0"
     width="32"
-    (blur)="closeDropdown()"
     (click)="toggleDropdown()"
-    (focus)="openDropdown()"
     (keydown.enter)="toggleDropdown()"
     (keydown.space)="toggleDropdown()"
     [ngSrc]="userProfile().image"
   />
 
   @if (showDropdown()) {
-    <btj-search-dropdown class="profile-dropdown">
+    <btj-dropdown class="profile-dropdown">
       <div class="dropdown-content">
-        <button btjButton class="profile-url" type="button" (mousedown)="goToProfile()">Profile</button>
+        <a btjButton class="profile-url" tabindex="0" target="_blank" (click)="closeDropdown()" [href]="userProfile().accountUrl">Profile</a>
       </div>
-    </btj-search-dropdown>
-  }
+    </btj-dropdown>
+  } 
 </div>

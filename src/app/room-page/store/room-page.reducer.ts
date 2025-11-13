@@ -14,7 +14,7 @@ export interface State {
   queueHasError: boolean
   userIsLoading: boolean
   userHasError: boolean
-  userHasData: User | null
+  user: User | null
 }
 
 export const initialState: State = {
@@ -27,7 +27,7 @@ export const initialState: State = {
   queueHasError: false,
   userIsLoading: false,
   userHasError: false,
-  userHasData: null,
+  user: null,
 };
 
 export const reducer = createReducer(
@@ -100,6 +100,6 @@ export const reducer = createReducer(
     ...state,
     userHasError: false,
     userIsLoading: false,
-    userHasData: user,
+    user: user,
   })),
 );

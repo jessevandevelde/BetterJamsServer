@@ -1,5 +1,6 @@
-.profile{
+.profile {
   position: relative;
+  height: 32px;
 }
 
 .profile-picture {
@@ -7,6 +8,10 @@
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.profile-picture:focus-visible {
+  outline: 2px solid var(--light-gray);
 }
 
 .profile-dropdown {

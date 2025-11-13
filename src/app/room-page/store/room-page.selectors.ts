@@ -40,5 +40,5 @@ export const selectUserHasError = createSelector(
 
 export const selectUserHasData = createSelector(
   selectRoomPageState,
-  state => state.userHasData,
+  state => state.user,
 );
