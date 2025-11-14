@@ -15,7 +15,7 @@ export class QueueTrack implements Track {
   public id: string;
   public name: string;
   public uri: string;
-  public dateAdded: string;
+  public dateAdded: number;
   public uuid: string;
 
   public constructor(track: Track) {
@@ -28,7 +28,7 @@ export class QueueTrack implements Track {
     this.name = name;
     this.uri = uri;
     this.upvoteIds = [];
-    this.dateAdded = Date.now().toLocaleString();
+    this.dateAdded = Date.now();
     this.uuid = crypto.randomUUID();
   }
 }

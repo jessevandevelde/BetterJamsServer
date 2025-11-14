@@ -2,8 +2,6 @@ import type { Request, Response } from 'express';
 import { getQueue } from './queue';
 
 export function upvoteTrack(req: Request<null, null, { userId: string, trackUuid: string }>, res: Response): void {
-  console.log(req);
-
   try {
     const queue = getQueue();
 
