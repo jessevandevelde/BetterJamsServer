@@ -15,6 +15,9 @@ import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { StatusCodes } from 'http-status-codes';
 import { startWebsocket } from './websocket/websocket';
 import http from 'http';
+import getUserRoutes from './user';
+import { handleApiError, HttpErrorCause } from './helpers/errors.helpers';
+import { spotifyFetch } from './helpers/spotify-fetch';
 
 const env = dotenv.config();
 
@@ -47,6 +50,8 @@ app.use(isAuthorizedMiddleware);
 
 app.use('/queue', queueRoutes);
 app.use('/current-track', currentTrackRoutes);
+app.use('/user', getUserRoutes);
+
 app.get('/', (_req: Request, res: Response) => {
   res.send('test');
 });
@@ -108,7 +113,7 @@ app.get('/callback', async (req: Request, res: Response) => {
     params.append('grant_type', 'authorization_code');
 
     try {
-      const response = await fetch(`${spotifyUrl}/api/token`, {
+      const response = await spotifyFetch<AuthTokensResponse>(`${spotifyUrl}/api/token`, {
         method: 'POST',
         headers: {
           /* eslint-disable @typescript-eslint/naming-convention */
@@ -119,13 +124,11 @@ app.get('/callback', async (req: Request, res: Response) => {
         body: params.toString(),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to retrieve tokens', {
-          cause: { status: response.status, statusText: response.statusText },
-        });
-      }
+      const data = response;
 
-      const data = await response.json() as AuthTokensResponse;
+      if (!data) {
+        throw new Error();
+      }
 
       if (data.access_token && data.refresh_token) {
         const oneSecondInMs = 1000;
@@ -150,44 +153,37 @@ app.get('/callback', async (req: Request, res: Response) => {
   }
 });
 
-app.get('/search', async (req: Request, res: Response): Promise<Response> => {
+app.get('/search', async (req: Request, res: Response): Promise<void> => {
   const query = req.query.query as string | undefined;
-
-  if (!query) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Missing search query' });
-  }
 
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
   const { access_token } = req.cookies;
 
   try {
-    const response = await fetch(
-      `${spotifyApiUrl}/search?${querystring.stringify({
-        q: query,
-        type: 'track',
-        limit: 20,
-      })}`,
-      {
-        headers: {
-          authorization: `Bearer ${access_token}`,
-        },
-      },
-    );
-
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: `Spotify API error: ${response.statusText}`,
-      });
+    if (!query) {
+      throw new Error('Missing search query', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
     }
 
-    const data: unknown = await response.json();
+    const url = `${spotifyApiUrl}/search?${querystring.stringify({
+      q: query,
+      type: 'track',
+      limit: 20,
+    })}`;
 
-    return res.json(data);
+    const response = await spotifyFetch(url,
+      {
+        method: 'GET',
+        headers: {
+          /* eslint-disable-next-line @typescript-eslint/naming-convention */
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+    res.json(response);
   }
-  catch (err) {
-    console.error(err);
 
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Failed to search Spotify API' });
+  catch (error) {
+    handleApiError(error, res);
   }
 });
 

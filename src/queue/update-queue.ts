@@ -3,14 +3,7 @@ import { getQueue } from './queue';
 import type { Track } from './queue.interfaces';
 import { QueueTrack } from './queue.interfaces';
 import { StatusCodes } from 'http-status-codes';
-
-export class HttpErrorCause {
-  public code: number;
-
-  public constructor(code: number) {
-    this.code = code;
-  }
-}
+import { handleApiError, HttpErrorCause } from '../helpers/errors.helpers';
 
 export function updateQueue(req: Request<null, QueueTrack, Track | undefined>, res: Response): void {
   try {
@@ -26,17 +19,6 @@ export function updateQueue(req: Request<null, QueueTrack, Track | undefined>, r
     res.json(queueTrack);
   }
   catch (error) {
-    console.error(error);
-
-    if (error instanceof Error) {
-      const { cause } = error;
-
-      if (cause instanceof HttpErrorCause) {
-        res.status(cause.code).json({ error: error.message });
-      }
-      else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' });
-      }
-    }
+    handleApiError(error, res);
   }
 }
