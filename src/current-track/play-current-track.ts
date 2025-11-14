@@ -16,7 +16,7 @@ export async function playTrack(req: Request, res: Response): Promise<void> {
       throw new Error('no current track defined', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
     }
 
-    const response = await spotifyFetch('https://api.spotify.com/v1/me/player/play', {
+    await spotifyFetch('https://api.spotify.com/v1/me/player/play', {
       method: 'PUT',
       headers: {
       /* eslint-disable @typescript-eslint/naming-convention */
