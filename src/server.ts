@@ -127,7 +127,7 @@ app.get('/callback', async (req: Request, res: Response) => {
       const data = response;
 
       if (!data) {
-        return;
+        throw new Error();
       }
 
       if (data.access_token && data.refresh_token) {
