@@ -27,3 +27,8 @@ export const selectQueueTracks = createSelector(
   selectRoomPageState,
   state => state.queueTracks,
 );
+
+export const selectDevices = createSelector(
+  selectRoomPageState,
+  state => state.devices,
+);

@@ -6,16 +6,18 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectDevices } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
+import type { SpotifyDevice } from '../types/devices.interface';
+import { DeviceSelector } from './device-selector/device-selector.component';
 
 @Component({
   selector: 'app-room-page',
   standalone: true,
-  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent],
+  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, DeviceSelector],
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +32,7 @@ export class RoomPageComponent implements OnDestroy {
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<QueueTrack[]>;
+  protected devices: Signal<SpotifyDevice[]>;
   private readonly store = inject(Store);
   private readonly roomPageService = inject(RoomPageService);
   private readonly websocketService: WebsocketService = inject(WebsocketService);
@@ -39,11 +42,13 @@ export class RoomPageComponent implements OnDestroy {
     this.searchResults = this.store.selectSignal(selectSearchResults);
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
+    this.devices = this.store.selectSignal(selectDevices);
 
     this.initializeQueueUpdatedWebsocket();
     this.initializeCurrentTrackWebsocket();
     this.initializeCurrentTrackProgressWebsocket();
     this.store.dispatch(getQueueTracks());
+    this.getDevices();
   }
 
   public ngOnDestroy(): void {
@@ -78,6 +83,10 @@ export class RoomPageComponent implements OnDestroy {
 
   protected addTrack(track: Track): void {
     this.roomPageService.addTrackToQueue(track).subscribe();
+  }
+
+  private getDevices(): void {
+    this.store.dispatch(RoomPageActions.getDevices());
   }
 
   private initializeQueueUpdatedWebsocket(): void {

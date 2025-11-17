@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import type { QueueTrack, Track } from '../../types/track.interfaces';
 import { RoomPageActions } from '.';
+import type { SpotifyDevice } from 'src/app/types/devices.interface';
 
 export interface State {
   searchResults: Track[]
@@ -10,6 +11,8 @@ export interface State {
   queueTracks: QueueTrack[]
   queueIsLoading: boolean
   queueHasError: boolean
+  devices: SpotifyDevice[]
+  devicesHasError: boolean
 }
 
 export const initialState: State = {
@@ -20,6 +23,8 @@ export const initialState: State = {
   queueTracks: [],
   queueIsLoading: false,
   queueHasError: false,
+  devices: [],
+  devicesHasError: false,
 };
 
 export const reducer = createReducer(
@@ -76,4 +81,20 @@ export const reducer = createReducer(
     queueIsLoading: false,
   })),
 
+  on(RoomPageActions.getDevices, (state): State => ({
+    ...state,
+    devicesHasError: false,
+  })),
+
+  on(RoomPageActions.getDevicesFailure, (state): State => ({
+    ...state,
+    devicesHasError: true,
+    devices: [],
+  })),
+
+  on(RoomPageActions.getDevicesSuccess, (state, { devices }): State => ({
+    ...state,
+    devices,
+    devicesHasError: false,
+  })),
 );

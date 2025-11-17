@@ -1,3 +1,6 @@
+@if (!activeDevice) {
+  <btj-device-selector />
+}
 <div class="header">
   <btj-search-bar class="search-bar" 
     (addTrack)="addTrack($event);" 
