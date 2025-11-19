@@ -12,16 +12,17 @@ import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import type { SpotifyDevice } from '../types/devices.interface';
-import { DeviceSelector } from './device-selector/device-selector.component';
+import { SelectDevicesModal } from './components/select-devices-modal/select-devices-modal.component';
 
 @Component({
   selector: 'app-room-page',
   standalone: true,
-  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, DeviceSelector],
+  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, SelectDevicesModal],
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class RoomPageComponent implements OnDestroy {
   public upvoteCount = 0;
   public upvoted = false;

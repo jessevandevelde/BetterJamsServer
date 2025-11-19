@@ -1,0 +1,11 @@
+<div class="test">
+<ng-template cdkPortal>
+  <div class="devices-container">
+    @for (device of devices(); track $index){
+      <div class="device-card">
+        <btj-device-row  [device]="device"/>
+      </div>
+    }
+  </div>
+</ng-template>
+</div>

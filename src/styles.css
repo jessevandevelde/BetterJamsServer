@@ -1,2 +1,4 @@
 @import url("./styles/reset.css");
 @import url("./styles/variables.css");
+@import url("@angular/cdk/overlay-prebuilt.css");
+@import url("./styles/modal.css")

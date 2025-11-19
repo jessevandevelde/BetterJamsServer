@@ -1,6 +1,6 @@
-@if (!activeDevice) {
-  <btj-device-selector />
-}
+<btj-select-devices-modal class="devices-modal"
+  [devices]="devices()"
+/>
 <div class="header">
   <btj-search-bar class="search-bar" 
     (addTrack)="addTrack($event);" 

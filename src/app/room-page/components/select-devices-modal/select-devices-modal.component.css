@@ -1,0 +1,14 @@
+.devices-container {
+  background-color: var(--dark-blue);
+  max-width: 326px;
+  width: 100%;
+  padding: 16px;
+  color: var(--light-gray);
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.device-card {
+  flex-direction: column;
+  padding: 8px;
+}
