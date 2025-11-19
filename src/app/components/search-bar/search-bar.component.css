@@ -8,7 +8,6 @@
   border: 1px solid var(--dark-gray);
   padding: 4px;
   position: relative;
-  z-index: 100;
 
   @media (width >= 768px) {
     width: 100%;
@@ -46,13 +45,12 @@
   top: 56px;
   width: 100%;
   height: calc(100dvh - 57px);
-  z-index: 999;
 
   @media (width >= 768px) {
     position: absolute;
     top: 39px;
     height: 100%;
-    width: 100%;
+    width: calc(100% + 2px);
     left: -1px;
   }
 }

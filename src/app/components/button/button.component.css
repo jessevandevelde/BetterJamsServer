@@ -17,3 +17,7 @@
 :host:hover {
   background-color: var(--dark-gray);
 }
+
+:host:focus {
+  outline: 1px solid var(--light-gray);
+}

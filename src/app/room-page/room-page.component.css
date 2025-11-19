@@ -5,7 +5,6 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--dark-gray);
   padding-inline: 8px;
-  z-index: 2;
   align-items: center;
 
   @media (width >= 768px) {
@@ -38,6 +37,7 @@
   flex-grow: 1;
   max-width: 768px;
   width: 100%;
+  z-index: 1;
 
   @media (width >= 910px) {
     position: absolute;
@@ -52,7 +52,6 @@
 }
 
 .room-page {
-  align-self: center;
   padding-inline: 8px;
 
   @media (width >= 768px) {
