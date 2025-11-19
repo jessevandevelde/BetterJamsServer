@@ -94,7 +94,7 @@ export const reducer = createReducer(
 
   on(RoomPageActions.getDevicesSuccess, (state, { devices }): State => ({
     ...state,
-    devices,
+    devices: [...devices, ...devices, ...devices],
     devicesHasError: false,
   })),
 );

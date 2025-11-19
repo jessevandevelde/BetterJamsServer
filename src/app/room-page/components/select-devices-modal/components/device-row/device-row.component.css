@@ -7,3 +7,12 @@
   border-radius: 4px;
   border: 1px solid var(--dark-gray);
 }
+
+.selected-icon {
+  margin-left: auto;
+  visibility: hidden;
+}
+
+.selected-icon.active {
+  visibility: visible;
+}

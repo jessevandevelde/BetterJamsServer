@@ -1,4 +1,4 @@
-.devices-container {
+.modal-container {
   background-color: var(--dark-blue);
   max-width: 326px;
   width: 100%;
@@ -8,7 +8,21 @@
   margin: 0 auto;
 }
 
+.devices-container {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
 .device-card {
   flex-direction: column;
   padding: 8px;
+  cursor: pointer;
+}
+
+.select-device-button {
+  display: flex;
+  margin-left: auto;
+  margin-right: 8px;
+  margin-top: 16px;
 }
