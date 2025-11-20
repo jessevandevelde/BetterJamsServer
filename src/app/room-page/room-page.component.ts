@@ -80,8 +80,6 @@ export class RoomPageComponent implements OnDestroy {
   }
 
   protected upvoteTrack(track: QueueTrack): void {
-    console.log('upvote in roompage');
-
     if (!this.userProfile()) {
       return;
     }
