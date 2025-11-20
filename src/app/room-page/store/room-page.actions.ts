@@ -63,3 +63,7 @@ export const setActiveDeviceId = createAction(
   '[Devices] Set active device id',
   props<{ activeDeviceId: string }>(),
 );
+
+export const playTrack = createAction(
+  '[Room page] Play track',
+);

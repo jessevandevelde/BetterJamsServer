@@ -1,3 +1,4 @@
+import type { OverlayRef } from '@angular/cdk/overlay';
 import { Overlay } from '@angular/cdk/overlay';
 import { OverlayConfig } from '@angular/cdk/overlay';
 import type { AfterViewInit } from '@angular/core';
@@ -27,6 +28,7 @@ export class SelectDevicesModal implements AfterViewInit {
   protected selectedDeviceId = signal<string>('');
 
   private readonly overlay: Overlay;
+  private overlayRef: OverlayRef | null = null;
 
   public constructor() {
     this.overlay = inject(Overlay);
@@ -44,6 +46,10 @@ export class SelectDevicesModal implements AfterViewInit {
     const selectedDeviceId = this.selectedDeviceId();
 
     this.setActiveDeviceId.emit(selectedDeviceId);
+
+    if (this.overlayRef) {
+      this.overlayRef.detach();
+    }
   }
 
   private openModal(): void {
@@ -52,8 +58,8 @@ export class SelectDevicesModal implements AfterViewInit {
       width: '60%',
     });
 
-    const overlayRef = this.overlay.create(config);
+    this.overlayRef = this.overlay.create(config);
 
-    overlayRef.attach(this.portal());
+    this.overlayRef.attach(this.portal());
   }
 }

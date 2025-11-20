@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
 import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectDevices, selectDevicesHasLoaded, selectActiveDeviceId } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
-import { getActiveDevice, getQueueTracks } from './store/room-page.actions';
+import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import type { SpotifyDevice } from '../types/devices.interface';
@@ -103,13 +103,15 @@ export class RoomPageComponent implements OnDestroy {
 
   protected setSelectedDeviceId(activeDeviceId: string): void {
     this.store.dispatch(RoomPageActions.setActiveDeviceId({ activeDeviceId }));
+    this.store.dispatch(RoomPageActions.playTrack());
   }
 
   private setActiveDeviceId(devices: SpotifyDevice[]): void {
     const activeDeviceId = this.getActiveDeviceId(devices);
 
     if (activeDeviceId) {
-      this.store.dispatch(getActiveDevice());
+      this.store.dispatch(RoomPageActions.setActiveDeviceId({ activeDeviceId }));
+      this.store.dispatch(RoomPageActions.playTrack());
     }
     else {
       this.showSelectDevicesModal.set(true);
@@ -147,7 +149,8 @@ export class RoomPageComponent implements OnDestroy {
   private initializeCurrentTrackWebsocket(): void {
     this.websocketService.socket.on(WebsocketEvent.currentTrack, (track: Track) => {
       this.currentTrack.set(track);
-      this.roomPageService.playTrack().subscribe();
+
+      this.store.dispatch(RoomPageActions.playTrack());
     });
   }
 
