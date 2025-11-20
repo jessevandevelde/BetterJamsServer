@@ -32,3 +32,13 @@ export const selectDevices = createSelector(
   selectRoomPageState,
   state => state.devices,
 );
+
+export const selectDevicesHasLoaded = createSelector(
+  selectRoomPageState,
+  state => state.devicesHasLoaded,
+);
+
+export const selectActiveDeviceId = createSelector(
+  selectRoomPageState,
+  state => state.activeDeviceId,
+);

@@ -54,3 +54,12 @@ export const getDevicesSuccess = createAction(
   '[Devices] Get devices success',
   props<{ devices: SpotifyDevice[] }>(),
 );
+
+export const getActiveDevice = createAction(
+  '[Devices] Get active device',
+);
+
+export const setActiveDeviceId = createAction(
+  '[Devices] Set active device id',
+  props<{ activeDeviceId: string }>(),
+);

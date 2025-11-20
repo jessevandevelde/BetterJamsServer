@@ -1,6 +1,3 @@
-<btj-select-devices-modal class="devices-modal"
-  [devices]="devices()"
-/>
 <div class="header">
   <btj-search-bar class="search-bar" 
     (addTrack)="addTrack($event);" 
@@ -42,3 +39,9 @@
   </div>
 </div>
 
+@if (showSelectDevicesModal()) {
+  <btj-select-devices-modal class="devices-modal"
+    (setActiveDeviceId)="setSelectedDeviceId($event)"
+    [devices]="devices()"
+  />
+}

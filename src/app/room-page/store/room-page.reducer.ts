@@ -13,6 +13,8 @@ export interface State {
   queueHasError: boolean
   devices: SpotifyDevice[]
   devicesHasError: boolean
+  devicesHasLoaded: boolean
+  activeDeviceId: string
 }
 
 export const initialState: State = {
@@ -25,6 +27,8 @@ export const initialState: State = {
   queueHasError: false,
   devices: [],
   devicesHasError: false,
+  devicesHasLoaded: false,
+  activeDeviceId: '',
 };
 
 export const reducer = createReducer(
@@ -83,6 +87,7 @@ export const reducer = createReducer(
 
   on(RoomPageActions.getDevices, (state): State => ({
     ...state,
+    devicesHasLoaded: false,
     devicesHasError: false,
   })),
 
@@ -94,7 +99,13 @@ export const reducer = createReducer(
 
   on(RoomPageActions.getDevicesSuccess, (state, { devices }): State => ({
     ...state,
-    devices: [...devices, ...devices, ...devices],
+    devices,
+    devicesHasLoaded: true,
     devicesHasError: false,
+  })),
+
+  on(RoomPageActions.setActiveDeviceId, (state, { activeDeviceId }): State => ({
+    ...state,
+    activeDeviceId,
   })),
 );

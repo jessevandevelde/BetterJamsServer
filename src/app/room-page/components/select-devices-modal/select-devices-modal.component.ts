@@ -1,7 +1,7 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { OverlayConfig } from '@angular/cdk/overlay';
 import type { AfterViewInit } from '@angular/core';
-import { ChangeDetectionStrategy, Component, inject, input, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, signal, viewChild } from '@angular/core';
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import type { SpotifyDevice } from 'src/app/types/devices.interface';
 import { faDesktop, faMobileScreenButton, faHeadphones } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +22,7 @@ export class SelectDevicesModal implements AfterViewInit {
   public headPhoneIcon = faHeadphones;
   public mobileIcon = faMobileScreenButton;
   public desktopIcon = faDesktop;
+  public setActiveDeviceId = output<string>();
 
   protected selectedDeviceId = signal<string>('');
 
@@ -37,6 +38,12 @@ export class SelectDevicesModal implements AfterViewInit {
 
   protected selectDevice(deviceId: string): void {
     this.selectedDeviceId.set(deviceId);
+  }
+
+  protected setActiveDevice(): void {
+    const selectedDeviceId = this.selectedDeviceId();
+
+    this.setActiveDeviceId.emit(selectedDeviceId);
   }
 
   private openModal(): void {

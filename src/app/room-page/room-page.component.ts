@@ -1,14 +1,14 @@
 import type { OnDestroy, Signal, WritableSignal } from '@angular/core';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import type { QueueTrack, Track } from '../types/track.interfaces';
 import { MediaPlayerComponent } from './components/media-player/media-player.component';
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectDevices } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectDevices, selectDevicesHasLoaded, selectActiveDeviceId } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
-import { getQueueTracks } from './store/room-page.actions';
+import { getActiveDevice, getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import type { SpotifyDevice } from '../types/devices.interface';
@@ -28,12 +28,17 @@ export class RoomPageComponent implements OnDestroy {
   public upvoted = false;
   public isPlaying = true;
   public isLoading: Signal<boolean>;
+
   protected currentTrack: WritableSignal<Track | null> = signal(null);
   protected currentTrackProgress = signal(0);
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<QueueTrack[]>;
   protected devices: Signal<SpotifyDevice[]>;
+  protected showSelectDevicesModal = signal(false);
+  protected devicesHasLoaded: Signal<boolean>;
+  protected activeDeviceId: Signal<string>;
+
   private readonly store = inject(Store);
   private readonly roomPageService = inject(RoomPageService);
   private readonly websocketService: WebsocketService = inject(WebsocketService);
@@ -44,12 +49,22 @@ export class RoomPageComponent implements OnDestroy {
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.devices = this.store.selectSignal(selectDevices);
+    this.devicesHasLoaded = this.store.selectSignal(selectDevicesHasLoaded);
+    this.activeDeviceId = this.store.selectSignal(selectActiveDeviceId);
 
     this.initializeQueueUpdatedWebsocket();
     this.initializeCurrentTrackWebsocket();
     this.initializeCurrentTrackProgressWebsocket();
     this.store.dispatch(getQueueTracks());
     this.getDevices();
+
+    effect(() => {
+      if (this.devicesHasLoaded()) {
+        const devices = this.devices();
+
+        this.setActiveDeviceId(devices);
+      }
+    });
   }
 
   public ngOnDestroy(): void {
@@ -84,6 +99,39 @@ export class RoomPageComponent implements OnDestroy {
 
   protected addTrack(track: Track): void {
     this.roomPageService.addTrackToQueue(track).subscribe();
+  }
+
+  protected setSelectedDeviceId(activeDeviceId: string): void {
+    this.store.dispatch(RoomPageActions.setActiveDeviceId({ activeDeviceId }));
+  }
+
+  private setActiveDeviceId(devices: SpotifyDevice[]): void {
+    const activeDeviceId = this.getActiveDeviceId(devices);
+
+    if (activeDeviceId) {
+      this.store.dispatch(getActiveDevice());
+    }
+    else {
+      this.showSelectDevicesModal.set(true);
+    }
+  }
+
+  private getActiveDeviceId(devices: SpotifyDevice[]): string | null {
+    if (!devices.length) {
+      return null;
+    }
+
+    if (devices.length === 1) {
+      const activeDevice = devices[0].id;
+
+      return activeDevice;
+    }
+
+    const activeDevice = devices.find((device) => {
+      return device.is_active;
+    });
+
+    return activeDevice?.id ?? null;
   }
 
   private getDevices(): void {
