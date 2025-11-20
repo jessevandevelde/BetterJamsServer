@@ -52,6 +52,10 @@ export class SelectDevicesModal implements AfterViewInit {
     }
   }
 
+  protected refreshWindow(): void {
+    location.reload();
+  }
+
   private openModal(): void {
     const config = new OverlayConfig({
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),

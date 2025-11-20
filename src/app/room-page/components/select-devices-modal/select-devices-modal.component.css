@@ -26,3 +26,13 @@
   margin-right: 8px;
   margin-top: 16px;
 }
+
+.refresh-button {
+  display: flex;
+  align-self: center;
+  text-align: center;
+}
+
+.alterative-text {
+  text-align: center;
+}

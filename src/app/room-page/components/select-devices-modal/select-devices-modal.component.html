@@ -1,11 +1,16 @@
 <ng-template cdkPortal>
   <div class="modal-container">
     <div class="devices-container">
-      @for (device of devices(); track $index){
-        <btj-device-row (selectDevice)="selectDevice(device.id)" [device]="device" [isActive]="selectedDeviceId() === device.id"/>
+      @if (devices().length >= 1) {
+        @for (device of devices(); track $index){
+          <btj-device-row (selectDevice)="selectDevice(device.id)" [device]="device" [isActive]="selectedDeviceId() === device.id"/>
+        }
+      } @else {
+        <p class="alterative-text">Start the spotify application</p>
+        <button btjButton class="refresh-button" tabindex="0" type="button" (click)="refreshWindow()">Refresh</button>
       }
     </div>
 
-    <button btjButton class="select-device-button" type="button" (click)="setActiveDevice()" [disabled]="!selectedDeviceId()">Select device</button>
+    <button btjButton class="select-device-button" type="button" (click)="setActiveDevice()"  [disabled]="!selectedDeviceId()">Select device</button>
   </div>
 </ng-template>
