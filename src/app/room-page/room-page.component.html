@@ -1,4 +1,9 @@
 <div class="header">
+  <div class="logo">
+    <span class="short">BTJ</span>
+    <span class="long">BETTERJAMS</span>
+  </div>
+
   <btj-search-bar class="search-bar" 
     (addTrack)="addTrack($event);" 
     (clearSearch)="clearSearch();" 
@@ -7,9 +12,16 @@
     [query]="searchQuery()" 
     [searchResults]="searchResults()" 
   />
+
+  @if(userProfile()) {
+    <btj-user-profile class="user-profile" 
+      [userProfile]="userProfile()!" 
+    />
+  }
+
 </div>
 
-<div class="roompage">
+<div class="room-page">
   <div class="room-page-container">
     @let _currentTrack = currentTrack();
 

@@ -5,6 +5,7 @@ import { spotifyApiCallLink, spotifySearchLink } from 'src/app/environment';
 import { Track } from '../types/track.interfaces';
 import type { SearchResultsRemote } from '../types/track.interfaces';
 import type { GetQueueDTO } from './room-page.interfaces';
+import type { User } from '../types/user.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,12 @@ export class RoomPageService {
 
   public playTrack(): Observable<object> {
     return this.httpClient.post(`${spotifyApiCallLink}/current-track/play`, null, {
+      withCredentials: true,
+    });
+  }
+
+  public getUserProfile(): Observable<User> {
+    return this.httpClient.get<User>(`${spotifyApiCallLink}/user`, {
       withCredentials: true,
     });
   }

@@ -1,6 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import type { QueueTrack, Track } from '../../types/track.interfaces';
 import { RoomPageActions } from '.';
+import type { User } from 'src/app/types/user.interfaces';
+import { getUserProfileSuccess } from './room-page.actions';
 
 export interface State {
   searchResults: Track[]
@@ -10,6 +12,9 @@ export interface State {
   queueTracks: QueueTrack[]
   queueIsLoading: boolean
   queueHasError: boolean
+  userIsLoading: boolean
+  userHasError: boolean
+  user: User | null
 }
 
 export const initialState: State = {
@@ -20,6 +25,9 @@ export const initialState: State = {
   queueTracks: [],
   queueIsLoading: false,
   queueHasError: false,
+  userIsLoading: false,
+  userHasError: false,
+  user: null,
 };
 
 export const reducer = createReducer(
@@ -76,4 +84,22 @@ export const reducer = createReducer(
     queueIsLoading: false,
   })),
 
+  on(RoomPageActions.getUserProfile, (state): State => ({
+    ...state,
+    userIsLoading: true,
+    userHasError: false,
+  })),
+
+  on(RoomPageActions.getUserProfileFailure, (state): State => ({
+    ...state,
+    userIsLoading: false,
+    userHasError: true,
+  })),
+
+  on(getUserProfileSuccess, (state, { user }): State => ({
+    ...state,
+    userHasError: false,
+    userIsLoading: false,
+    user: user,
+  })),
 );
