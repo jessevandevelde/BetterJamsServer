@@ -42,15 +42,15 @@ export const getQueueTracksFailure = createAction(
 );
 
 export const getUserProfile = createAction(
-  '[User] get user profile',
+  '[Room page] get user profile',
 );
 
 export const getUserProfileFailure = createAction(
-  '[User] get user profile failure',
+  '[Room page] get user profile failure',
   props<{ error: HttpErrorResponse }>(),
 );
 
 export const getUserProfileSuccess = createAction(
-  '[User] get user profile success',
+  '[Room page] get user profile success',
   props<{ user: User }>(),
 );

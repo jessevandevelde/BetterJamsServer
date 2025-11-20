@@ -51,7 +51,7 @@ export class RoomPageComponent implements OnDestroy {
     this.initializeCurrentTrackWebsocket();
     this.initializeCurrentTrackProgressWebsocket();
     this.store.dispatch(getQueueTracks());
-    this.initializeGetUserProfile();
+    this.getUserProfile();
   }
 
   public ngOnDestroy(): void {
@@ -76,6 +76,7 @@ export class RoomPageComponent implements OnDestroy {
 
   protected addTrack(track: Track): void {
     this.roomPageService.addTrackToQueue(track).subscribe();
+    this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
   protected upvoteTrack(track: QueueTrack): void {
@@ -89,7 +90,7 @@ export class RoomPageComponent implements OnDestroy {
     this.roomPageService.upvoteTrack(track.uuid, this.userProfile()!.userId).subscribe();
   }
 
-  protected initializeGetUserProfile(): void {
+  protected getUserProfile(): void {
     this.store.dispatch(RoomPageActions.getUserProfile());
   }
 

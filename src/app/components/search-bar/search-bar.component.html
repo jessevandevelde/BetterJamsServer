@@ -14,7 +14,7 @@
 
   @if (showDropdown && query() && (searchResults()?.length || isLoading())) {
     <div class="search-dropdown">
-      <btj-search-dropdown>
+      <btj-dropdown>
         <div class="dropdown-content">
           @if (isLoading()) {
             <div class="loading">
@@ -27,7 +27,7 @@
           }
         </div>
       
-      </btj-search-dropdown>
+      </btj-dropdown>
     </div>
   }
 </div>

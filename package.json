@@ -10,8 +10,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e",
-    "lint": "ng lint",
-    "lint:fix": "ng lint --fix"
+    "eslint": "ng lint",
+    "eslint:fix": "ng lint --fix",
+    "stylelint": "stylelint **/*.css -c ./stylelint.config.mjs",
+    "lint:all": "npm run eslint && npm run stylelint"
   },
   "private": true,
   "dependencies": {
