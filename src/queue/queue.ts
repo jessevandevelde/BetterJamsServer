@@ -10,7 +10,7 @@ const FALLBACK_TRACK: QueueTrack = {
   id: '76ZOzwf0oSiS69NOw8r8Nx',
   name: 'Interlude',
   uri: 'spotify:track:76ZOzwf0oSiS69NOw8r8Nx',
-  dateAdded: 0,
+  dateAdded: '',
   uuid: crypto.randomUUID(),
 };
 
@@ -36,11 +36,7 @@ class Queue {
 
   private static sortQueue(queue: QueueTrack[]): QueueTrack[] {
     return queue.sort((a, b) => {
-      const diff = b.upvoteIds.length - a.upvoteIds.length;
-
-      if (diff !== 0) return diff;
-
-      return a.dateAdded - b.dateAdded;
+      return b.upvoteIds.length - a.upvoteIds.length || Date.parse(b.dateAdded) - Date.parse(a.dateAdded);
     });
   }
 

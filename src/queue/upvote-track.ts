@@ -10,7 +10,13 @@ export function upvoteTrack(req: Request<null, null, { userId: string, trackUuid
     const track = queue.getTrack(req.body.trackUuid);
 
     if (!queue.queue.length || !track) {
-      throw new Error('track not found', {
+      throw new Error('Track not found', {
+        cause: new HttpErrorCause(StatusCodes.NOT_FOUND),
+      });
+    }
+
+    if (!req.body.userId || !req.body.trackUuid) {
+      throw new Error('Bad request', {
         cause: new HttpErrorCause(StatusCodes.BAD_REQUEST),
       });
     }
