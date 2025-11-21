@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const excludedPaths = ['/login', '/callback'];
+  const excludedPaths = ['/login', '/callback', '/authenticated'];
 
   if (excludedPaths.some(path => req.path.startsWith(path))) {
     next();

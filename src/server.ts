@@ -19,6 +19,7 @@ import http from 'http';
 import getUserRoutes from './user';
 import { handleApiError, HttpErrorCause } from './helpers/errors.helpers';
 import { spotifyFetch } from './helpers/spotify-fetch';
+import isAuthenticatedRoutes from './is-authenticated';
 
 const env = dotenv.config();
 
@@ -49,6 +50,7 @@ app.use(json());
 
 app.use(isAuthorizedMiddleware);
 
+app.use('/authenticated', isAuthenticatedRoutes);
 app.use('/devices', deviceRoutes);
 app.use('/queue', queueRoutes);
 app.use('/current-track', currentTrackRoutes);
