@@ -58,4 +58,10 @@ export class RoomPageService {
     }).pipe(
       map(({ devices }) => devices));
   }
+
+  public isAuthenticated(): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${spotifyApiCallLink}/authenticated`, {
+      withCredentials: true,
+    });
+  }
 }

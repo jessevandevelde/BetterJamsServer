@@ -5,28 +5,25 @@ import { provideState } from '@ngrx/store';
 import { reducer } from './room-page/store/room-page.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { RoomPageEffects } from './room-page/store';
+import { isAuthenticatedGuard } from './is-authenticated.guard';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'login',
+    component: LoginPageComponent,
+  },
+  {
+    path: 'room',
+    component: RoomPageComponent,
+    canActivate: [isAuthenticatedGuard],
     providers: [
       provideState('room-page', reducer),
       provideEffects(RoomPageEffects),
     ],
-    children: [
-      {
-        path: 'login',
-        component: LoginPageComponent,
-      },
-      {
-        path: 'room',
-        component: RoomPageComponent,
-      },
-      {
-        path: '',
-        redirectTo: 'room',
-        pathMatch: 'full',
-      },
-    ],
+  },
+  {
+    path: '',
+    redirectTo: 'room',
+    pathMatch: 'full',
   },
 ];
