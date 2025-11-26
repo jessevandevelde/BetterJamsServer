@@ -106,6 +106,10 @@ export class RoomPageComponent implements OnDestroy {
     this.store.dispatch(RoomPageActions.playTrack());
   }
 
+  protected refreshTokens(): void {
+    this.roomPageService.refresh().subscribe();
+  }
+
   private setActiveDeviceId(devices: SpotifyDevice[]): void {
     const activeDeviceId = this.getActiveDeviceId(devices);
 

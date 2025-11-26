@@ -64,4 +64,10 @@ export class RoomPageService {
       withCredentials: true,
     });
   }
+
+  public refresh(): Observable<object> {
+    return this.httpClient.post(`${spotifyApiCallLink}/auth/refresh`, null, {
+      withCredentials: true,
+    });
+  }
 }
