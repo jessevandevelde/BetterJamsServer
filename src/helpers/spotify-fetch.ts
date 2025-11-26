@@ -21,8 +21,6 @@ export async function spotifyFetch<T>(url: string, options: FetchOptions): Promi
   /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-type-assertion, @typescript-eslint/no-explicit-any */
   const response = await fetch(url, options as any);
 
-  console.log(response);
-
   if (!response.ok) {
     throw new Error(`Spotify Api Error: ${response.statusText}`, { cause: new HttpErrorCause(response.status) });
   }
