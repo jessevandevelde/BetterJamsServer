@@ -15,6 +15,8 @@ export class QueueTrack implements Track {
   public id: string;
   public name: string;
   public uri: string;
+  public dateAdded: string;
+  public uuid: string;
 
   public constructor(track: Track) {
     const { albumCoverUrl, artists, durationMs, id, name, uri } = track;
@@ -26,5 +28,7 @@ export class QueueTrack implements Track {
     this.name = name;
     this.uri = uri;
     this.upvoteIds = [];
+    this.dateAdded = new Date().toLocaleString();
+    this.uuid = crypto.randomUUID();
   }
 }
