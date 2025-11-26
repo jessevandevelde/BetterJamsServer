@@ -6,7 +6,7 @@ import { upvoteTrack } from './upvote-track';
 const router = Router();
 
 router.post('/', updateQueue);
-router.post('/upvote', upvoteTrack);
+router.post('/vote', upvoteTrack);
 router.get('/', getQueue);
 
 export default router;

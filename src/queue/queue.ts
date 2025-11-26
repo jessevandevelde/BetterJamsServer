@@ -36,7 +36,7 @@ class Queue {
 
   private static sortQueue(queue: QueueTrack[]): QueueTrack[] {
     return queue.sort((a, b) => {
-      return b.upvoteIds.length - a.upvoteIds.length || Date.parse(b.dateAdded) - Date.parse(a.dateAdded);
+      return b.upvoteIds.length - a.upvoteIds.length || Date.parse(a.dateAdded) - Date.parse(b.dateAdded);
     });
   }
 
