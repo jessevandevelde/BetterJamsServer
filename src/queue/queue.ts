@@ -1,18 +1,7 @@
 import { io } from '../websocket/websocket';
 import { WebsocketEvent } from '../websocket/websocket.enums';
-import type { QueueTrack } from './queue.interfaces';
-
-const FALLBACK_TRACK: QueueTrack = {
-  upvoteIds: [],
-  albumCoverUrl: 'https://i.scdn.co/image/ab67616d0000b273ea5c803c889b985833ae8b8e',
-  artists: 'CHASETHEMONEY, LUCKI',
-  durationMs: 66612,
-  id: '76ZOzwf0oSiS69NOw8r8Nx',
-  name: 'Interlude',
-  uri: 'spotify:track:76ZOzwf0oSiS69NOw8r8Nx',
-  dateAdded: '',
-  uuid: crypto.randomUUID(),
-};
+import { getFallbackPlaylist } from './fallback-playlist';
+import { QueueTrack } from './queue.interfaces';
 
 class Queue {
   private readonly _queue: QueueTrack[] = [];
@@ -87,7 +76,9 @@ class Queue {
 
   public setNextTrack(): void {
     if (this.isQueueEmpty()) {
-      this.currentTrack = FALLBACK_TRACK;
+      const playlist = getFallbackPlaylist();
+
+      this.currentTrack = new QueueTrack(playlist.getRandomTrack());
       this.emitCurrentTrack();
     }
     else {
