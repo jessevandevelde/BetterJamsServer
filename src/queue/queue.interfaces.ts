@@ -19,8 +19,6 @@ export class QueueTrack implements Track {
   public uuid: string;
 
   public constructor(track: Track) {
-    console.log(track);
-
     const { albumCoverUrl, artists, durationMs, id, name, uri } = track;
 
     this.albumCoverUrl = albumCoverUrl;

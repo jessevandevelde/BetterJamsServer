@@ -8,8 +8,6 @@ export class FallbackTrackPlaylist {
 
     const randomTrackIndex = Math.floor(Math.random() * this.fallbackPlaylist.size);
 
-    console.log(playlistArray, randomTrackIndex, this.fallbackPlaylist.size, playlistArray[randomTrackIndex]);
-
     return playlistArray[randomTrackIndex];
   }
 
