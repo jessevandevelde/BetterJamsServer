@@ -1,0 +1,47 @@
+.empty-queue-container {
+  display: flex;
+  background-color: var(--mid-blue);
+  padding: 16px 32px;
+  border-radius: 8px;
+  align-items: center;
+  flex-direction: column;
+  width: fit-content;
+  margin: 16px auto;
+
+  @media (width >= 768px) {
+    margin-top: 32px;
+    gap: 8px;
+  }
+}
+
+.music-icon {
+  color: var(--dark-blue);
+  margin-bottom: 16px;
+  font-size: 60px;
+
+  @media (width >= 768px) {
+    font-size: 68px;
+  }
+}
+
+.empty-queue-text-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 8px;
+}
+
+.empty-queue-header {
+  color: var(--light-gray);
+  font-size: var(--font-size-lg);
+
+  @media (width >= 768px) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.empty-queue-text {
+  color: var(--mid-gray);
+  margin: 0;
+  font-size: var(--font-size-md);
+}

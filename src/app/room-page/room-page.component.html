@@ -33,6 +33,8 @@
         [progress]="currentTrackProgress()"
         [track]="_currentTrack!"
       />
+    } @else {
+      <btj-empty-queue />
     }
 
     <div class="queue">
@@ -44,8 +46,6 @@
           [upVoteCount]="upvoteCount"
           [upvoted]="upvoted" 
         />
-      }  @empty {
-        <p class="empty-queue">search tracks to queue</p>
       }
     </div>
   </div>
