@@ -62,7 +62,6 @@ export class RoomPageService {
     },
     {
       withCredentials: true,
-    },
-    );
+    });
   }
 }

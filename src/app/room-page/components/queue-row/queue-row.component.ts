@@ -19,10 +19,9 @@ export class QueueRowComponent {
   public upvoted = input.required<boolean>();
   protected fasThumbsUp = fasThumbsUp;
   protected faThumbsUp = faThumbsUp;
-  protected upvote = output();
-  protected removeVote = output();
+  protected vote = output();
 
   protected toggleVote(): void {
-    this.upvote.emit();
+    this.vote.emit();
   }
 }

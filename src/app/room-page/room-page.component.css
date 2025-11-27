@@ -20,7 +20,7 @@
   .logo .short {
     display: none;
   }
-  
+
   .logo .long {
     display: inline;
   }
@@ -63,6 +63,16 @@
   max-width: 768px;
   margin: 0 auto;
   width: 100%;
+}
+
+.room-page-loader {
+  display: flex;
+  justify-self: center;
+  padding-top: 8px;
+
+  @media (width >= 768px) {
+    padding-top: 16px;
+  }
 }
 
 .media-player {
