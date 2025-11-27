@@ -74,6 +74,11 @@
   }
 }
 
+.empty-queue-placeholder {
+  display: flex;
+  justify-content: center;
+}
+
 .queue {
   display: flex;
   flex-direction: column;

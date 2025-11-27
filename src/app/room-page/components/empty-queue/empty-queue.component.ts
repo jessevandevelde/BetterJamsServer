@@ -9,6 +9,6 @@ import { faMusic } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './empty-queue.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmptyQueue {
+export class EmptyQueuePlaceholder {
   protected faMusic = faMusic;
 }

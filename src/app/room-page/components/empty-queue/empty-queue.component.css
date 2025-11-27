@@ -3,31 +3,32 @@
   background-color: var(--mid-blue);
   padding: 16px 32px;
   border-radius: 8px;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   width: fit-content;
-  margin: 16px auto;
+  text-align: center;
+  border: 1px solid var(--dark-gray);
+  max-width: 387px;
 
   @media (width >= 768px) {
     margin-top: 32px;
-    gap: 8px;
+    gap: 16px;
   }
 }
 
 .music-icon {
+  display: flex;
   color: var(--dark-blue);
-  margin-bottom: 16px;
   font-size: 60px;
 
   @media (width >= 768px) {
-    font-size: 68px;
+    font-size: 85px;
   }
 }
 
 .empty-queue-text-container {
   display: flex;
   flex-direction: column;
-  text-align: center;
   gap: 8px;
 }
 
