@@ -15,8 +15,8 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class QueueRowComponent {
   public track = input.required<QueueTrack>();
-  public upVoteCount = input.required<number>();
-  public upvoted = input.required<boolean>();
+  public voteCount = input.required<number>();
+  public voted = input.required<boolean>();
   protected fasThumbsUp = fasThumbsUp;
   protected faThumbsUp = faThumbsUp;
   protected vote = output();

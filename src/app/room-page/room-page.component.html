@@ -41,10 +41,10 @@
         <div class="queue">
           @for (track of queueTracks(); track track.uuid) {
             <app-queue-row
-              (upvote)="upvoteTrack(track)"
+              (vote)="voteTrack(track)"
               [track]="track"
-              [upVoteCount]="upvoteCount" 
-              [upvoted]="track.upvoteIds.includes(userProfile()!.userId)"
+              [voteCount]="voteCount" 
+              [voted]="track.voteIds.includes(userProfile()!.userId)"
             />
           }
         </div>

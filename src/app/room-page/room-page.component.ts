@@ -24,8 +24,8 @@ import { LoadingStateComponent } from '../components/loading-state/loading-state
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomPageComponent implements OnDestroy {
-  public upvoteCount = 0;
-  public upvoted = false;
+  public voteCount = 0;
+  public voted = false;
   public isPlaying = true;
   public isLoading: Signal<boolean>;
   protected currentTrack: WritableSignal<Track | null> = signal(null);
@@ -79,13 +79,13 @@ export class RoomPageComponent implements OnDestroy {
     this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
-  protected upvoteTrack(track: QueueTrack): void {
+  protected voteTrack(track: QueueTrack): void {
     if (!this.userProfile()) {
       return;
     }
 
     /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
-    this.roomPageService.upvoteTrack(track.uuid, this.userProfile()!.userId).subscribe();
+    this.roomPageService.voteTrack(track.uuid, this.userProfile()!.userId).subscribe();
   }
 
   protected getUserProfile(): void {

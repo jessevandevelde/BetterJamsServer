@@ -55,7 +55,7 @@ export class RoomPageService {
     });
   }
 
-  public upvoteTrack(trackUuid: string, userId: string): Observable<object> {
+  public voteTrack(trackUuid: string, userId: string): Observable<object> {
     return this.httpClient.post(`${spotifyApiCallLink}/queue/vote`, {
       userId,
       trackUuid,
