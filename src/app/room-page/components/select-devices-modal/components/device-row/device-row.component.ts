@@ -2,7 +2,7 @@ import type { Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faDesktop, faHeadphones, faMobileScreenButton, faCheck } from '@fortawesome/free-solid-svg-icons';
-import type { SpotifyDevice } from 'src/app/types/devices.interface';
+import type { Device } from 'src/app/types/devices.interface';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -13,7 +13,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeviceRow {
-  public device = input.required<SpotifyDevice>();
+  public device = input.required<Device>();
   public isActive = input<boolean>(false);
 
   public selectDevice = output();

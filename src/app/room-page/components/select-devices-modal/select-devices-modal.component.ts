@@ -4,7 +4,7 @@ import { OverlayConfig } from '@angular/cdk/overlay';
 import type { AfterViewInit } from '@angular/core';
 import { ChangeDetectionStrategy, Component, inject, input, output, signal, viewChild } from '@angular/core';
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import type { SpotifyDevice } from 'src/app/types/devices.interface';
+import type { Device } from 'src/app/types/devices.interface';
 import { faDesktop, faMobileScreenButton, faHeadphones } from '@fortawesome/free-solid-svg-icons';
 import { DeviceRow } from './components/device-row/device-row.component';
 import { ButtonComponent } from 'src/app/components/button/button.component';
@@ -17,7 +17,7 @@ import { ButtonComponent } from 'src/app/components/button/button.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectDevicesModal implements AfterViewInit {
-  public devices = input.required<SpotifyDevice[]>();
+  public devices = input.required<Device[]>();
   public readonly portal = viewChild(CdkPortal);
 
   public headPhoneIcon = faHeadphones;

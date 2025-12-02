@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import type { QueueTrack, Track } from '../../types/track.interfaces';
 import { RoomPageActions } from '.';
-import type { SpotifyDevice } from 'src/app/types/devices.interface';
+import type { Device } from 'src/app/types/devices.interface';
 
 export interface State {
   searchResults: Track[]
@@ -11,7 +11,7 @@ export interface State {
   queueTracks: QueueTrack[]
   queueIsLoading: boolean
   queueHasError: boolean
-  devices: SpotifyDevice[]
+  devices: Device[]
   devicesHasError: boolean
   devicesHasLoaded: boolean
   activeDeviceId: string

@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import type { QueueTrack, Track } from '../../types/track.interfaces';
 import type { HttpErrorResponse } from '@angular/common/http';
-import type { SpotifyDevice } from 'src/app/types/devices.interface';
+import type { Device } from 'src/app/types/devices.interface';
 
 export const searchTracks = createAction(
   '[Room page] Search tracks',
@@ -52,7 +52,7 @@ export const getDevicesFailure = createAction(
 
 export const getDevicesSuccess = createAction(
   '[Devices] Get devices success',
-  props<{ devices: SpotifyDevice[] }>(),
+  props<{ devices: Device[] }>(),
 );
 
 export const getActiveDevice = createAction(

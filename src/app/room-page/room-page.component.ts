@@ -11,7 +11,7 @@ import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
-import type { SpotifyDevice } from '../types/devices.interface';
+import type { Device } from '../types/devices.interface';
 import { SelectDevicesModal } from './components/select-devices-modal/select-devices-modal.component';
 
 @Component({
@@ -34,7 +34,7 @@ export class RoomPageComponent implements OnDestroy {
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<QueueTrack[]>;
-  protected devices: Signal<SpotifyDevice[]>;
+  protected devices: Signal<Device[]>;
   protected showSelectDevicesModal = signal(false);
   protected devicesHasLoaded: Signal<boolean>;
   protected activeDeviceId: Signal<string>;
@@ -106,7 +106,7 @@ export class RoomPageComponent implements OnDestroy {
     this.store.dispatch(RoomPageActions.playTrack());
   }
 
-  private setActiveDeviceId(devices: SpotifyDevice[]): void {
+  private setActiveDeviceId(devices: Device[]): void {
     const activeDeviceId = this.getActiveDeviceId(devices);
 
     if (activeDeviceId) {
@@ -118,7 +118,7 @@ export class RoomPageComponent implements OnDestroy {
     }
   }
 
-  private getActiveDeviceId(devices: SpotifyDevice[]): string | null {
+  private getActiveDeviceId(devices: Device[]): string | null {
     if (!devices.length) {
       return null;
     }
