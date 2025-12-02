@@ -11,15 +11,14 @@
   max-width: 387px;
 
   @media (width >= 768px) {
-    margin-top: 32px;
-    gap: 16px;
+    gap: 8px;
   }
 }
 
 .music-icon {
   display: flex;
   color: var(--dark-blue);
-  font-size: 60px;
+  font-size: 72px;
 
   @media (width >= 768px) {
     font-size: 85px;

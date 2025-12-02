@@ -53,8 +53,10 @@
 
 .room-page {
   padding-inline: 8px;
+  margin-top: 16px;
 
   @media (width >= 768px) {
+    margin-top: 32px;
     padding-inline: 32px;
   }
 }
@@ -63,15 +65,6 @@
   max-width: 768px;
   margin: 0 auto;
   width: 100%;
-}
-
-.media-player {
-  display: block;
-  margin-block: 16px;
-
-  @media (width >= 768px) {
-    margin-block: 32px;
-  }
 }
 
 .empty-queue-placeholder {
