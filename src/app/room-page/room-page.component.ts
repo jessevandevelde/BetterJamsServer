@@ -24,7 +24,6 @@ import { LoadingStateComponent } from '../components/loading-state/loading-state
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomPageComponent implements OnDestroy {
-  public voteCount = 0;
   public voted = false;
   public isPlaying = true;
   public isLoading: Signal<boolean>;
