@@ -3,12 +3,12 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'btj-empty-queue',
+  selector: 'btj-empty-queue-placeholder',
   imports: [FaIconComponent],
-  templateUrl: './empty-queue.component.html',
-  styleUrl: './empty-queue.component.css',
+  templateUrl: './empty-queue-placeholder.component.html',
+  styleUrl: './empty-queue-placeholder.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EmptyQueue {
+export class EmptyQueuePlaceholder {
   protected faMusic = faMusic;
 }
