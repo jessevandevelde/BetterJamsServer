@@ -53,8 +53,10 @@
 
 .room-page {
   padding-inline: 8px;
+  margin-top: 16px;
 
   @media (width >= 768px) {
+    margin-top: 32px;
     padding-inline: 32px;
   }
 }
@@ -63,21 +65,31 @@
   max-width: 768px;
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.room-page-loader {
+  display: flex;
+  justify-self: center;
+  padding-top: 8px;
+
+  @media (width >= 768px) {
+    padding-top: 16px;
+  }
 }
 
 .media-player {
   display: block;
-  margin-block: 16px;
-
-  @media (width >= 768px) {
-    margin-block: 32px;
-  }
+  width: 100%;
 }
 
 .queue {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
 
   @media (width >= 768px) {
     gap: 16px;
