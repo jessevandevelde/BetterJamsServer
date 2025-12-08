@@ -27,15 +27,11 @@ export async function getDevices(req: Request, res: Response<Device[]>): Promise
       return;
     }
 
-    const x = response.devices.map(device => new Device(device));
+    const devicesResponse = response.devices.map(device => new Device(device));
 
-    res.status(StatusCodes.OK).json(x);
-
-    return;
+    res.status(StatusCodes.OK).json(devicesResponse);
   }
   catch (error: unknown) {
     handleApiError(error, res);
-
-    return;
   }
 }
