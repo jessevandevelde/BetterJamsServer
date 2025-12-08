@@ -6,26 +6,28 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectDevices, selectDevicesHasLoaded, selectActiveDeviceId } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectUserHasData, selectUserIsLoading, selectDevices, selectDevicesHasLoaded, selectActiveDeviceId } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import type { Device } from '../types/devices.interface';
 import { SelectDevicesModal } from './components/select-devices-modal/select-devices-modal.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import type { User } from '../types/user.interfaces';
+import { LoadingStateComponent } from '../components/loading-state/loading-state.component';
 
 @Component({
   selector: 'app-room-page',
   standalone: true,
-  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, SelectDevicesModal],
+  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent, LoadingStateComponent, SelectDevicesModal],
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class RoomPageComponent implements OnDestroy {
-  public upvoteCount = 0;
-  public upvoted = false;
+  public voted = false;
   public isPlaying = true;
   public isLoading: Signal<boolean>;
 
@@ -34,6 +36,8 @@ export class RoomPageComponent implements OnDestroy {
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<QueueTrack[]>;
+  protected userProfile: Signal<User | null>;
+  protected userIsLoading: Signal<boolean>;
   protected devices: Signal<Device[]>;
   protected showSelectDevicesModal = signal(false);
   protected devicesHasLoaded: Signal<boolean>;
@@ -48,6 +52,8 @@ export class RoomPageComponent implements OnDestroy {
     this.searchResults = this.store.selectSignal(selectSearchResults);
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
+    this.userProfile = this.store.selectSignal(selectUserHasData);
+    this.userIsLoading = this.store.selectSignal(selectUserIsLoading);
     this.devices = this.store.selectSignal(selectDevices);
     this.devicesHasLoaded = this.store.selectSignal(selectDevicesHasLoaded);
     this.activeDeviceId = this.store.selectSignal(selectActiveDeviceId);
@@ -56,6 +62,7 @@ export class RoomPageComponent implements OnDestroy {
     this.initializeCurrentTrackWebsocket();
     this.initializeCurrentTrackProgressWebsocket();
     this.store.dispatch(getQueueTracks());
+    this.getUserProfile();
     this.getDevices();
 
     effect(() => {
@@ -69,16 +76,6 @@ export class RoomPageComponent implements OnDestroy {
 
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
-  }
-
-  protected vote(): void {
-    this.upvoted = true;
-    this.upvoteCount++;
-  }
-
-  protected removeVote(): void {
-    this.upvoted = false;
-    this.upvoteCount--;
   }
 
   protected pauseTrack(): void {
@@ -99,11 +96,20 @@ export class RoomPageComponent implements OnDestroy {
 
   protected addTrack(track: Track): void {
     this.roomPageService.addTrackToQueue(track).subscribe();
+    this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
-  protected setSelectedDeviceId(activeDeviceId: string): void {
-    this.store.dispatch(RoomPageActions.setActiveDeviceId({ activeDeviceId }));
-    this.store.dispatch(RoomPageActions.playTrack());
+  protected voteTrack(track: QueueTrack): void {
+    if (!this.userProfile()) {
+      return;
+    }
+
+    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+    this.roomPageService.voteTrack(track.uuid, this.userProfile()!.userId).subscribe();
+  }
+
+  protected getUserProfile(): void {
+    this.store.dispatch(RoomPageActions.getUserProfile());
   }
 
   private setActiveDeviceId(devices: Device[]): void {

@@ -1,6 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import type { QueueTrack, Track } from '../../types/track.interfaces';
 import { RoomPageActions } from '.';
+import type { User } from 'src/app/types/user.interfaces';
+import { getUserProfileSuccess } from './room-page.actions';
 import type { Device } from 'src/app/types/devices.interface';
 
 export interface State {
@@ -11,6 +13,9 @@ export interface State {
   queueTracks: QueueTrack[]
   queueIsLoading: boolean
   queueHasError: boolean
+  userIsLoading: boolean
+  userHasError: boolean
+  user: User | null
   devices: Device[]
   devicesHasError: boolean
   devicesHasLoaded: boolean
@@ -25,6 +30,9 @@ export const initialState: State = {
   queueTracks: [],
   queueIsLoading: false,
   queueHasError: false,
+  userIsLoading: false,
+  userHasError: false,
+  user: null,
   devices: [],
   devicesHasError: false,
   devicesHasLoaded: false,
@@ -85,6 +93,24 @@ export const reducer = createReducer(
     queueIsLoading: false,
   })),
 
+  on(RoomPageActions.getUserProfile, (state): State => ({
+    ...state,
+    userIsLoading: true,
+    userHasError: false,
+  })),
+
+  on(RoomPageActions.getUserProfileFailure, (state): State => ({
+    ...state,
+    userIsLoading: false,
+    userHasError: true,
+  })),
+
+  on(getUserProfileSuccess, (state, { user }): State => ({
+    ...state,
+    userHasError: false,
+    userIsLoading: false,
+    user: user,
+  })),
   on(RoomPageActions.getDevices, (state): State => ({
     ...state,
     devicesHasLoaded: false,

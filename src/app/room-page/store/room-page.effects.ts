@@ -47,6 +47,20 @@ export class RoomPageEffects {
     );
   });
 
+  public getUserProfile$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(RoomPageActions.getUserProfile),
+      switchMap(() =>
+        this.roomPageService.getUserProfile().pipe(
+          map(user => RoomPageActions.getUserProfileSuccess({ user })),
+          catchError((error: HttpErrorResponse) =>
+            of(RoomPageActions.getUserProfileFailure({ error })),
+          ),
+        ),
+      ),
+    );
+  });
+
   public getDevices$ = createEffect(() => {
     return this.actions.pipe(
       ofType(RoomPageActions.getDevices),

@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import type { QueueTrack, Track } from '../../types/track.interfaces';
 import type { HttpErrorResponse } from '@angular/common/http';
+import type { User } from 'src/app/types/user.interfaces';
 import type { Device } from 'src/app/types/devices.interface';
 
 export const searchTracks = createAction(
@@ -39,6 +40,20 @@ export const getQueueTracksSuccess = createAction(
 export const getQueueTracksFailure = createAction(
   '[Queue] Get queue tracks failure',
   props<{ error: HttpErrorResponse }>(),
+);
+
+export const getUserProfile = createAction(
+  '[Room page] get user profile',
+);
+
+export const getUserProfileFailure = createAction(
+  '[Room page] get user profile failure',
+  props<{ error: HttpErrorResponse }>(),
+);
+
+export const getUserProfileSuccess = createAction(
+  '[Room page] get user profile success',
+  props<{ user: User }>(),
 );
 
 export const getDevices = createAction(
