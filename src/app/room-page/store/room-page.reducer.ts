@@ -20,6 +20,8 @@ export interface State {
   devicesHasError: boolean
   devicesHasLoaded: boolean
   activeDeviceId: string
+  devicesIsLoading: boolean
+  currentTrack: Track | null
 }
 
 export const initialState: State = {
@@ -37,6 +39,8 @@ export const initialState: State = {
   devicesHasError: false,
   devicesHasLoaded: false,
   activeDeviceId: '',
+  devicesIsLoading: false,
+  currentTrack: null,
 };
 
 export const reducer = createReducer(
@@ -113,6 +117,7 @@ export const reducer = createReducer(
   })),
   on(RoomPageActions.getDevices, (state): State => ({
     ...state,
+    devicesIsLoading: true,
     devicesHasLoaded: false,
     devicesHasError: false,
   })),
@@ -120,11 +125,13 @@ export const reducer = createReducer(
   on(RoomPageActions.getDevicesFailure, (state): State => ({
     ...state,
     devicesHasError: true,
+    devicesIsLoading: false,
     devices: [],
   })),
 
   on(RoomPageActions.getDevicesSuccess, (state, { devices }): State => ({
     ...state,
+    devicesIsLoading: false,
     devices,
     devicesHasLoaded: true,
     devicesHasError: false,
@@ -133,5 +140,10 @@ export const reducer = createReducer(
   on(RoomPageActions.setActiveDeviceId, (state, { activeDeviceId }): State => ({
     ...state,
     activeDeviceId,
+  })),
+
+  on(RoomPageActions.setCurrentTrack, (state, { currentTrack }): State => ({
+    ...state,
+    currentTrack,
   })),
 );

@@ -1,4 +1,4 @@
-import type { OnDestroy, Signal, WritableSignal } from '@angular/core';
+import type { OnDestroy, Signal } from '@angular/core';
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { QueueRowComponent } from './components/queue-row/queue-row.component';
 import type { QueueTrack, Track } from '../types/track.interfaces';
@@ -6,7 +6,7 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectUserHasData, selectUserIsLoading, selectDevices, selectDevicesHasLoaded, selectActiveDeviceId } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectUserHasData, selectUserIsLoading, selectDevices, selectDevicesHasLoaded, selectActiveDeviceId, selectDevicesIsLoading, selectCurrentTrack } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
@@ -31,7 +31,7 @@ export class RoomPageComponent implements OnDestroy {
   public isPlaying = true;
   public isLoading: Signal<boolean>;
 
-  protected currentTrack: WritableSignal<Track | null> = signal(null);
+  protected currentTrack: Signal<Track | null>;
   protected currentTrackProgress = signal(0);
   protected searchQuery: Signal<string>;
   protected searchResults: Signal<Track[]>;
@@ -42,6 +42,7 @@ export class RoomPageComponent implements OnDestroy {
   protected showSelectDevicesModal = signal(false);
   protected devicesHasLoaded: Signal<boolean>;
   protected activeDeviceId: Signal<string>;
+  protected devicesIsLoading: Signal<boolean>;
 
   private readonly store = inject(Store);
   private readonly roomPageService = inject(RoomPageService);
@@ -55,8 +56,10 @@ export class RoomPageComponent implements OnDestroy {
     this.userProfile = this.store.selectSignal(selectUserHasData);
     this.userIsLoading = this.store.selectSignal(selectUserIsLoading);
     this.devices = this.store.selectSignal(selectDevices);
+    this.devicesIsLoading = this.store.selectSignal(selectDevicesIsLoading);
     this.devicesHasLoaded = this.store.selectSignal(selectDevicesHasLoaded);
     this.activeDeviceId = this.store.selectSignal(selectActiveDeviceId);
+    this.currentTrack = this.store.selectSignal(selectCurrentTrack);
 
     this.initializeQueueUpdatedWebsocket();
     this.initializeCurrentTrackWebsocket();
@@ -121,7 +124,6 @@ export class RoomPageComponent implements OnDestroy {
 
     if (activeDeviceId) {
       this.store.dispatch(RoomPageActions.setActiveDeviceId({ activeDeviceId }));
-      this.store.dispatch(RoomPageActions.playTrack());
     }
     else {
       this.showSelectDevicesModal.set(true);
@@ -158,7 +160,7 @@ export class RoomPageComponent implements OnDestroy {
 
   private initializeCurrentTrackWebsocket(): void {
     this.websocketService.socket.on(WebsocketEvent.currentTrack, (track: Track) => {
-      this.currentTrack.set(track);
+      this.store.dispatch(RoomPageActions.setCurrentTrack({ currentTrack: track }));
 
       this.store.dispatch(RoomPageActions.playTrack());
     });

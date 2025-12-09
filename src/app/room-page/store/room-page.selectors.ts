@@ -57,3 +57,13 @@ export const selectActiveDeviceId = createSelector(
   selectRoomPageState,
   state => state.activeDeviceId,
 );
+
+export const selectDevicesIsLoading = createSelector(
+  selectRoomPageState,
+  state => state.devicesIsLoading,
+);
+
+export const selectCurrentTrack = createSelector(
+  selectRoomPageState,
+  state => state.currentTrack,
+);
