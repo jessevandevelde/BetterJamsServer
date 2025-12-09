@@ -23,7 +23,7 @@
 
 <div class="room-page">
   <div class="room-page-container">
-    @if (userIsLoading()) {
+    @if (userIsLoading() && devicesIsLoading()) {
       <btj-loading-state class="room-page-loader" />
     } @else {
         @let _currentTrack = currentTrack();
@@ -52,3 +52,10 @@
     }
   </div>
 </div>
+
+@if (showSelectDevicesModal()) {
+  <btj-select-devices-modal class="devices-modal"
+    (setActiveDeviceId)="setSelectedDeviceId($event)"
+    [devices]="devices()"
+  />
+}

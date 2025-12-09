@@ -5,6 +5,8 @@ import { spotifyApiCallLink, spotifySearchLink } from 'src/app/environment';
 import { Track } from '../types/track.interfaces';
 import type { SearchResultsRemote } from '../types/track.interfaces';
 import type { GetQueueDTO } from './room-page.interfaces';
+import type { Device } from '../types/devices.interface';
+import { Store } from '@ngrx/store';
 import type { User } from '../types/user.interfaces';
 
 @Injectable({
@@ -13,6 +15,7 @@ import type { User } from '../types/user.interfaces';
 
 export class RoomPageService {
   private readonly httpClient: HttpClient;
+  private readonly store = inject(Store);
 
   public constructor() {
     this.httpClient = inject(HttpClient);
@@ -43,8 +46,15 @@ export class RoomPageService {
     });
   }
 
-  public playTrack(): Observable<object> {
-    return this.httpClient.post(`${spotifyApiCallLink}/current-track/play`, null, {
+  public playTrack(deviceId: string): Observable<object> {
+    return this.httpClient.post(`${spotifyApiCallLink}/current-track/play`, { deviceId }, {
+      withCredentials: true,
+    },
+    );
+  }
+
+  public getAvailableDevices(): Observable<Device[]> {
+    return this.httpClient.get<Device[]>(`${spotifyApiCallLink}/devices`, {
       withCredentials: true,
     });
   }

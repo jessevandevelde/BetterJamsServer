@@ -3,6 +3,7 @@ import type { QueueTrack, Track } from '../../types/track.interfaces';
 import { RoomPageActions } from '.';
 import type { User } from 'src/app/types/user.interfaces';
 import { getUserProfileSuccess } from './room-page.actions';
+import type { Device } from 'src/app/types/devices.interface';
 
 export interface State {
   searchResults: Track[]
@@ -15,6 +16,12 @@ export interface State {
   userIsLoading: boolean
   userHasError: boolean
   user: User | null
+  devices: Device[]
+  devicesHasError: boolean
+  devicesHasLoaded: boolean
+  activeDeviceId: string
+  devicesIsLoading: boolean
+  currentTrack: Track | null
 }
 
 export const initialState: State = {
@@ -28,6 +35,12 @@ export const initialState: State = {
   userIsLoading: false,
   userHasError: false,
   user: null,
+  devices: [],
+  devicesHasError: false,
+  devicesHasLoaded: false,
+  activeDeviceId: '',
+  devicesIsLoading: false,
+  currentTrack: null,
 };
 
 export const reducer = createReducer(
@@ -101,5 +114,36 @@ export const reducer = createReducer(
     userHasError: false,
     userIsLoading: false,
     user: user,
+  })),
+  on(RoomPageActions.getDevices, (state): State => ({
+    ...state,
+    devicesIsLoading: true,
+    devicesHasLoaded: false,
+    devicesHasError: false,
+  })),
+
+  on(RoomPageActions.getDevicesFailure, (state): State => ({
+    ...state,
+    devicesHasError: true,
+    devicesIsLoading: false,
+    devices: [],
+  })),
+
+  on(RoomPageActions.getDevicesSuccess, (state, { devices }): State => ({
+    ...state,
+    devicesIsLoading: false,
+    devices,
+    devicesHasLoaded: true,
+    devicesHasError: false,
+  })),
+
+  on(RoomPageActions.setActiveDeviceId, (state, { activeDeviceId }): State => ({
+    ...state,
+    activeDeviceId,
+  })),
+
+  on(RoomPageActions.setCurrentTrack, (state, { currentTrack }): State => ({
+    ...state,
+    currentTrack,
   })),
 );

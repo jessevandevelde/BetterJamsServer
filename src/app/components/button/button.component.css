@@ -6,7 +6,7 @@
   color: var(--light-gray);
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
   text-decoration: none;
 
   @media (width >= 768px) {
@@ -16,6 +16,12 @@
 
 :host:hover {
   background-color: var(--dark-gray);
+}
+
+:host:disabled {
+  color: var(--dark-gray);
+  background-color: var(--mid-blue);
+  cursor: default;
 }
 
 :host:focus-visible {
