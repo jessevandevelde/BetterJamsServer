@@ -13,12 +13,12 @@ import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import type { User } from '../types/user.interfaces';
-import { LoadingStateComponent } from '../components/loading-state/loading-state.component';
+import { EmptyQueuePlaceholder } from './components/empty-queue/empty-queue-placeholder.component';
 
 @Component({
   selector: 'app-room-page',
   standalone: true,
-  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent, LoadingStateComponent],
+  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent, EmptyQueuePlaceholder],
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

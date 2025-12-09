@@ -28,15 +28,17 @@
     } @else {
         @let _currentTrack = currentTrack();
 
-        @if (_currentTrack) {
-          <app-media-player class="media-player" 
-            (pauseTrack)="pauseTrack()"
-            (playTrack)="playTrack()"
-            [isPlaying]="isPlaying"
-            [progress]="currentTrackProgress()"
-            [track]="_currentTrack!"
-          />
-        }
+    @if (_currentTrack) {
+      <app-media-player class="media-player" 
+        (pauseTrack)="pauseTrack()"
+        (playTrack)="playTrack()"
+        [isPlaying]="isPlaying"
+        [progress]="currentTrackProgress()"
+        [track]="_currentTrack!"
+      />
+    } @else {
+      <btj-empty-queue-placeholder class="empty-queue-placeholder" />
+    }
 
         <div class="queue">
           @for (track of queueTracks(); track track.uuid) {
