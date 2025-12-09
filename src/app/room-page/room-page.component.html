@@ -23,7 +23,10 @@
 
 <div class="room-page">
   <div class="room-page-container">
-    @let _currentTrack = currentTrack();
+    @if (userIsLoading()) {
+      <btj-loading-state class="room-page-loader" />
+    } @else {
+        @let _currentTrack = currentTrack();
 
     @if (_currentTrack) {
       <app-media-player class="media-player" 
@@ -37,17 +40,15 @@
       <btj-empty-queue-placeholder class="empty-queue-placeholder" />
     }
 
-    <div class="queue">
-      @for (track of queueTracks(); track $index) {
-        <app-queue-row
-          (removeVote)="removeVote()"
-          (upvote)="vote()"
-          [track]="track"
-          [upVoteCount]="upvoteCount"
-          [upvoted]="upvoted" 
-        />
-      }
-    </div>
+        <div class="queue">
+          @for (track of queueTracks(); track track.uuid) {
+            <app-queue-row
+              (vote)="voteTrack(track)"
+              [track]="track"
+              [voted]="track.voteIds.includes(userProfile()!.userId)"
+            />
+          }
+        </div>
+    }
   </div>
 </div>
-

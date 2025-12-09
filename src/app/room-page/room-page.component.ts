@@ -6,14 +6,13 @@ import { MediaPlayerComponent } from './components/media-player/media-player.com
 import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { RoomPageActions } from './store';
-import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectUserHasData } from './store/room-page.selectors';
+import { selectQuery, selectSearchIsLoading, selectSearchResults, selectQueueTracks, selectUserHasData, selectUserIsLoading } from './store/room-page.selectors';
 import { RoomPageService } from './room-page.service';
 import { getQueueTracks } from './store/room-page.actions';
 import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import type { User } from '../types/user.interfaces';
-import { EmptyQueuePlaceholder } from './components/empty-queue/empty-queue-placeholder.component';
 
 @Component({
   selector: 'app-room-page',
@@ -24,8 +23,7 @@ import { EmptyQueuePlaceholder } from './components/empty-queue/empty-queue-plac
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomPageComponent implements OnDestroy {
-  public upvoteCount = 0;
-  public upvoted = false;
+  public voted = false;
   public isPlaying = true;
   public isLoading: Signal<boolean>;
   protected currentTrack: WritableSignal<Track | null> = signal(null);
@@ -34,6 +32,7 @@ export class RoomPageComponent implements OnDestroy {
   protected searchResults: Signal<Track[]>;
   protected queueTracks: Signal<QueueTrack[]>;
   protected userProfile: Signal<User | null>;
+  protected userIsLoading: Signal<boolean>;
   private readonly store = inject(Store);
   private readonly roomPageService = inject(RoomPageService);
   private readonly websocketService: WebsocketService = inject(WebsocketService);
@@ -44,6 +43,7 @@ export class RoomPageComponent implements OnDestroy {
     this.isLoading = this.store.selectSignal(selectSearchIsLoading);
     this.queueTracks = this.store.selectSignal(selectQueueTracks);
     this.userProfile = this.store.selectSignal(selectUserHasData);
+    this.userIsLoading = this.store.selectSignal(selectUserIsLoading);
 
     this.initializeQueueUpdatedWebsocket();
     this.initializeCurrentTrackWebsocket();
@@ -54,16 +54,6 @@ export class RoomPageComponent implements OnDestroy {
 
   public ngOnDestroy(): void {
     this.websocketService.disconnect();
-  }
-
-  protected vote(): void {
-    this.upvoted = true;
-    this.upvoteCount++;
-  }
-
-  protected removeVote(): void {
-    this.upvoted = false;
-    this.upvoteCount--;
   }
 
   protected pauseTrack(): void {
@@ -87,6 +77,15 @@ export class RoomPageComponent implements OnDestroy {
     this.store.dispatch(RoomPageActions.resetSearchField());
   }
 
+  protected voteTrack(track: QueueTrack): void {
+    if (!this.userProfile()) {
+      return;
+    }
+
+    /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
+    this.roomPageService.voteTrack(track.uuid, this.userProfile()!.userId).subscribe();
+  }
+
   protected getUserProfile(): void {
     this.store.dispatch(RoomPageActions.getUserProfile());
   }
@@ -100,7 +99,10 @@ export class RoomPageComponent implements OnDestroy {
   private initializeCurrentTrackWebsocket(): void {
     this.websocketService.socket.on(WebsocketEvent.currentTrack, (track: Track) => {
       this.currentTrack.set(track);
-      this.roomPageService.playTrack().subscribe();
+
+      if (this.isPlaying) {
+        this.roomPageService.playTrack().subscribe();
+      }
     });
   }
 
