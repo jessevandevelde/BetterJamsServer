@@ -13,6 +13,7 @@ import { WebsocketService } from '../services/websocket.service';
 import { WebsocketEvent } from '../services/websocket.enums';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import type { User } from '../types/user.interfaces';
+import { EmptyQueuePlaceholder } from './components/empty-queue/empty-queue-placeholder.component';
 
 @Component({
   selector: 'app-room-page',
