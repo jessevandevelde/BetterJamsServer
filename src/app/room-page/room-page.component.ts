@@ -16,11 +16,12 @@ import { SelectDevicesModal } from './components/select-devices-modal/select-dev
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import type { User } from '../types/user.interfaces';
 import { EmptyQueuePlaceholder } from './components/empty-queue/empty-queue-placeholder.component';
+import { LoadingStateComponent } from '../components/loading-state/loading-state.component';
 
 @Component({
   selector: 'app-room-page',
   standalone: true,
-  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent, EmptyQueuePlaceholder, SelectDevicesModal],
+  imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent, EmptyQueuePlaceholder, SelectDevicesModal, LoadingStateComponent],
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
