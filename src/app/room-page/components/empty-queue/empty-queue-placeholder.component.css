@@ -1,4 +1,4 @@
-.empty-queue-container {
+.placeholder-container {
   display: flex;
   background-color: var(--mid-blue);
   padding: 16px 32px;
@@ -25,13 +25,13 @@
   }
 }
 
-.empty-queue-placeholder-text-container {
+.placeholder-text-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.empty-queue-placeholder-header {
+.placeholder-header {
   color: var(--light-gray);
   font-size: var(--font-size-lg);
 
@@ -40,7 +40,7 @@
   }
 }
 
-.empty-queue-placeholder-text {
+.placeholder-text {
   color: var(--mid-gray);
   margin: 0;
   font-size: var(--font-size-md);
