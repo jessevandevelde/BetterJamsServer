@@ -6,6 +6,7 @@
   color: var(--light-gray);
   border-radius: 8px;
   margin: 0 auto;
+  border: 1px solid var(--dark-gray);
 }
 
 .devices-container {

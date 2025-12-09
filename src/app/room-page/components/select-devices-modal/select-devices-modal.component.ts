@@ -59,7 +59,7 @@ export class SelectDevicesModal implements AfterViewInit {
   private openModal(): void {
     const config = new OverlayConfig({
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
-      width: '60%',
+      width: '100%',
     });
 
     this.overlayRef = this.overlay.create(config);
