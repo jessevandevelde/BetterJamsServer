@@ -39,6 +39,20 @@
   }
 }
 
+.device-card-title {
+  font-size: 24px;
+  margin: 0;
+
+  @media (width >= 768px) {
+    font-size: 28px;
+  }
+}
+
+.device-card-text {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
 .alternative-container {
   gap: 8px;
   display: flex;
