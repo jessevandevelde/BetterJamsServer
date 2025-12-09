@@ -1,7 +1,7 @@
 .modal-container {
   background-color: var(--dark-blue);
-  max-width: 326px;
   width: 100%;
+  max-width: 358px;
   padding: 16px;
   color: var(--light-gray);
   border-radius: 8px;
@@ -31,8 +31,30 @@
   display: flex;
   align-self: center;
   text-align: center;
+  margin-top: 8px;
+  padding: 4px 8px;
+
+  @media (width >= 768px) {
+    padding: 8px 16px;
+  }
 }
 
-.alterative-text {
-  text-align: center;
+.alternative-container {
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.alternative-title {
+  font-size: 24px;
+  margin: 0;
+
+  @media (width >= 768px) {
+    font-size: 28px;
+  }
+}
+
+.alternative-text {
+  font-size: 16px;
+  margin: 0;
 }
