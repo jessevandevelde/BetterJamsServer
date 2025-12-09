@@ -1,0 +1,47 @@
+.placeholder-container {
+  display: flex;
+  background-color: var(--mid-blue);
+  padding: 16px 32px;
+  border-radius: 8px;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  text-align: center;
+  border: 1px solid var(--dark-gray);
+  max-width: 387px;
+
+  @media (width >= 768px) {
+    gap: 8px;
+  }
+}
+
+.music-icon {
+  display: flex;
+  color: var(--dark-blue);
+  font-size: 72px;
+
+  @media (width >= 768px) {
+    font-size: 85px;
+  }
+}
+
+.placeholder-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.placeholder-header {
+  color: var(--light-gray);
+  font-size: var(--font-size-lg);
+
+  @media (width >= 768px) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.placeholder-text {
+  color: var(--mid-gray);
+  margin: 0;
+  font-size: var(--font-size-md);
+}
