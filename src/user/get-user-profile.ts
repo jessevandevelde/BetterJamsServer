@@ -15,7 +15,7 @@ export async function getUserProfile(req: Request, res: Response): Promise<void>
     const response = await spotifyFetch<UserRemote>(`${spotifyApiUrl}/me`, { method: 'GET', headers: { Authorization: `Bearer ${access_token}` } });
 
     if (!response) {
-      throw new Error();
+      return;
     }
 
     const user: User = new User(response);

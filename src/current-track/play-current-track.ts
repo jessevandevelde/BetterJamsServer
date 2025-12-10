@@ -6,21 +6,17 @@ import type { Request, Response } from 'express';
 import { handleApiError, HttpErrorCause } from '../helpers/errors.helpers';
 import { spotifyFetch } from '../helpers/spotify-fetch';
 
-export async function playTrack(req: Request<null, null, { deviceId: string } | undefined>, res: Response): Promise<void> {
+export async function playTrack(req: Request, res: Response): Promise<void> {
   const accessToken = getCookieFromCookies('access_token', req.cookies);
   const queue = getQueue();
   const { currentTrack } = queue;
 
   try {
     if (!currentTrack) {
-      throw new Error('No current track defined', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
+      throw new Error('no current track defined', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
     }
 
-    if (!req.body?.deviceId) {
-      throw new Error('No device id supplied', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
-    }
-
-    await spotifyFetch(`https://api.spotify.com/v1/me/player/play?device_id=${req.body.deviceId}`, {
+    const response = await spotifyFetch('https://api.spotify.com/v1/me/player/play', {
       method: 'PUT',
       headers: {
       /* eslint-disable @typescript-eslint/naming-convention */
@@ -36,7 +32,7 @@ export async function playTrack(req: Request<null, null, { deviceId: string } | 
       }),
     });
 
-    res.status(StatusCodes.NO_CONTENT);
+    res.send({ status: response });
   }
   catch (error) {
     handleApiError(error, res);

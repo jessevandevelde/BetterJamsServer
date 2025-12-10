@@ -10,7 +10,6 @@ import dotenv from 'dotenv';
 import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
-import deviceRoutes from './devices';
 import currentTrackRoutes from './current-track';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { StatusCodes } from 'http-status-codes';
@@ -49,7 +48,6 @@ app.use(json());
 
 app.use(isAuthorizedMiddleware);
 
-app.use('/devices', deviceRoutes);
 app.use('/queue', queueRoutes);
 app.use('/current-track', currentTrackRoutes);
 app.use('/user', getUserRoutes);
@@ -61,7 +59,7 @@ app.get('/', (_req: Request, res: Response) => {
 app.get('/login', (_req: Request, res: Response) => {
   const stringLength = 16;
   const state = randomBytes(stringLength).toString('hex');
-  const scope = 'user-read-private user-read-email user-modify-playback-state user-read-playback-state';
+  const scope = 'user-read-private user-read-email user-modify-playback-state';
   const oneMinuteInSeconds = 60;
   const oneSecondInMs = 1000;
   const maxAge = oneMinuteInSeconds * oneSecondInMs;
@@ -129,7 +127,7 @@ app.get('/callback', async (req: Request, res: Response) => {
       const data = response;
 
       if (!data) {
-        throw new Error();
+        return;
       }
 
       if (data.access_token && data.refresh_token) {
