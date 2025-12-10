@@ -22,34 +22,40 @@
 </div>
 
 <div class="room-page">
-  @if (userIsLoading()) {
-    <btj-loading-state />
-  } @else {
-    <div class="room-page-container">
-      @let _currentTrack = currentTrack();
+  <div class="room-page-container">
+    @if (userIsLoading() && devicesIsLoading()) {
+      <btj-loading-state class="room-page-loader" />
+    } @else {
+        @let _currentTrack = currentTrack();
 
-      @if (_currentTrack) {
-        <app-media-player class="media-player" 
-          (pauseTrack)="pauseTrack()"
-          (playTrack)="playTrack()"
-          [isPlaying]="isPlaying"
-          [progress]="currentTrackProgress()"
-          [track]="_currentTrack!"
-        />
-      }
+    @if (_currentTrack) {
+      <app-media-player class="media-player" 
+        (pauseTrack)="pauseTrack()"
+        (playTrack)="playTrack()"
+        [isPlaying]="isPlaying"
+        [progress]="currentTrackProgress()"
+        [track]="_currentTrack!"
+      />
+    } @else {
+      <btj-empty-queue-placeholder class="empty-queue-placeholder" />
+    }
 
-      <div class="queue">
-        @for (track of queueTracks(); track track.uuid) {
-          <app-queue-row
-            (upvote)="upvoteTrack(track)"
-            [track]="track"
-            [upVoteCount]="upvoteCount" 
-            [upvoted]="track.upvoteIds.includes(userProfile()!.userId)"
-          />
-        }  @empty {
-          <p class="empty-queue">search tracks to queue</p>
-        }
-      </div>
-    </div>
-  }
+        <div class="queue">
+          @for (track of queueTracks(); track track.uuid) {
+            <app-queue-row
+              (vote)="voteTrack(track)"
+              [track]="track"
+              [voted]="track.voteIds.includes(userProfile()!.userId)"
+            />
+          }
+        </div>
+    }
+  </div>
 </div>
+
+@if (showSelectDevicesModal()) {
+  <btj-select-devices-modal class="devices-modal"
+    (setActiveDeviceId)="setSelectedDeviceId($event)"
+    [devices]="devices()"
+  />
+}

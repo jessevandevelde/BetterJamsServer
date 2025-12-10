@@ -42,3 +42,28 @@ export const selectUserHasData = createSelector(
   selectRoomPageState,
   state => state.user,
 );
+
+export const selectDevices = createSelector(
+  selectRoomPageState,
+  state => state.devices,
+);
+
+export const selectDevicesHasLoaded = createSelector(
+  selectRoomPageState,
+  state => state.devicesHasLoaded,
+);
+
+export const selectActiveDeviceId = createSelector(
+  selectRoomPageState,
+  state => state.activeDeviceId,
+);
+
+export const selectDevicesIsLoading = createSelector(
+  selectRoomPageState,
+  state => state.devicesIsLoading,
+);
+
+export const selectCurrentTrack = createSelector(
+  selectRoomPageState,
+  state => state.currentTrack,
+);

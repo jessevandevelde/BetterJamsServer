@@ -1,0 +1,75 @@
+.modal-container {
+  background-color: var(--dark-blue);
+  width: 100%;
+  max-width: 358px;
+  padding: 16px;
+  color: var(--light-gray);
+  border-radius: 8px;
+  margin: 0 auto;
+  border: 1px solid var(--dark-gray);
+}
+
+.devices-container {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.device-card {
+  flex-direction: column;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.select-device-button {
+  display: flex;
+  margin-left: auto;
+  margin-right: 8px;
+  margin-top: 16px;
+}
+
+.refresh-button {
+  display: flex;
+  align-self: center;
+  text-align: center;
+  margin-top: 8px;
+  padding: 4px 8px;
+
+  @media (width >= 768px) {
+    padding: 8px 16px;
+  }
+}
+
+.device-card-title {
+  font-size: 24px;
+  margin: 0;
+
+  @media (width >= 768px) {
+    font-size: 28px;
+  }
+}
+
+.device-card-text {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.alternative-container {
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.alternative-title {
+  font-size: 24px;
+  margin: 0;
+
+  @media (width >= 768px) {
+    font-size: 28px;
+  }
+}
+
+.alternative-text {
+  font-size: 16px;
+  margin: 0;
+}

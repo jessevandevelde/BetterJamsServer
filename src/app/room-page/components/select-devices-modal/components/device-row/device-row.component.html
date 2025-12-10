@@ -1,0 +1,7 @@
+<div class="device-info" tabindex="0" (click)="selectActiveDevice()" (keydown)="selectActiveDevice()">
+  <fa-icon [icon]="icon()"/>
+
+  <div>{{ device().name }}</div>
+
+  <fa-icon class="selected-icon" [class.active]="isActive()" [icon]="checkIcon" />
+</div>
