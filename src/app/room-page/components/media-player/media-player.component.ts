@@ -43,7 +43,6 @@ export class MediaPlayerComponent {
 
   protected play(): void {
     this.playTrack.emit();
-    this.roomPageService.playTrack().subscribe();
   }
 
   private initializeProgressEffect(): void {

@@ -88,6 +88,7 @@ export class RoomPageComponent implements OnDestroy {
 
   protected playTrack(): void {
     this.isPlaying = true;
+    this.store.dispatch(RoomPageActions.playTrack());
   }
 
   protected clearSearch(): void {
@@ -162,7 +163,6 @@ export class RoomPageComponent implements OnDestroy {
   private initializeCurrentTrackWebsocket(): void {
     this.websocketService.socket.on(WebsocketEvent.currentTrack, (track: Track) => {
       this.store.dispatch(RoomPageActions.setCurrentTrack({ currentTrack: track }));
-
       this.store.dispatch(RoomPageActions.playTrack());
     });
   }
