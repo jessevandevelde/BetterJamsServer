@@ -38,7 +38,6 @@ export class MediaPlayerComponent {
 
   protected pause(): void {
     this.pauseTrack.emit();
-    this.roomPageService.pauseTrack().subscribe();
   }
 
   protected play(): void {
