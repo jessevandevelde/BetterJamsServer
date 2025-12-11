@@ -56,7 +56,7 @@ export class Track {
   }
 }
 export interface QueueTrack extends Track {
-  voteIds: string[]
+  upvoteIds: string[]
   dateAdded: string
   uuid: string
 }

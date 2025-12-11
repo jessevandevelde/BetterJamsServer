@@ -120,6 +120,7 @@ export class RoomPageComponent implements OnDestroy {
 
   protected setSelectedDeviceId(activeDeviceId: string): void {
     this.store.dispatch(RoomPageActions.setActiveDeviceId({ activeDeviceId }));
+    this.store.dispatch(RoomPageActions.playTrack());
   }
 
   private setActiveDeviceId(devices: Device[]): void {

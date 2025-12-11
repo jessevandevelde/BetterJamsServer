@@ -80,4 +80,16 @@ export class RoomPageService {
       withCredentials: true,
     });
   }
+
+  public isAuthenticated(): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${spotifyApiCallLink}/authenticated`, {
+      withCredentials: true,
+    });
+  }
+
+  public refresh(): Observable<object> {
+    return this.httpClient.post(`${spotifyApiCallLink}/auth/refresh`, null, {
+      withCredentials: true,
+    });
+  }
 }
