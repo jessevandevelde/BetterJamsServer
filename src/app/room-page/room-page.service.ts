@@ -74,4 +74,10 @@ export class RoomPageService {
       withCredentials: true,
     });
   }
+
+  public pauseTrack(): Observable<object> {
+    return this.httpClient.put(`${spotifyApiCallLink}/current-track/pause`, null, {
+      withCredentials: true,
+    });
+  }
 }
