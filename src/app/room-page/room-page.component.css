@@ -83,6 +83,11 @@
 .media-player {
   display: block;
   width: 100%;
+  margin-bottom: 8px;
+
+  @media (width >= 768px) {
+    margin-bottom: 32px;
+  }
 }
 
 .queue {

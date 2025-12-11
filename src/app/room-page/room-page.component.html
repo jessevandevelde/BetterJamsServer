@@ -45,7 +45,7 @@
             <app-queue-row
               (vote)="voteTrack(track)"
               [track]="track"
-              [voted]="track.voteIds.includes(userProfile()!.userId)"
+              [voted]="track.upvoteIds.includes(userProfile()!.userId)"
             />
           }
         </div>
