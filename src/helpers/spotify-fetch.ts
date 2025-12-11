@@ -5,7 +5,7 @@ interface FetchOptions {
   method: 'GET' | 'PUT' | 'POST'
   headers: {
     /* eslint-disable @typescript-eslint/naming-convention */
-    'Authorization': string
+    'Authorization'?: string
     'Content-Type'?: string
   }
   body?: unknown

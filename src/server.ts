@@ -16,9 +16,11 @@ import { isAuthorizedMiddleware } from './auth/auth-middleware';
 import { StatusCodes } from 'http-status-codes';
 import { startWebsocket } from './websocket/websocket';
 import http from 'http';
-import getUserRoutes from './user';
+import userRoutes from './user';
 import { handleApiError, HttpErrorCause } from './helpers/errors.helpers';
 import { spotifyFetch } from './helpers/spotify-fetch';
+import isAuthenticatedRoutes from './is-authenticated';
+import authRoutes from './auth';
 
 const env = dotenv.config();
 
@@ -49,10 +51,12 @@ app.use(json());
 
 app.use(isAuthorizedMiddleware);
 
+app.use('/auth', authRoutes);
+app.use('/authenticated', isAuthenticatedRoutes);
 app.use('/devices', deviceRoutes);
 app.use('/queue', queueRoutes);
 app.use('/current-track', currentTrackRoutes);
-app.use('/user', getUserRoutes);
+app.use('/user', userRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   res.send('test');
