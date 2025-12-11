@@ -142,7 +142,6 @@ app.get('/callback', async (req: Request, res: Response) => {
         const oneHourInMinutes = 60;
         const maxAge = oneSecondInMs * oneMinuteInSeconds * oneHourInMinutes;
 
-        console.log(data);
         createCookie(res, 'access_token', data.access_token, maxAge);
         createCookie(res, 'refresh_token', data.refresh_token);
 

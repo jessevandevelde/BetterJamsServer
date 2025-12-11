@@ -8,12 +8,7 @@ interface FetchOptions {
     'Authorization'?: string
     'Content-Type'?: string
   }
-  form?: {
-    grant_type?: string
-    refresh_token?: string
-  }
   body?: unknown
-  json?: boolean
   /* eslint-enable @typescript-eslint/naming-convention */
 }
 
