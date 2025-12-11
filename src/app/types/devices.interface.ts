@@ -1,15 +1,7 @@
-export interface SpotifyDevice {
-  /* eslint-disable @typescript-eslint/naming-convention */
+export interface Device {
   id: string
+  /* eslint-disable-next-line @typescript-eslint/naming-convention */
   is_active: boolean
-  is_private_session: boolean
-  is_restricted: boolean
   name: string
   type: string
-  volume_percent: number
-  /* eslint-enable @typescript-eslint/naming-convention */
-}
-
-export interface DevicesResponse {
-  devices: SpotifyDevice[]
 }

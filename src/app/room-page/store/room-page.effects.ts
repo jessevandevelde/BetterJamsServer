@@ -47,6 +47,20 @@ export class RoomPageEffects {
     );
   });
 
+  public getUserProfile$ = createEffect(() => {
+    return this.actions.pipe(
+      ofType(RoomPageActions.getUserProfile),
+      switchMap(() =>
+        this.roomPageService.getUserProfile().pipe(
+          map(user => RoomPageActions.getUserProfileSuccess({ user })),
+          catchError((error: HttpErrorResponse) =>
+            of(RoomPageActions.getUserProfileFailure({ error })),
+          ),
+        ),
+      ),
+    );
+  });
+
   public getDevices$ = createEffect(() => {
     return this.actions.pipe(
       ofType(RoomPageActions.getDevices),
@@ -61,14 +75,22 @@ export class RoomPageEffects {
 
   public playTrack$ = createEffect(() => {
     return this.actions.pipe(
-      ofType(RoomPageActions.playTrack),
-      withLatestFrom(this.store.select(RoomPageSelectors.selectActiveDeviceId)),
+      ofType(RoomPageActions.playTrack, RoomPageActions.setActiveDeviceId),
+      withLatestFrom(
+        this.store.select(RoomPageSelectors.selectActiveDeviceId),
+        this.store.select(RoomPageSelectors.selectCurrentTrack),
+      ),
       /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-      filter(([_action, deviceId]) => !!deviceId),
+      filter(([_action, deviceId, currentTrack]) => !!deviceId && !!currentTrack),
       /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-      switchMap(([_action, deviceId]) => this.roomPageService.playTrack(deviceId)),
+      switchMap(([_action, deviceId, _currentTrack]) => this.roomPageService.playTrack(deviceId).pipe(
+        map(() => {
+          return RoomPageActions.playTrackSuccess();
+        }),
+        catchError((error: HttpErrorResponse) => of(RoomPageActions.playTrackFailure({ error }))),
+      )),
     );
-  }, { dispatch: false });
+  });
 
   public constructor(
     private readonly actions: Actions,

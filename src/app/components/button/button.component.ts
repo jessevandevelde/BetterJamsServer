@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'button[btjButton]',
+  selector: '[btjButton]',
   imports: [],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',

@@ -5,8 +5,9 @@ import { spotifyApiCallLink, spotifySearchLink } from 'src/app/environment';
 import { Track } from '../types/track.interfaces';
 import type { SearchResultsRemote } from '../types/track.interfaces';
 import type { GetQueueDTO } from './room-page.interfaces';
-import type { DevicesResponse, SpotifyDevice } from '../types/devices.interface';
+import type { Device } from '../types/devices.interface';
 import { Store } from '@ngrx/store';
+import type { User } from '../types/user.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -52,11 +53,32 @@ export class RoomPageService {
     );
   }
 
-  public getAvailableDevices(): Observable<SpotifyDevice[]> {
-    return this.httpClient.get<DevicesResponse>(`${spotifyApiCallLink}/devices`, {
+  public getAvailableDevices(): Observable<Device[]> {
+    return this.httpClient.get<Device[]>(`${spotifyApiCallLink}/devices`, {
       withCredentials: true,
-    }).pipe(
-      map(({ devices }) => devices));
+    });
+  }
+
+  public getUserProfile(): Observable<User> {
+    return this.httpClient.get<User>(`${spotifyApiCallLink}/user`, {
+      withCredentials: true,
+    });
+  }
+
+  public voteTrack(trackUuid: string, userId: string): Observable<object> {
+    return this.httpClient.post(`${spotifyApiCallLink}/queue/vote`, {
+      userId,
+      trackUuid,
+    },
+    {
+      withCredentials: true,
+    });
+  }
+
+  public pauseTrack(): Observable<object> {
+    return this.httpClient.put(`${spotifyApiCallLink}/current-track/pause`, null, {
+      withCredentials: true,
+    });
   }
 
   public isAuthenticated(): Observable<boolean> {

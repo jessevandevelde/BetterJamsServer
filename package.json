@@ -10,8 +10,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "e2e": "ng e2e",
-    "lint": "ng lint",
-    "lint:fix": "ng lint --fix"
+    "eslint": "ng lint",
+    "eslint:fix": "ng lint --fix",
+    "stylelint": "stylelint **/*.css -c ./stylelint.config.mjs",
+    "lint:all": "npm run eslint && npm run stylelint"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +23,6 @@
     "@angular/compiler": "^20.2.4",
     "@angular/core": "^20.2.4",
     "@angular/forms": "^20.2.4",
-    "@angular/material": "^20.2.13",
     "@angular/platform-browser": "^20.2.4",
     "@angular/platform-browser-dynamic": "^20.2.4",
     "@angular/router": "^20.2.4",

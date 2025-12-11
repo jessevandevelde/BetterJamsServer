@@ -1,17 +1,32 @@
 <div class="header">
+  <div class="logo">
+    <span class="short">BTJ</span>
+    <span class="long">BETTERJAMS</span>
+  </div>
+
   <btj-search-bar class="search-bar" 
     (addTrack)="addTrack($event);" 
     (clearSearch)="clearSearch();" 
-    (searchQueryChange)="searchQueryChange($event)" 
+    (searchQueryChange)="searchQueryChange($event)"
     [isLoading]="isLoading()" 
     [query]="searchQuery()" 
     [searchResults]="searchResults()" 
   />
+
+  @if(userProfile()) {
+    <btj-user-profile class="user-profile" 
+      [userProfile]="userProfile()!" 
+    />
+  }
+
 </div>
 
-<div class="roompage">
+<div class="room-page">
   <div class="room-page-container">
-    @let _currentTrack = currentTrack();
+    @if (userIsLoading() && devicesIsLoading()) {
+      <btj-loading-state class="room-page-loader" />
+    } @else {
+        @let _currentTrack = currentTrack();
 
     @if (_currentTrack) {
       <app-media-player class="media-player" 
@@ -21,21 +36,20 @@
         [progress]="currentTrackProgress()"
         [track]="_currentTrack!"
       />
+    } @else {
+      <btj-empty-queue-placeholder class="empty-queue-placeholder" />
     }
 
-    <div class="queue">
-      @for (track of queueTracks(); track $index) {
-        <app-queue-row
-          (removeVote)="removeVote()"
-          (upvote)="vote()"
-          [track]="track"
-          [upVoteCount]="upvoteCount"
-          [upvoted]="upvoted" 
-        />
-      }  @empty {
-        <p class="empty-queue">search tracks to queue</p>
-      }
-    </div>
+        <div class="queue">
+          @for (track of queueTracks(); track track.uuid) {
+            <app-queue-row
+              (vote)="voteTrack(track)"
+              [track]="track"
+              [voted]="track.voteIds.includes(userProfile()!.userId)"
+            />
+          }
+        </div>
+    }
   </div>
 </div>
 

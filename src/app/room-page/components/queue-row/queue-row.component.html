@@ -15,12 +15,12 @@
     <p class="artist-name">{{ _track.artists }}</p>
   </div>
   
-  <div class="upvote-container">
-    <fa-icon class="upvote-button"
+  <div class="vote-container">
+    <fa-icon class="vote-button"
       (click)="toggleVote()" 
-      [icon]="upvoted() ? fasThumbsUp : faThumbsUp" 
+      [icon]="voted() ? fasThumbsUp : faThumbsUp" 
     />
 
-    <p class="upvote-count">{{ upVoteCount() }}</p>
+    <p class="vote-count">{{ _track.voteIds.length }}</p>
   </div>
 </div>
