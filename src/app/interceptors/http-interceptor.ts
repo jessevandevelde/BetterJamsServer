@@ -16,6 +16,8 @@ export const httpInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
       if (error.status === HttpStatusCode.Unauthorized) {
         if (req.url.includes('/auth/refresh')) {
           void router.navigate(['/login']);
+
+          return throwError(() => error);
         }
 
         return roomPageService.refresh().pipe(

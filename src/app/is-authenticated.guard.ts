@@ -10,12 +10,7 @@ export const isAuthenticatedGuard: CanActivateFn = () => {
 
   return roomPageService.isAuthenticated().pipe(
     map((isAuth) => {
-      if (isAuth) {
-        return true;
-      }
-      else {
-        return router.createUrlTree(['login']);
-      }
+      return isAuth ? true : router.createUrlTree(['login']);
     }),
   );
 };
