@@ -39,8 +39,6 @@
   </div>
 </div>
 
-<button type="button" (click)="refreshTokens()" (keydown)="refreshTokens()">test</button>
-
 @if (showSelectDevicesModal()) {
   <btj-select-devices-modal class="devices-modal"
     (setActiveDeviceId)="setSelectedDeviceId($event)"
