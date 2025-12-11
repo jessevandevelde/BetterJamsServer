@@ -12,9 +12,9 @@ export class FallbackTrackPlaylist {
   }
 
   public addTrackToPlaylist(track: Track): void {
-    const x = this.fallbackPlaylist.has(track.id);
+    const hasTrack = this.fallbackPlaylist.has(track.id);
 
-    if (x) {
+    if (hasTrack) {
       return;
     }
 
