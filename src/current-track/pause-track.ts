@@ -23,7 +23,7 @@ export async function pauseTrack(req: Request, res: Response): Promise<void> {
       });
     }
 
-    res.send({ status: response });
+    res.status(StatusCodes.NO_CONTENT);
   }
   catch (error) {
     handleApiError(error, res);
