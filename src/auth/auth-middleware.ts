@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { getCookieFromCookies } from '../helpers/cookies.helpers';
 
 export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const excludedPaths = ['/login', '/callback', '/authenticated'];
+  const excludedPaths = ['/auth/login', '/auth/callback', '/authenticated'];
 
   if (excludedPaths.some(path => req.path.startsWith(path))) {
     next();
