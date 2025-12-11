@@ -30,6 +30,11 @@ export async function spotifyFetch<T>(url: string, options: FetchOptions): Promi
     return null;
   }
 
+  if (response.headers.get('Content-Type')?.includes('application/json')) {
+    /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
+    return response.json() as Promise<T>;
+  }
+
   /* eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion */
-  return response.json() as Promise<T>;
+  return response.text() as Promise<T>;
 }

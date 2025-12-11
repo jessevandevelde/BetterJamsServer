@@ -2,20 +2,15 @@ import type { Request, Response } from 'express';
 import { getCookieFromCookies } from '../helpers/cookies.helpers';
 import { spotifyFetch } from '../helpers/spotify-fetch';
 import { handleApiError } from '../helpers/errors.helpers';
-import type { DevicesResponse } from './devices.interfaces';
 import { StatusCodes } from 'http-status-codes';
+import type { DevicesResponse } from './devices.interfaces';
+import { Device } from './devices.interfaces';
 
-export async function getDevices(req: Request, res: Response): Promise<void> {
+export async function getDevices(req: Request, res: Response<Device[]>): Promise<void> {
   const accessToken = getCookieFromCookies('access_token', req.cookies);
 
-  if (!accessToken) {
-    res.status(StatusCodes.UNAUTHORIZED);
-
-    return;
-  }
-
   try {
-    const devices = await spotifyFetch<DevicesResponse | null>(
+    const response = await spotifyFetch<DevicesResponse | null>(
       'https://api.spotify.com/v1/me/player/devices',
       {
         method: 'GET',
@@ -26,19 +21,17 @@ export async function getDevices(req: Request, res: Response): Promise<void> {
       },
     );
 
-    if (!devices) {
+    if (!response) {
       res.status(StatusCodes.NOT_FOUND);
 
       return;
     }
 
-    res.status(StatusCodes.OK).json(devices);
+    const devicesResponse = response.devices.map(device => new Device(device));
 
-    return;
+    res.status(StatusCodes.OK).json(devicesResponse);
   }
   catch (error: unknown) {
     handleApiError(error, res);
-
-    return;
   }
 }
