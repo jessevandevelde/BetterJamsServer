@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { getCookieFromCookies } from '../helpers/cookies.helpers';
 
 export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const excludedPaths = ['/login', '/callback', '/authenticated'];
+  const excludedPaths = ['/api/login', '/api/callback', '/api/authenticated'];
 
   if (excludedPaths.some(path => req.path.startsWith(path))) {
     next();
@@ -14,7 +14,7 @@ export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFu
   try {
     const refreshToken = getCookieFromCookies('refresh_token', req.cookies);
 
-    if (req.path.startsWith('/auth/refresh')) {
+    if (req.path.startsWith('/api/auth/refresh')) {
       if (refreshToken) {
         next();
 

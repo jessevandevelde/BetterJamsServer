@@ -31,34 +31,37 @@ dotenvExpand.expand(env);
 /* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
 const serverPort = process.env.SERVER_PORT as string;
 const serverUrl = process.env.SERVER_URL as string;
+const clientUrl = process.env.CLIENT_URL as string;
 const spotifyUrl = process.env.SPOTIFY_ACCOUNT_URL as string;
 const clientId = process.env.CLIENT_ID as string;
 const clientSecret = process.env.CLIENT_SECRET as string;
-const redirectUri = `${serverUrl}/callback`;
+const redirectUri = `${serverUrl}/api/callback`;
 const spotifyApiUrl = process.env.SPOTIFY_API_URL as string;
+
 const app = express();
+const api = express.Router();
 /* eslint-enable @typescript-eslint/non-nullable-type-assertion-style */
 /* eslint-disable @typescript-eslint/no-unsafe-type-assertion */
 
-app.use(cookieParser());
+api.use(cookieParser());
 
-app.use(cors ({
-  origin: serverUrl,
+api.use(cors ({
+  origin: clientUrl,
   credentials: true,
 }));
 
-app.use(json());
+api.use(json());
 
-app.use(isAuthorizedMiddleware);
+api.use(isAuthorizedMiddleware);
 
-app.use('/auth', authRoutes);
-app.use('/authenticated', isAuthenticatedRoutes);
-app.use('/devices', deviceRoutes);
-app.use('/queue', queueRoutes);
-app.use('/current-track', currentTrackRoutes);
-app.use('/user', userRoutes);
+api.use('/auth', authRoutes);
+api.use('/authenticated', isAuthenticatedRoutes);
+api.use('/devices', deviceRoutes);
+api.use('/queue', queueRoutes);
+api.use('/current-track', currentTrackRoutes);
+api.use('/user', userRoutes);
 
-app.get('/login', (_req: Request, res: Response) => {
+api.get('/login', (_req: Request, res: Response) => {
   const stringLength = 16;
   const state = randomBytes(stringLength).toString('hex');
   const scope = 'user-read-private user-read-email user-modify-playback-state user-read-playback-state';
@@ -80,7 +83,7 @@ app.get('/login', (_req: Request, res: Response) => {
     }));
 });
 
-app.get('/track', (req: Request, res: Response) => {
+api.get('/track', (req: Request, res: Response) => {
   const { track } = req.params;
 
   const dummySong = {
@@ -94,7 +97,7 @@ app.get('/track', (req: Request, res: Response) => {
   res.json(dummySong);
 });
 
-app.get('/callback', async (req: Request, res: Response) => {
+api.get('/callback', async (req: Request, res: Response) => {
   const code = typeof req.query.code === 'string'
     ? req.query.code
     : null;
@@ -102,7 +105,7 @@ app.get('/callback', async (req: Request, res: Response) => {
   const { state } = req.cookies;
 
   if (state === null || state !== req.query.state) {
-    res.redirect(`${serverUrl}/login?error=state_mismatch`);
+    res.redirect(`${clientUrl}/login?error=state_mismatch`);
   }
   else {
     const params = new URLSearchParams();
@@ -141,7 +144,7 @@ app.get('/callback', async (req: Request, res: Response) => {
         createCookie(res, 'access_token', data.access_token, maxAge);
         createCookie(res, 'refresh_token', data.refresh_token);
 
-        res.redirect(serverUrl);
+        res.redirect(clientUrl);
       }
       else {
         throw new Error('Failed to retrieve tokens');
@@ -150,12 +153,12 @@ app.get('/callback', async (req: Request, res: Response) => {
     catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
-      res.redirect(`${serverUrl}/login?error=unauthorized`);
+      res.redirect(`${clientUrl}/login?error=unauthorized`);
     }
   }
 });
 
-app.get('/search', async (req: Request, res: Response): Promise<void> => {
+api.get('/search', async (req: Request, res: Response): Promise<void> => {
   const query = req.query.query as string | undefined;
 
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
@@ -189,6 +192,8 @@ app.get('/search', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
+app.use('/api', api);
+
 const angularDist: string = path.resolve(__dirname, '../../client/dist/browser');
 
 app.use(express.static(angularDist));
@@ -199,6 +204,8 @@ app.use((req, res, next) => {
 
     return;
   }
+
+  console.log(req.path);
 
   if (req.path.startsWith('/api')) {
     next();
@@ -211,7 +218,7 @@ app.use((req, res, next) => {
 
 const server = http.createServer(app);
 
-if (clientId && serverPort && serverUrl && serverUrl && clientSecret) {
+if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
   server.listen(serverPort, () => {
     startWebsocket(server);
     // eslint-disable-next-line no-console
@@ -223,6 +230,6 @@ else {
     clientId: ${clientId},
     serverPort: ${serverPort},
     serverUrl: ${serverUrl},
-    clientUrl: ${serverUrl},
+    clientUrl: ${clientUrl},
     clientSecret: ${clientSecret}`);
 }
