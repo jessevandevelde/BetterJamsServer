@@ -1,0 +1,61 @@
+<div class="header">
+  <div class="logo">
+    <span class="short">BTJ</span>
+    <span class="long">BETTERJAMS</span>
+  </div>
+
+  <btj-search-bar class="search-bar" 
+    (addTrack)="addTrack($event);" 
+    (clearSearch)="clearSearch();" 
+    (searchQueryChange)="searchQueryChange($event)"
+    [isLoading]="isLoading()" 
+    [query]="searchQuery()" 
+    [searchResults]="searchResults()" 
+  />
+
+  @if(userProfile()) {
+    <btj-user-profile class="user-profile" 
+      [userProfile]="userProfile()!" 
+    />
+  }
+
+</div>
+
+<div class="room-page">
+  <div class="room-page-container">
+    @if (userIsLoading() && devicesIsLoading()) {
+      <btj-loading-state class="room-page-loader" />
+    } @else {
+        @let _currentTrack = currentTrack();
+
+    @if (_currentTrack) {
+      <app-media-player class="media-player" 
+        (pauseTrack)="pauseTrack()"
+        (playTrack)="playTrack()"
+        [isPlaying]="isPlaying"
+        [progress]="currentTrackProgress()"
+        [track]="_currentTrack!"
+      />
+    } @else {
+      <btj-empty-queue-placeholder class="empty-queue-placeholder" />
+    }
+
+        <div class="queue">
+          @for (track of queueTracks(); track track.uuid) {
+            <app-queue-row
+              (vote)="voteTrack(track)"
+              [track]="track"
+              [voted]="track.upvoteIds.includes(userProfile()!.userId)"
+            />
+          }
+        </div>
+    }
+  </div>
+</div>
+
+@if (showSelectDevicesModal()) {
+  <btj-select-devices-modal class="devices-modal"
+    (setActiveDeviceId)="setSelectedDeviceId($event)"
+    [devices]="devices()"
+  />
+}

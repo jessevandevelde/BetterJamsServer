@@ -1,0 +1,26 @@
+@let _track = track();
+<div class="queue-row">
+  <img 
+    alt="album-cover"
+    class="album-cover" 
+    height="500" 
+    priority
+    width="500"
+    [ngSrc]="_track.albumCoverUrl"
+  />
+  
+  <div class="text-container">
+    <h2 class="track-name">{{ _track.name }}</h2>
+    
+    <p class="artist-name">{{ _track.artists }}</p>
+  </div>
+  
+  <div class="vote-container">
+    <fa-icon class="vote-button"
+      (click)="toggleVote()" 
+      [icon]="voted() ? fasThumbsUp : faThumbsUp" 
+    />
+
+    <p class="vote-count">{{ _track.upvoteIds.length }}</p>
+  </div>
+</div>

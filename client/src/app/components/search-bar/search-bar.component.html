@@ -1,0 +1,33 @@
+<div class="search-bar" [class.show-dropdown]="showDropdown">
+  <fa-icon class="search-icon" [icon]="magnifyingGlass" />
+  <input 
+    class="search-input" 
+    placeholder="Search" 
+    type="text" 
+    (blur)="blur()"
+    (focus)="focus()"
+    (input)="search($event)"
+    [value]="query()"
+    #searchInput>
+
+  <fa-icon class="close" (click)="clearInput();" [icon]="closeIcon" />
+
+  @if (showDropdown && query() && (searchResults()?.length || isLoading())) {
+    <div class="search-dropdown">
+      <btj-dropdown>
+        <div class="dropdown-content">
+          @if (isLoading()) {
+            <div class="loading">
+             <btj-loading-state />
+            </div>
+          } @else{
+            @for (track of searchResults(); track $index) {
+              <btj-search-result (addTrack)="addTrack.emit(track)" [track]="track" />
+            }
+          }
+        </div>
+      
+      </btj-dropdown>
+    </div>
+  }
+</div>
