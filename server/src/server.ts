@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenvExpand from 'dotenv-expand';
 import dotenv from 'dotenv';
+import * as path from 'node:path';
 import { createCookie } from './helpers/cookies.helpers';
 import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
@@ -30,7 +31,6 @@ dotenvExpand.expand(env);
 /* eslint-disable @typescript-eslint/non-nullable-type-assertion-style */
 const serverPort = process.env.SERVER_PORT as string;
 const serverUrl = process.env.SERVER_URL as string;
-const clientUrl = process.env.CLIENT_URL as string;
 const spotifyUrl = process.env.SPOTIFY_ACCOUNT_URL as string;
 const clientId = process.env.CLIENT_ID as string;
 const clientSecret = process.env.CLIENT_SECRET as string;
@@ -43,7 +43,7 @@ const app = express();
 app.use(cookieParser());
 
 app.use(cors ({
-  origin: clientUrl,
+  origin: serverUrl,
   credentials: true,
 }));
 
@@ -57,10 +57,6 @@ app.use('/devices', deviceRoutes);
 app.use('/queue', queueRoutes);
 app.use('/current-track', currentTrackRoutes);
 app.use('/user', userRoutes);
-
-app.get('/', (_req: Request, res: Response) => {
-  res.send('test');
-});
 
 app.get('/login', (_req: Request, res: Response) => {
   const stringLength = 16;
@@ -106,7 +102,7 @@ app.get('/callback', async (req: Request, res: Response) => {
   const { state } = req.cookies;
 
   if (state === null || state !== req.query.state) {
-    res.redirect(`${clientUrl}/login?error=state_mismatch`);
+    res.redirect(`${serverUrl}/login?error=state_mismatch`);
   }
   else {
     const params = new URLSearchParams();
@@ -145,7 +141,7 @@ app.get('/callback', async (req: Request, res: Response) => {
         createCookie(res, 'access_token', data.access_token, maxAge);
         createCookie(res, 'refresh_token', data.refresh_token);
 
-        res.redirect(clientUrl);
+        res.redirect(serverUrl);
       }
       else {
         throw new Error('Failed to retrieve tokens');
@@ -154,7 +150,7 @@ app.get('/callback', async (req: Request, res: Response) => {
     catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
-      res.redirect(`${clientUrl}/login?error=unauthorized`);
+      res.redirect(`${serverUrl}/login?error=unauthorized`);
     }
   }
 });
@@ -193,9 +189,29 @@ app.get('/search', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
+const angularDist: string = path.resolve(__dirname, '../../client/dist/browser');
+
+app.use(express.static(angularDist));
+
+app.use((req, res, next) => {
+  if (req.method !== 'GET') {
+    next();
+
+    return;
+  }
+
+  if (req.path.startsWith('/api')) {
+    next();
+
+    return;
+  }
+
+  res.sendFile(path.join(angularDist, 'index.html'));
+});
+
 const server = http.createServer(app);
 
-if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
+if (clientId && serverPort && serverUrl && serverUrl && clientSecret) {
   server.listen(serverPort, () => {
     startWebsocket(server);
     // eslint-disable-next-line no-console
@@ -203,10 +219,10 @@ if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {
   });
 }
 else {
-  console.warn(`missing parameters 
+  console.warn(`missing parameters
     clientId: ${clientId},
     serverPort: ${serverPort},
     serverUrl: ${serverUrl},
-    clientUrl: ${clientUrl},
+    clientUrl: ${serverUrl},
     clientSecret: ${clientSecret}`);
 }

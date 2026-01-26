@@ -13,7 +13,7 @@ export function startWebsocket(server: http.Server): void {
     server,
     {
       cors: {
-        origin: process.env.CLIENT_URL,
+        origin: process.env.SERVER_URL,
         methods: ['GET', 'POST'],
         credentials: true,
       },

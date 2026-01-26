@@ -1,0 +1,12 @@
+
+{
+  "name": "better-jams",
+  "scripts": {
+    "postinstall": "npm --prefix client ci && npm --prefix server ci",
+    "build": "npm --prefix client run build && npm --prefix server run build",
+    "start": "npm --prefix server run start"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
