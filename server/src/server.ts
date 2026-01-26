@@ -205,8 +205,6 @@ app.use((req, res, next) => {
     return;
   }
 
-  console.log(req.path);
-
   if (req.path.startsWith('/api')) {
     next();
 
