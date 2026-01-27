@@ -4,18 +4,18 @@
     <span class="long">BETTERJAMS</span>
   </div>
 
-  <btj-search-bar class="search-bar" 
-    (addTrack)="addTrack($event);" 
-    (clearSearch)="clearSearch();" 
+  <btj-search-bar class="search-bar"
+    (addTrack)="addTrack($event);"
+    (clearSearch)="clearSearch();"
     (searchQueryChange)="searchQueryChange($event)"
-    [isLoading]="isLoading()" 
-    [query]="searchQuery()" 
-    [searchResults]="searchResults()" 
+    [isLoading]="isLoading()"
+    [query]="searchQuery()"
+    [searchResults]="searchResults()"
   />
 
-  @if(userProfile()) {
-    <btj-user-profile class="user-profile" 
-      [userProfile]="userProfile()!" 
+  @if(!userIsLoading()) {
+    <btj-user-profile class="user-profile"
+      [userProfile]="userProfile()!"
     />
   }
 
@@ -23,13 +23,13 @@
 
 <div class="room-page">
   <div class="room-page-container">
-    @if (userIsLoading() && devicesIsLoading()) {
+    @if (userIsLoading() || devicesIsLoading()) {
       <btj-loading-state class="room-page-loader" />
     } @else {
         @let _currentTrack = currentTrack();
 
     @if (_currentTrack) {
-      <app-media-player class="media-player" 
+      <app-media-player class="media-player"
         (pauseTrack)="pauseTrack()"
         (playTrack)="playTrack()"
         [isPlaying]="isPlaying"

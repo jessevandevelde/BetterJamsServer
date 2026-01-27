@@ -50,7 +50,6 @@ class Queue {
       return;
     }
 
-    /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
     trackToUpvote.upvoteIds.includes(userId)
       ? trackToUpvote.upvoteIds.splice(trackToUpvote.upvoteIds.indexOf(userId), 1)
       : trackToUpvote.upvoteIds.push(userId);

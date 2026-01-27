@@ -80,9 +80,7 @@ export class RoomPageEffects {
         this.store.select(RoomPageSelectors.selectActiveDeviceId),
         this.store.select(RoomPageSelectors.selectCurrentTrack),
       ),
-      /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
       filter(([_action, deviceId, currentTrack]) => !!deviceId && !!currentTrack),
-      /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
       switchMap(([_action, deviceId, _currentTrack]) => this.roomPageService.playTrack(deviceId).pipe(
         map(() => {
           return RoomPageActions.playTrackSuccess();

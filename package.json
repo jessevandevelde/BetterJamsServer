@@ -7,7 +7,9 @@
   "scripts": {
     "build": "npm run build -w client && npm run build -w server",
     "start:client": "npm start -w client",
-    "start:server": "npm start -w server"
+    "start:server": "npm start -w server",
+    "eslint:all": "npm run eslint -w client && npm run eslint -w server",
+    "lint:all": "npm run eslint:all"
   },
   "engines": {
     "node": ">=18"

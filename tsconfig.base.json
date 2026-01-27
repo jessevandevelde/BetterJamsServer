@@ -8,6 +8,6 @@
     "noImplicitOverride": true,
     "forceConsistentCasingInFileNames": true,
     "noPropertyAccessFromIndexSignature": true,
-    "useDefineForClassFields": true
+    "useDefineForClassFields": false
   }
 }

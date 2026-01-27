@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from '@angular/core';
 import type { Track } from '../../../types/track.interfaces';
 import { faPause } from '@fortawesome/free-solid-svg-icons';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
-import { RoomPageService } from '../../room-page.service';
 
 @Component({
   selector: 'app-media-player',
@@ -23,8 +22,6 @@ export class MediaPlayerComponent {
   protected faPause = faPause;
   protected faPlay = faPlay;
   protected readonly progressPercentage = signal(0);
-
-  private readonly roomPageService = inject(RoomPageService);
 
   public constructor() {
     this.initializeProgressEffect();

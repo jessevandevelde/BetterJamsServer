@@ -39,16 +39,16 @@ const spotifyApiUrl = process.env['SPOTIFY_API_URL'];
 const app = express();
 const api = express.Router();
 
-api.use(cookieParser());
+app.use(cookieParser());
 
-api.use(cors ({
+app.use(cors ({
   origin: clientUrl,
   credentials: true,
 }));
 
 api.use(json());
 
-api.use(isAuthorizedMiddleware);
+app.use(isAuthorizedMiddleware);
 
 api.use('/auth', authRoutes);
 api.use('/authenticated', isAuthenticatedRoutes);
@@ -196,6 +196,7 @@ app.use((req, res, next) => {
   res.sendFile(path.join(angularDist, 'index.html'));
 });
 
+/* eslint-disable-next-line @typescript-eslint/strict-void-return */
 const server = http.createServer(app);
 
 if (clientId && serverPort && serverUrl && clientUrl && clientSecret) {

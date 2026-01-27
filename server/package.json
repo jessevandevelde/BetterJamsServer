@@ -7,7 +7,7 @@
     "start": "dotenv -e .env -- nodemon src/server.ts",
     "watch:production": "dotenv -e .env.production -- nodemon src/server.ts",
     "build": "tsc",
-    "lint": "eslint",
+    "eslint": "eslint",
     "lint:fix": "eslint --fix"
   },
   "repository": {
