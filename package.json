@@ -8,8 +8,9 @@
     "build": "npm run build -w client && npm run build -w server",
     "start:client": "npm start -w client",
     "start:server": "npm start -w server",
+    "stylelint": "stylelint **/*.css -c ./stylelint.config.mjs",
     "eslint:all": "npm run eslint -w client && npm run eslint -w server",
-    "lint:all": "npm run eslint:all"
+    "lint:all": "npm run eslint:all && npm run stylelint"
   },
   "engines": {
     "node": ">=18"
