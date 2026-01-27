@@ -1,24 +1,27 @@
 // import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
-import angular from 'angular-eslint';
+import angularEslint from 'angular-eslint';
 import baseConfig from '../eslint.config.mjs';
-import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig(
   {
     ignores: ['node_modules', 'dist', 'e2e'],
   },
   {
-    extends: [
-      baseConfig,
-      ...angular.configs.tsRecommended,
-    ],
-    plugins: {
-      '@stylistic': stylistic,
+    extends: [baseConfig],
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname,
+        project: ['./tsconfig.json'],
+      },
     },
-    processor: angular.processInlineTemplates,
+  },
+  {
+    files: ['**/*.ts'],
+    extends: [
+      angularEslint.configs.tsRecommended,
+    ],
     rules: {
-      '@stylistic/semi': 'error',
       '@angular-eslint/directive-selector': [
         'error',
         {
@@ -32,13 +35,14 @@ export default defineConfig(
         {
           type: 'element',
           prefix: 'btj',
+          style: 'kebab-case',
         },
       ],
     },
   },
   {
     files: ['**/*.html'],
-    extends: [...angular.configs.templateAll],
+    extends: [...angularEslint.configs.templateAll],
     rules: {
       '@angular-eslint/template/i18n': 'off',
       // disabled because it doesn't work with signal

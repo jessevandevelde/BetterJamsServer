@@ -92,8 +92,8 @@ const tseslintConfig = defineConfig(
     },
     languageOptions: {
       parserOptions: {
-        projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        project: ['./tsconfig.json'],
       },
     },
   },
@@ -105,7 +105,7 @@ export default defineConfig(
   },
   {
     files: ['**/*.mjs', '**/*.js'],
-    extends: eslintConfig,
+    extends: [eslintConfig],
   },
   {
     files: ['**/*.ts'],

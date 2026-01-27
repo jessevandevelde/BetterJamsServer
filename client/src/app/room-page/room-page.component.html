@@ -29,7 +29,7 @@
         @let _currentTrack = currentTrack();
 
     @if (_currentTrack) {
-      <app-media-player class="media-player"
+      <btj-media-player class="media-player"
         (pauseTrack)="pauseTrack()"
         (playTrack)="playTrack()"
         [isPlaying]="isPlaying"
@@ -42,7 +42,7 @@
 
         <div class="queue">
           @for (track of queueTracks(); track track.uuid) {
-            <app-queue-row
+            <btj-queue-row
               (vote)="voteTrack(track)"
               [track]="track"
               [voted]="track.upvoteIds.includes(userProfile()!.userId)"

@@ -7,7 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
-  selector: 'app-queue-row',
+  selector: 'btj-queue-row',
   imports: [FontAwesomeModule, NgOptimizedImage],
   templateUrl: './queue-row.component.html',
   styleUrls: ['./queue-row.component.css'],

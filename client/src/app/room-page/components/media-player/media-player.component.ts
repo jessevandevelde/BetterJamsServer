@@ -6,7 +6,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 
 @Component({
-  selector: 'app-media-player',
+  selector: 'btj-media-player',
   templateUrl: './media-player.component.html',
   styleUrl: './media-player.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

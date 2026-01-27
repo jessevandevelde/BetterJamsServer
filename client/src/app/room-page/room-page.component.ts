@@ -19,7 +19,7 @@ import { EmptyQueuePlaceholder } from './components/empty-queue/empty-queue-plac
 import { LoadingStateComponent } from '../components/loading-state/loading-state.component';
 
 @Component({
-  selector: 'app-room-page',
+  selector: 'btj-room-page',
   standalone: true,
   imports: [QueueRowComponent, MediaPlayerComponent, SearchBarComponent, UserProfileComponent, EmptyQueuePlaceholder, SelectDevicesModal, LoadingStateComponent],
   templateUrl: './room-page.component.html',
