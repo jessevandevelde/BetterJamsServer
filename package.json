@@ -1,13 +1,24 @@
-
 {
   "name": "better-jams",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "postinstall": "npm --prefix client ci && npm --prefix server ci",
-    "build": "npm --prefix client run build && npm --prefix server run build",
-    "start:client": "npm --prefix client run start",
-    "start:server": "npm --prefix server run start"
+    "build": "npm run build -w client && npm run build -w server",
+    "start:client": "npm start -w client",
+    "start:server": "npm start -w server"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "http-status-codes": "^2.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@stylistic/eslint-plugin": "^5.3.1",
+    "eslint": "^9.35.0",
+    "typescript-eslint": "^8.43.0"
   }
 }

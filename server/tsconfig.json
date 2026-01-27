@@ -1,12 +1,12 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
     "module": "commonjs",
     "moduleResolution": "node",
     "rootDir": "src",
     "outDir": "dist",
     "esModuleInterop": true,
-    "strict": true,
-    "types": ["cookie-parser", "cors"]
-  }
+    "types": ["cookie-parser", "cors", "node"]
+  },
+  "include": ["src/**/*.ts"]
 }
