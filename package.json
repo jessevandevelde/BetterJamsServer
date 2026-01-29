@@ -5,7 +5,10 @@
     "server"
   ],
   "scripts": {
-    "build": "npm run build -w client && npm run build -w server",
+    "build:server": "npm run build -w server",
+    "build:client": "npm run build -w client",
+    "build": "npm run build:server && npm run build:client",
+    "start:server:prod": "npm run start:prod -w server",
     "start:client": "npm start -w client",
     "start:server": "npm start -w server",
     "stylelint": "stylelint **/*.css -c ./stylelint.config.mjs",
