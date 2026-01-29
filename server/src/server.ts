@@ -49,7 +49,7 @@ app.use(cors ({
 
 api.use(json());
 
-app.use(isAuthorizedMiddleware);
+api.use(isAuthorizedMiddleware);
 
 api.use('/auth', authRoutes);
 api.use('/authenticated', isAuthenticatedRoutes);
