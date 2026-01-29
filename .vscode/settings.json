@@ -1,5 +1,11 @@
 {
-    "cSpell.words": [
-        "betterjamserver"
-    ]
+  "cSpell.words": [
+    "betterjamsserver"
+  ],
+  "angular-schematics.schematicsDefaultOptions": {
+    "angular-*": {
+      "externalTemplate": true
+    }
+  },
+  "eslint.useFlatConfig": true
 }

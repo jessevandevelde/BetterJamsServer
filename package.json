@@ -1,29 +1,30 @@
 {
-  "name": "betterjamserver",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "better-jams",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "dev": "ts-node src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
+    "build:server": "npm run build -w server",
+    "build:client": "npm run build -w client",
+    "build": "npm run build:server && npm run build:client",
+    "start:server:prod": "npm run start:prod -w server",
+    "start:client": "npm start -w client",
+    "start:server": "npm start -w server",
+    "stylelint": "stylelint **/*.css -c ./stylelint.config.mjs",
+    "eslint:all": "npm run eslint -w client && npm run eslint -w server",
+    "lint:all": "npm run eslint:all && npm run stylelint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jessevandevelde/BetterJamsServer.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jessevandevelde/BetterJamsServer/issues"
-  },
-  "homepage": "https://github.com/jessevandevelde/BetterJamsServer#readme",
-  "devDependencies": {
-    "ts-node": "^10.9.2"
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
-    "axios": "^1.11.0",
-    "dotenv": "^17.2.2",
-    "express": "^5.1.0"
+    "http-status-codes": "^2.3.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@stylistic/eslint-plugin": "^5.3.1",
+    "eslint": "^9.35.0",
+    "typescript-eslint": "^8.43.0"
   }
 }
