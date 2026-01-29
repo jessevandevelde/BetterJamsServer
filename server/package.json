@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "dotenv -e ../.env -- nodemon src/server.ts",
+    "start:prod": "node dist/server.js",
     "watch:production": "dotenv -e .env.production -- nodemon src/server.ts",
     "build": "tsc",
     "eslint": "eslint",
