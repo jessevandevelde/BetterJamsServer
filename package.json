@@ -13,7 +13,8 @@
     "start:server": "npm start -w server",
     "stylelint": "stylelint **/*.css -c ./stylelint.config.mjs",
     "eslint:all": "npm run eslint -w client && npm run eslint -w server",
-    "lint:all": "npm run eslint:all && npm run stylelint"
+    "lint:all": "npm run eslint:all && npm run stylelint",
+    "clean": "rimraf ./**/node_modules && rimraf node_modules"
   },
   "engines": {
     "node": ">=18"
