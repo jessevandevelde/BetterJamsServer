@@ -1,0 +1,113 @@
+@import url("../../../../styles/variables.css");
+
+.media-player {
+  display: flex;
+  flex-direction: column;
+  background: var(--dark-blue);
+  border-radius: 8px;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+
+  @media (width >= 768px) {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+.album-cover {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  align-self: center;
+  border-radius: 16px;
+
+  @media (width >= 768px) {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+.track-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.track-name {
+  font-weight: normal;
+  font-size: 28px;
+  margin: 0;
+  color: var(--light-gray);
+}
+
+.artist-names {
+  font-weight: normal;
+  font-size: 28px;
+  color: var(--mid-gray);
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pause-icon {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+  color: var(--dark-blue);
+  cursor: pointer;
+  background-color: var(--light-gray);
+  border-radius: 50%;
+  padding: 8px;
+  align-self: center;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.bar {
+  width: 100%;
+  height: 8px;
+  background: var(--dark-gray);
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+
+  @media (width >= 768px) {
+    width: 100%;
+  }
+}
+
+.progressbar {
+  height: 100%;
+  background: var(--light-gray);
+  border-radius: 3px;
+  transition: width 1s linear;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.playback-time {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.timestamp {
+  margin: 0;
+  margin-top: 4px;
+  color: var(--light-gray);
+  font-size: 14px;
+}

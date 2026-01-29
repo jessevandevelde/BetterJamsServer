@@ -46,16 +46,8 @@ const eslintConfig = defineConfig(
   },
 );
 
-export default defineConfig(
+const tseslintConfig = defineConfig(
   {
-    ignores: ['node_modules', 'dist'],
-  },
-  {
-    files: ['**/*.mjs', '**/*.js'],
-    extends: eslintConfig,
-  },
-  {
-    files: ['**/*.ts'],
     plugins: {
       '@stylistic': stylistic,
     },
@@ -66,6 +58,7 @@ export default defineConfig(
     ],
     rules: {
       '@typescript-eslint/prefer-readonly-parameter-types': 'off',
+      '@typescript-eslint/class-methods-use-this': 'off',
       '@typescript-eslint/max-params': 'off',
       '@typescript-eslint/strict-boolean-expressions': 'off',
       '@typescript-eslint/no-unused-vars': ['error', {
@@ -84,12 +77,38 @@ export default defineConfig(
         ignoreNumericLiteralTypes: true,
         ignore: [-1, 0, 1],
       }],
+      '@typescript-eslint/no-extraneous-class': [
+        'error',
+        {
+          allowWithDecorator: true,
+        },
+      ],
+      '@typescript-eslint/no-unused-expressions': [
+        'error',
+        {
+          allowTernary: true,
+        },
+      ],
     },
     languageOptions: {
       parserOptions: {
-        projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        project: ['./tsconfig.json'],
       },
     },
+  },
+);
+
+export default defineConfig(
+  {
+    ignores: ['node_modules', 'dist'],
+  },
+  {
+    files: ['**/*.mjs', '**/*.js'],
+    extends: [eslintConfig],
+  },
+  {
+    files: ['**/*.ts'],
+    extends: [tseslintConfig],
   },
 );
