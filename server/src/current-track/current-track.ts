@@ -11,12 +11,15 @@ export function emitCurrentTrackProgress(): void {
   io().emit(WebsocketEvent.currentTrackProgress, currentPositionMs);
 }
 
+/* eslint-disable-next-line @typescript-eslint/init-declarations */
+let intervalId: NodeJS.Timeout | null;
+
 export function startTrackInterval(): void {
   intervalStarted = true;
 
   const queue = getQueue();
 
-  setInterval(() => {
+  intervalId = setInterval(() => {
     const { currentTrack } = queue;
 
     if (!currentTrack) {
@@ -33,6 +36,16 @@ export function startTrackInterval(): void {
       queue.setNextTrack();
     }
   }, ONE_SECOND_IN_MS);
+}
+
+export function stopInterval(): void {
+  if (!intervalId) {
+    return;
+  }
+
+  clearInterval(intervalId);
+  intervalId = null;
+  intervalStarted = false;
 }
 
 export function getCurrentPositionMs(): number {
