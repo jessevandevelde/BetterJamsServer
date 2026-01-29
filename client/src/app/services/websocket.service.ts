@@ -10,8 +10,9 @@ export class WebsocketService {
   private readonly _socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
   public constructor() {
-    this._socket = io('http://127.0.0.1:3000', {
+    this._socket = io({
       withCredentials: true,
+      path: '/socket.io',
     });
   }
 
