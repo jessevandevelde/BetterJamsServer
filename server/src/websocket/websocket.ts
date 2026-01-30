@@ -1,12 +1,13 @@
 import { Server } from 'socket.io';
 import type http from 'http';
-import { emitCurrentTrackProgress, intervalStarted, startTrackInterval } from '../current-track/current-track';
+import { emitCurrentTrackProgress, intervalStarted, startTrackInterval, stopInterval } from '../current-track/current-track';
 import { WebsocketEvent } from './websocket.enums';
 import type { ClientToServerEvents, ServerToClientEvents } from './websocket.interfaces';
 import { getQueue } from '../queue/queue';
 
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
 let _io: Server<ClientToServerEvents, ServerToClientEvents>;
+const connectedIds = new Set();
 
 export function startWebsocket(server: http.Server): void {
   _io = new Server<ClientToServerEvents, ServerToClientEvents>(
@@ -20,7 +21,9 @@ export function startWebsocket(server: http.Server): void {
     },
   );
 
-  _io.on(WebsocketEvent.connection, () => {
+  _io.on(WebsocketEvent.connection, (socket) => {
+    connectedIds.add(socket.id);
+
     if (!intervalStarted) {
       startTrackInterval();
     }
@@ -29,6 +32,14 @@ export function startWebsocket(server: http.Server): void {
 
     emitCurrentTrackProgress();
     queue.emitCurrentTrack();
+
+    socket.on('disconnect', () => {
+      connectedIds.delete(socket.id);
+
+      if (intervalStarted && !connectedIds.size) {
+        stopInterval();
+      }
+    });
   });
 }
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, type Observable } from 'rxjs';
-import { spotifyApiCallLink, spotifySearchLink } from 'src/app/environment';
+import { spotifySearchLink } from 'src/app/environment';
 import { Track } from '../types/track.interfaces';
 import type { SearchResultsRemote } from '../types/track.interfaces';
 import type { GetQueueDTO } from './room-page.interfaces';
@@ -33,38 +33,38 @@ export class RoomPageService {
   }
 
   public addTrackToQueue(track: Track): Observable<Track> {
-    return this.httpClient.post<Track>(`${spotifyApiCallLink}/api/queue`, track, {
+    return this.httpClient.post<Track>('/api/queue', track, {
       withCredentials: true,
     });
   }
 
   public getQueue(): Observable<GetQueueDTO> {
-    return this.httpClient.get<GetQueueDTO>(`${spotifyApiCallLink}/api/queue`, {
+    return this.httpClient.get<GetQueueDTO>('/api/queue', {
       withCredentials: true,
     });
   }
 
   public playTrack(deviceId: string): Observable<object> {
-    return this.httpClient.post(`${spotifyApiCallLink}/api/current-track/play`, { deviceId }, {
+    return this.httpClient.post('/api/current-track/play', { deviceId }, {
       withCredentials: true,
     },
     );
   }
 
   public getAvailableDevices(): Observable<Device[]> {
-    return this.httpClient.get<Device[]>(`${spotifyApiCallLink}/api/devices`, {
+    return this.httpClient.get<Device[]>('/api/devices', {
       withCredentials: true,
     });
   }
 
   public getUserProfile(): Observable<User> {
-    return this.httpClient.get<User>(`${spotifyApiCallLink}/api/user`, {
+    return this.httpClient.get<User>('/api/user', {
       withCredentials: true,
     });
   }
 
   public voteTrack(trackUuid: string, userId: string): Observable<object> {
-    return this.httpClient.post(`${spotifyApiCallLink}/api/queue/vote`, {
+    return this.httpClient.post('/api/queue/vote', {
       userId,
       trackUuid,
     },
@@ -74,19 +74,19 @@ export class RoomPageService {
   }
 
   public pauseTrack(): Observable<object> {
-    return this.httpClient.put(`${spotifyApiCallLink}/api/current-track/pause`, null, {
+    return this.httpClient.put('/api/current-track/pause', null, {
       withCredentials: true,
     });
   }
 
   public isAuthenticated(): Observable<boolean> {
-    return this.httpClient.get<boolean>(`${spotifyApiCallLink}/api/authenticated`, {
+    return this.httpClient.get<boolean>('/api/authenticated', {
       withCredentials: true,
     });
   }
 
   public refresh(): Observable<object> {
-    return this.httpClient.post(`${spotifyApiCallLink}/api/auth/refresh`, null, {
+    return this.httpClient.post('/api/auth/refresh', null, {
       withCredentials: true,
     });
   }

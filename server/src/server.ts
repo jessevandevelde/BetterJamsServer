@@ -22,12 +22,13 @@ import { handleApiError, HttpErrorCause } from './helpers/errors.helpers';
 import { spotifyFetch } from './helpers/spotify-fetch';
 import isAuthenticatedRoutes from './is-authenticated';
 import authRoutes from './auth';
+import healthRoutes from './health';
 
 const env = dotenv.config();
 
 dotenvExpand.expand(env);
 
-const serverPort = process.env['SERVER_PORT'];
+const serverPort = process.env['PORT'];
 const serverUrl = process.env['SERVER_URL'];
 const clientUrl = process.env['CLIENT_URL'];
 const spotifyUrl = process.env['SPOTIFY_ACCOUNT_URL'];
@@ -48,7 +49,7 @@ app.use(cors ({
 
 api.use(json());
 
-app.use(isAuthorizedMiddleware);
+api.use(isAuthorizedMiddleware);
 
 api.use('/auth', authRoutes);
 api.use('/authenticated', isAuthenticatedRoutes);
@@ -56,6 +57,7 @@ api.use('/devices', deviceRoutes);
 api.use('/queue', queueRoutes);
 api.use('/current-track', currentTrackRoutes);
 api.use('/user', userRoutes);
+api.use('/health', healthRoutes);
 
 api.get('/login', (_req: Request, res: Response) => {
   const stringLength = 16;
