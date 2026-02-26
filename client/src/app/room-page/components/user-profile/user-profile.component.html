@@ -1,15 +1,27 @@
 <div class="profile" #profile>
-  <img
-    alt="profile-picture"
-    class="profile-picture"
-    height="32"
-    tabindex="0"
-    width="32"
-    (click)="toggleDropdown()"
-    (keydown.enter)="toggleDropdown()"
-    (keydown.space)="toggleDropdown()"
-    [ngSrc]="userProfile().image"
-  />
+  @if (userProfile().image) {
+    <img
+      alt="profile-picture"
+      class="profile-picture"
+      height="32"
+      tabindex="0"
+      width="32"
+      (click)="toggleDropdown()"
+      (keydown.enter)="toggleDropdown()"
+      (keydown.space)="toggleDropdown()"
+      [ngSrc]="userProfile().image!"
+    />
+  } @else {
+    <div
+      class="profile-picture profile-icon-fallback"
+      tabindex="0"
+      (click)="toggleDropdown()"
+      (keydown.enter)="toggleDropdown()"
+      (keydown.space)="toggleDropdown()"
+    >
+      <fa-icon [icon]="profileIcon" />
+    </div>
+  }
 
   @if (showDropdown()) {
     <btj-dropdown class="profile-dropdown">
