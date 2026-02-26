@@ -29,7 +29,7 @@ export interface UserRemote {
   }
   href: string
   id: string
-  images: ProfileImageRemote[]
+  images?: ProfileImageRemote[]
   external_urls: {
     spotify: string
   }
@@ -41,7 +41,7 @@ export interface UserRemote {
 }
 
 export class User {
-  public image: string;
+  public image?: string;
   public accountUrl: string;
   public userId: string;
 
@@ -49,7 +49,7 @@ export class User {
     /* eslint-disable-next-line @typescript-eslint/naming-convention */
     const { images, external_urls, id } = userRemote;
 
-    this.image = images[0].url;
+    this.image = images && images.length > 0 ? images[0].url : undefined;
     this.accountUrl = external_urls.spotify;
     this.userId = id;
   }
