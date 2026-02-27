@@ -20,6 +20,6 @@ To start the server run ```npm run start:server```
 
 Open a new terminal window and navigate to the root of this project.
 
-To start the client rub ```npm run start:client```
+To start the client run ```npm run start:client```
 
 In your browser navigate to http://127.0.0.1:4200
