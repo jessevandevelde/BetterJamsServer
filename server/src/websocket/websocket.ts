@@ -4,6 +4,7 @@ import { emitCurrentTrackProgress, intervalStarted, startTrackInterval, stopInte
 import { WebsocketEvent } from './websocket.enums';
 import type { ClientToServerEvents, ServerToClientEvents } from './websocket.interfaces';
 import { getQueue } from '../queue/queue';
+import { getFallbackPlaylist } from '../queue/fallback-playlist';
 
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
 let _io: Server<ClientToServerEvents, ServerToClientEvents>;
@@ -38,6 +39,8 @@ export function startWebsocket(server: http.Server): void {
 
       if (intervalStarted && !connectedIds.size) {
         stopInterval();
+        queue.clearQueue();
+        getFallbackPlaylist().clearPlaylist();
       }
     });
   });

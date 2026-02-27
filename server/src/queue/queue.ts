@@ -3,7 +3,7 @@ import { WebsocketEvent } from '../websocket/websocket.enums';
 import { getFallbackPlaylist } from './fallback-playlist';
 import { QueueTrack } from './queue.interfaces';
 
-class Queue {
+export class Queue {
   private readonly _queue: QueueTrack[] = [];
   private _currentTrack: QueueTrack | null = null;
 
@@ -89,6 +89,12 @@ class Queue {
       Queue.emitUpdateQueue();
       this.emitCurrentTrack();
     }
+  }
+
+  public clearQueue(): void {
+    this._queue.length = 0;
+    this._currentTrack = null;
+    Queue.emitUpdateQueue();
   }
 
   private isQueueEmpty(): boolean {
