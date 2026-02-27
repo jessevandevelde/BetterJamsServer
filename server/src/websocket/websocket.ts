@@ -9,6 +9,42 @@ import { getFallbackPlaylist } from '../queue/fallback-playlist';
 /* eslint-disable-next-line @typescript-eslint/init-declarations */
 let _io: Server<ClientToServerEvents, ServerToClientEvents>;
 const connectedIds = new Set();
+let clearQueueTimeout: NodeJS.Timeout | null = null;
+
+const QUEUE_CLEAR_DELAY_MS = 30000;
+
+function clearQueueWithFallback(): void {
+  const queue = getQueue();
+
+  stopInterval();
+  queue.clearQueue();
+  getFallbackPlaylist().clearPlaylist();
+}
+
+function scheduleQueueClear(): void {
+  if (clearQueueTimeout) {
+    return;
+  }
+
+  clearQueueTimeout = setTimeout(() => {
+    clearQueueTimeout = null;
+
+    if (connectedIds.size) {
+      return;
+    }
+
+    clearQueueWithFallback();
+  }, QUEUE_CLEAR_DELAY_MS);
+}
+
+function cancelScheduledQueueClear(): void {
+  if (!clearQueueTimeout) {
+    return;
+  }
+
+  clearTimeout(clearQueueTimeout);
+  clearQueueTimeout = null;
+}
 
 export function startWebsocket(server: http.Server): void {
   _io = new Server<ClientToServerEvents, ServerToClientEvents>(
@@ -23,6 +59,8 @@ export function startWebsocket(server: http.Server): void {
   );
 
   _io.on(WebsocketEvent.connection, (socket) => {
+    cancelScheduledQueueClear();
+
     connectedIds.add(socket.id);
 
     if (!intervalStarted) {
@@ -38,9 +76,7 @@ export function startWebsocket(server: http.Server): void {
       connectedIds.delete(socket.id);
 
       if (intervalStarted && !connectedIds.size) {
-        stopInterval();
-        queue.clearQueue();
-        getFallbackPlaylist().clearPlaylist();
+        scheduleQueueClear();
       }
     });
   });
