@@ -1,6 +1,4 @@
-import type { Request, Response } from 'express';
 import express, { json } from 'express';
-import querystring from 'node:querystring';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenvExpand from 'dotenv-expand';
@@ -10,15 +8,13 @@ import queueRoutes from './queue';
 import deviceRoutes from './devices';
 import currentTrackRoutes from './current-track';
 import { isAuthorizedMiddleware } from './auth/auth-middleware';
-import { StatusCodes } from 'http-status-codes';
 import { startWebsocket } from './websocket/websocket';
 import http from 'http';
 import userRoutes from './user';
-import { handleApiError, HttpErrorCause } from './helpers/errors.helpers';
-import { spotifyFetch } from './helpers/spotify-fetch';
 import isAuthenticatedRoutes from './is-authenticated';
 import authRoutes, { login, callback } from './auth';
 import healthRoutes from './health';
+import searchRoutes from './search';
 
 const env = dotenv.config();
 
@@ -54,44 +50,11 @@ api.use('/queue', queueRoutes);
 api.use('/current-track', currentTrackRoutes);
 api.use('/user', userRoutes);
 api.use('/health', healthRoutes);
+api.use('/search', searchRoutes(spotifyApiUrl));
 
 api.get('/login', login(spotifyUrl, redirectUri, clientId));
 
 api.get('/callback', callback(spotifyUrl, clientId, clientSecret, redirectUri, clientUrl));
-
-api.get('/search', async (req: Request<null, null, null, { query: string }>, res: Response): Promise<void> => {
-  const query = req.query.query as string | undefined;
-
-  /* eslint-disable-next-line @typescript-eslint/naming-convention */
-  const { access_token } = req.cookies;
-
-  try {
-    if (!query) {
-      throw new Error('Missing search query', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
-    }
-
-    const url = `${spotifyApiUrl}/search?${querystring.stringify({
-      q: query,
-      type: 'track',
-      limit: 20,
-    })}`;
-
-    const response = await spotifyFetch(url,
-      {
-        method: 'GET',
-        headers: {
-          /* eslint-disable-next-line @typescript-eslint/naming-convention */
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-    res.json(response);
-  }
-
-  catch (error) {
-    handleApiError(error, res);
-  }
-});
 
 app.use('/api', api);
 
