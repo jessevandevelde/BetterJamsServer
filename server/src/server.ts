@@ -1,15 +1,11 @@
 import type { Request, Response } from 'express';
 import express, { json } from 'express';
-import { randomBytes } from 'node:crypto';
-import { Buffer } from 'node:buffer';
 import querystring from 'node:querystring';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenvExpand from 'dotenv-expand';
 import dotenv from 'dotenv';
 import * as path from 'node:path';
-import { createCookie } from './helpers/cookies.helpers';
-import type { AuthTokensResponse } from './types/tokens.interface';
 import queueRoutes from './queue';
 import deviceRoutes from './devices';
 import currentTrackRoutes from './current-track';
@@ -21,7 +17,7 @@ import userRoutes from './user';
 import { handleApiError, HttpErrorCause } from './helpers/errors.helpers';
 import { spotifyFetch } from './helpers/spotify-fetch';
 import isAuthenticatedRoutes from './is-authenticated';
-import authRoutes from './auth';
+import authRoutes, { login, callback } from './auth';
 import healthRoutes from './health';
 
 const env = dotenv.config();
@@ -59,88 +55,9 @@ api.use('/current-track', currentTrackRoutes);
 api.use('/user', userRoutes);
 api.use('/health', healthRoutes);
 
-api.get('/login', (_req: Request, res: Response) => {
-  const stringLength = 16;
-  const state = randomBytes(stringLength).toString('hex');
-  const scope = 'user-read-private user-read-email user-modify-playback-state user-read-playback-state';
-  const oneMinuteInSeconds = 60;
-  const oneSecondInMs = 1000;
-  const maxAge = oneMinuteInSeconds * oneSecondInMs;
+api.get('/login', login(spotifyUrl, redirectUri, clientId));
 
-  createCookie(res, 'state', state, maxAge);
-
-  res.redirect(`${spotifyUrl}/authorize?`
-    + querystring.stringify({
-    /* eslint-disable @typescript-eslint/naming-convention */
-      response_type: 'code',
-      client_id: clientId,
-      scope,
-      redirect_uri: redirectUri,
-      state,
-    /* eslint-enable @typescript-eslint/naming-convention */
-    }));
-});
-
-api.get('/callback', async (req: Request<null, null, null, { code: string, state: string }>, res: Response) => {
-  const code = typeof req.query.code === 'string'
-    ? req.query.code
-    : null;
-
-  const { state } = req.cookies;
-
-  if (state === null || state !== req.query.state) {
-    res.redirect(`${clientUrl}/login?error=state_mismatch`);
-  }
-  else {
-    const params = new URLSearchParams();
-
-    if (code) {
-      params.append('code', code);
-    }
-
-    params.append('redirect_uri', redirectUri);
-    params.append('grant_type', 'authorization_code');
-
-    try {
-      const response = await spotifyFetch<AuthTokensResponse>(`${spotifyUrl}/api/token`, {
-        method: 'POST',
-        headers: {
-          /* eslint-disable @typescript-eslint/naming-convention */
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64'),
-          /* eslint-enable @typescript-eslint/naming-convention */
-        },
-        body: params.toString(),
-      });
-
-      const data = response;
-
-      if (!data) {
-        throw new Error();
-      }
-
-      if (data.access_token && data.refresh_token) {
-        const oneSecondInMs = 1000;
-        const oneMinuteInSeconds = 60;
-        const oneHourInMinutes = 60;
-        const maxAge = oneSecondInMs * oneMinuteInSeconds * oneHourInMinutes;
-
-        createCookie(res, 'access_token', data.access_token, maxAge);
-        createCookie(res, 'refresh_token', data.refresh_token);
-
-        res.redirect(clientUrl ?? '');
-      }
-      else {
-        throw new Error('Failed to retrieve tokens');
-      }
-    }
-    catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-      res.redirect(`${clientUrl}/login?error=unauthorized`);
-    }
-  }
-});
+api.get('/callback', callback(spotifyUrl, clientId, clientSecret, redirectUri, clientUrl));
 
 api.get('/search', async (req: Request<null, null, null, { query: string }>, res: Response): Promise<void> => {
   const query = req.query.query as string | undefined;

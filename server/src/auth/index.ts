@@ -5,4 +5,7 @@ const router = Router();
 
 router.post('/refresh', refreshTokens);
 
+export { login } from './login';
+export { callback } from './callback';
+
 export default router;
