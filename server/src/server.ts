@@ -37,6 +37,16 @@ const clientSecret = process.env['CLIENT_SECRET'];
 const redirectUri = `${serverUrl}/api/callback`;
 const spotifyApiUrl = process.env['SPOTIFY_API_URL'];
 
+function createSpotifySearchUrl(query: string): string {
+  const searchParams = new URLSearchParams({
+    q: query.trim(),
+    type: 'track',
+    limit: '10',
+  });
+
+  return `${spotifyApiUrl}/search?${searchParams.toString()}`;
+}
+
 const app = express();
 const api = express.Router();
 
@@ -153,11 +163,7 @@ api.get('/search', async (req: Request<null, null, null, { query: string }>, res
       throw new Error('Missing search query', { cause: new HttpErrorCause(StatusCodes.BAD_REQUEST) });
     }
 
-    const url = `${spotifyApiUrl}/search?${querystring.stringify({
-      q: query,
-      type: 'track',
-      limit: 20,
-    })}`;
+    const url = createSpotifySearchUrl(query);
 
     const response = await spotifyFetch(url,
       {
