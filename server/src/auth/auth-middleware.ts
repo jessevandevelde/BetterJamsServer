@@ -14,7 +14,7 @@ export function isAuthorizedMiddleware(req: Request, res: Response, next: NextFu
   try {
     const refreshToken = getCookieFromCookies('refresh_token', req.cookies);
 
-    if (req.path.startsWith('/api/auth/refresh')) {
+    if (req.path.startsWith('/auth/refresh')) {
       if (refreshToken) {
         next();
 
