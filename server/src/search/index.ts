@@ -1,12 +1,8 @@
 import { Router } from 'express';
-import { getSearch } from './search';
+import { getSearchResults } from './get-search-results';
 
-const router = (spotifyApiUrl: string | undefined): Router => {
-  const searchRouter = Router();
+const router = Router();
 
-  searchRouter.get('/', getSearch(spotifyApiUrl));
-
-  return searchRouter;
-};
+router.get('/', getSearchResults);
 
 export default router;

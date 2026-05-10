@@ -12,7 +12,7 @@ import { startWebsocket } from './websocket/websocket';
 import http from 'http';
 import userRoutes from './user';
 import isAuthenticatedRoutes from './is-authenticated';
-import authRoutes, { login, callback } from './auth';
+import authRoutes from './auth';
 import healthRoutes from './health';
 import searchRoutes from './search';
 
@@ -23,11 +23,8 @@ dotenvExpand.expand(env);
 const serverPort = process.env['PORT'];
 const serverUrl = process.env['SERVER_URL'];
 const clientUrl = process.env['CLIENT_URL'];
-const spotifyUrl = process.env['SPOTIFY_ACCOUNT_URL'];
 const clientId = process.env['CLIENT_ID'];
 const clientSecret = process.env['CLIENT_SECRET'];
-const redirectUri = `${serverUrl}/api/callback`;
-const spotifyApiUrl = process.env['SPOTIFY_API_URL'];
 
 const app = express();
 const api = express.Router();
@@ -43,18 +40,14 @@ api.use(json());
 
 api.use(isAuthorizedMiddleware);
 
-api.use('/auth', authRoutes);
+api.use(authRoutes);
 api.use('/authenticated', isAuthenticatedRoutes);
 api.use('/devices', deviceRoutes);
 api.use('/queue', queueRoutes);
 api.use('/current-track', currentTrackRoutes);
 api.use('/user', userRoutes);
 api.use('/health', healthRoutes);
-api.use('/search', searchRoutes(spotifyApiUrl));
-
-api.get('/login', login(spotifyUrl, redirectUri, clientId));
-
-api.get('/callback', callback(spotifyUrl, clientId, clientSecret, redirectUri, clientUrl));
+api.use('/search', searchRoutes);
 
 app.use('/api', api);
 
