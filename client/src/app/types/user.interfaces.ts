@@ -1,5 +1,5 @@
 export interface User {
-  image: string
+  image?: string
   accountUrl: string
   userId: string
 }

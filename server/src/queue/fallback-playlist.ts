@@ -20,6 +20,10 @@ export class FallbackTrackPlaylist {
 
     this.fallbackPlaylist.set(track.id, track);
   }
+
+  public clearPlaylist(): void {
+    this.fallbackPlaylist.clear();
+  }
 }
 
 const playlist = new FallbackTrackPlaylist();
