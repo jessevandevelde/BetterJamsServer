@@ -22,6 +22,20 @@ function nodeEnd(node) {
   return node.sourceSpan?.end.offset;
 }
 
+/**
+ * Finds the start of the trailing whitespace before the next node.
+ *
+ * Some Angular parser versions place an @let node's end offset immediately
+ * before its semicolon. Replacing the complete gap would then remove that
+ * semicolon. Limiting the replacement to trailing whitespace preserves every
+ * non-whitespace character regardless of parser span behaviour.
+ */
+export function trailingWhitespaceStart(source, start, end) {
+  const trailingWhitespace = source.slice(start, end).match(/[\t \r\n]*$/)?.[0];
+
+  return end - (trailingWhitespace?.length ?? 0);
+}
+
 function newlineFor(source) {
   const firstNewline = source.match(NEWLINE)?.[0];
 
@@ -93,9 +107,11 @@ export default {
           continue;
         }
 
+        const fixStart = trailingWhitespaceStart(sourceCode.text, start, end);
+
         context.report({
           loc: {
-            start: sourceCode.getLocFromIndex(start),
+            start: sourceCode.getLocFromIndex(fixStart),
             end: sourceCode.getLocFromIndex(end),
           },
           messageId: MESSAGE_ID,
@@ -104,7 +120,7 @@ export default {
             const indentation = indentationBefore(sourceCode.text, end);
 
             return fixer.replaceTextRange(
-              [start, end],
+              [fixStart, end],
               `${newline}${newline}${indentation}`,
             );
           },
