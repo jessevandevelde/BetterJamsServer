@@ -13,6 +13,7 @@
   <div class="right">
     <div class="track-info">
       <h3 class="track-name">{{ _track.name }}</h3>
+
       <p class="artist-names">{{ _track.artists }}</p>
     </div>
 
@@ -31,6 +32,7 @@
 
     <div class="playback-time">
       <p class="timestamp">{{ progress() | date: 'mm:ss' }}</p>
+
       <p class="timestamp">{{ _track.durationMs | date: 'mm:ss' }}</p>
     </div>
   </div>

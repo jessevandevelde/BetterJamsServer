@@ -3,10 +3,13 @@
 <div class="search-result">
   <div class="content-container">
     <img alt="Album cover" class="album-cover" height="48" width="48" [ngSrc]="_track.albumCoverUrl">
+
     <div class="text-container">
       <p class="track-name">{{ _track.name }}</p>
+
       <p class="artist-name">{{ _track.artists }}</p>
     </div>
   </div>
+
   <button btjButton type="button" (mousedown)="onAddTrack()"><fa-icon [icon]="addToQueueButton" /></button>
 </div>
