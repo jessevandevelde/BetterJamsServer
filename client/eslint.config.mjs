@@ -2,6 +2,7 @@
 import { defineConfig } from 'eslint/config';
 import angularEslint from 'angular-eslint';
 import baseConfig from '../eslint.config.mjs';
+import paddingLineBetweenTemplateNodes from './eslint-rules/padding-line-between-template-nodes.mjs';
 
 export default defineConfig(
   {
@@ -43,7 +44,15 @@ export default defineConfig(
   {
     files: ['**/*.html'],
     extends: [...angularEslint.configs.templateAll],
+    plugins: {
+      local: {
+        rules: {
+          'padding-line-between-template-nodes': paddingLineBetweenTemplateNodes,
+        },
+      },
+    },
     rules: {
+      'local/padding-line-between-template-nodes': 'error',
       '@angular-eslint/template/i18n': 'off',
       // disabled because it doesn't work with signal
       // https://github.com/angular-eslint/angular-eslint/issues/1380#issuecomment-1783783808
