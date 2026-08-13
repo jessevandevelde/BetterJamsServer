@@ -2,6 +2,7 @@
 import { defineConfig } from 'eslint/config';
 import angularEslint from 'angular-eslint';
 import baseConfig from '../eslint.config.mjs';
+import noUnnecessaryNewlines from './eslint-rules/no-unnecessary-newlines.mjs';
 import paddingLineBetweenTemplateNodes from './eslint-rules/padding-line-between-template-nodes.mjs';
 
 export default defineConfig(
@@ -47,11 +48,13 @@ export default defineConfig(
     plugins: {
       local: {
         rules: {
+          'no-unnecessary-newlines': noUnnecessaryNewlines,
           'padding-line-between-template-nodes': paddingLineBetweenTemplateNodes,
         },
       },
     },
     rules: {
+      'local/no-unnecessary-newlines': 'error',
       'local/padding-line-between-template-nodes': 'error',
       '@angular-eslint/template/i18n': 'off',
       // disabled because it doesn't work with signal
